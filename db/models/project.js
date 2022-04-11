@@ -10,6 +10,14 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Project.associate = function(models) {
     // associations can be defined here
+    const columnMapping = {
+      through: "projectContact",
+      otherKey: 'contactId',
+      foreignKey: 'projectId',
+    }
+    Project.belongsTo(models.User, {foreignKey: "userId"})
+    Project.hasMany(models.Task, {foreignKey: "projectId"})
+    Project.belongsToMany(models.Contact, columnMapping)
   };
   return Project;
 };

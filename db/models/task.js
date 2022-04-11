@@ -5,10 +5,12 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.TEXT,
     projectId: DataTypes.INTEGER,
     dueDate: DataTypes.DATE,
-    tag: DataTypes.STRING
+    tag: DataTypes.STRING,
+    taskContactId: DataTypes.INTEGER,
   }, {});
   Task.associate = function(models) {
     // associations can be defined here
+    Task.belongsTo(models.Project, {foreignKey: "projectId"})
   };
   return Task;
 };
