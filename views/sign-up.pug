@@ -1,0 +1,19 @@
+extends layout.pug
+
+include utils.pug
+
+block content
+    p Fields With * Are Required.
+    form(action="/sign-up" method="POST")
+        input(type="hidden" name="_csrf" value=csrfToken)
+        +form("First Name*", "firstName", user.firstName, "text")
+        +form("Last Name*", "lastName", user.lastName, "text")
+        +form("Phone Number", "phoneNumber", user.phoneNumber, "tel")
+        +form("Occupation", "occupation", user.occupation, "text")
+        +form("Bio", "bio", user.bio, "textarea")
+        +form("Email*", "email", user.email, "email")
+        +form("Password*", "hashedPassword", user.hashedPassword, "password")
+        +form("Confirm Password*", "confirmPassword", "", "password")
+        div
+            button(type="submit" class="") Become a Beaver
+            a(href="/sign-in") Already a Beaver? Sign-In

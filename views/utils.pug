@@ -1,0 +1,7 @@
+mixin form(label, fieldName, fieldValue, fieldType = "text", placeholder = null)
+    div
+        label(for=fieldName)= label
+        if fieldType === "textarea"
+            textarea(name=fieldName, id=fieldName, rows="10")
+        else
+            input(type=fieldType, name=fieldName, id=fieldName, value=fieldValue, placeholder=placeholder)
