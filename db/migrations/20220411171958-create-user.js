@@ -23,7 +23,7 @@ module.exports = {
             },
             hashedPassword: {
                 allowNull: false,
-                type: Sequelize.STRING,
+                type: Sequelize.STRING.BINARY,
             },
             phoneNumber: {
                 type: Sequelize.STRING(10),
