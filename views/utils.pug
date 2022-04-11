@@ -5,3 +5,11 @@ mixin form(label, fieldName, fieldValue, fieldType = "text", placeholder = null)
             textarea(name=fieldName, id=fieldName, rows="10")
         else
             input(type=fieldType, name=fieldName, id=fieldName, value=fieldValue, placeholder=placeholder)
+
+mixin errorsSummary(errors)
+    if errors
+        div(role="alert")
+            p The Following Errors Occured
+            ul
+                each error in errors
+                    li= error
