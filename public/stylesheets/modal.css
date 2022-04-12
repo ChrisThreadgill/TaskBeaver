@@ -7,14 +7,22 @@
 
 body {
   background-color: #d3d0cb;
-  /* height:100% */
-  /* display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: grey; */
+}
+button {
+  padding: 0.5rem 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  border: 1px solid brown;
+  border-radius: 15%;
 }
 
+.date {
+  background-color: grey;
+}
+
+/* MODAL CSS
+============================================================
+*/
 .modal {
   border: 1px solid red;
   width: 100%;
@@ -30,7 +38,6 @@ body {
 .modal__header {
   display: flex;
   flex-direction: column;
-  /* align-self: flex-start; */
 }
 .modal__forms {
   display: flex;
@@ -46,37 +53,14 @@ body {
   display: flex;
 }
 
-h1 {
-  text-align: center;
-}
-p {
-  line-height: 1.5rem;
-  border-top: 1px solid grey;
-  padding: 1rem 0;
-}
-
-button {
-  padding: 0.5rem 0.5rem;
-  outline: none;
-  font-size: 1rem;
-  cursor: pointer;
-  border: 1px solid brown;
-  border-radius: 15%;
-}
+/* NAV CONTAINER CSS
+=================================================================================
+*/
 .nav-container {
   display: flex;
   background-color: #e2c044;
   justify-content: space-around;
   align-items: center;
-  /* position: fixed; */
-}
-#logout__button {
-  /* width: 75px; */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  /* justify-self: flex-end; */
-  /* align-items: center; */
 }
 #welcome__user {
   width: fit-content;
@@ -87,7 +71,6 @@ button {
   border: 1px red solid;
   width: 100%;
   display: flex;
-  /* justify-content: space-around; */
   justify-self: flex-start;
 }
 #current__tasks > a {
@@ -103,13 +86,15 @@ button {
   height: 88%;
   border: 1px red solid;
 }
+/*PROJECT LIST CSS
+=============================================================================
+*/
 .project__list {
   display: flex;
   flex-direction: column;
   overflow: scroll;
   overflow-x: hidden;
   overflow-y: auto;
-  /* justify-content: space-evenly; */
   width: fit-content;
   height: 724px;
   min-width: 150px;
@@ -118,16 +103,14 @@ button {
   border: 1px red solid;
   align-self: center;
 }
-
+.project__list__div {
+  align-self: flex-start;
+}
 .project__link {
   padding-top: 10px;
   padding-bottom: 10px;
 }
-.project__list__div {
-  align-self: flex-start;
-}
 .project__add {
-  /* position: absolute; */
   display: flex;
   flex-direction: column;
   height: fit-content;
@@ -135,6 +118,21 @@ button {
 .project__list__delete {
   width: 25px;
   height: 25px;
+}
+
+/* PROJECT BOARD CONTAINER CSS
+===================================================================================
+*/
+
+.project__board {
+  background-color: white;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px red solid;
+  width: 100%;
+  height: 80%;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 .project__task__container {
   display: flex;
@@ -145,6 +143,29 @@ button {
   text-align: center;
   border: 1px red solid;
 }
+.project__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.project__buttons {
+  display: flex;
+  height: 100%;
+}
+.project__buttons > span {
+  display: flex;
+  padding: 5px;
+}
+.project__buttons > span > button {
+  display: flex;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+}
+
+/* TASK CONTAINERS CSS
+=============================================================================
+*/
 .project__task {
   display: flex;
   width: 100%;
@@ -168,46 +189,10 @@ button {
   /* border: 1px red solid; */
   align-self: flex-end;
 }
-.project__board {
-  display: flex;
-  background-color: white;
-  flex-direction: column;
-  justify-content: center;
-  border: 1px red solid;
-  width: 100%;
-  height: 80%;
-  /* align-self: flex-start; */
-  /* overflow: scroll; */
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-.project__header {
-  display: flex;
-  /* position: fixed; */
-  /* display: flex; */
-  /* margin-top: 64px; */
-  /* height: 80px; */
-  justify-content: space-between;
-  align-items: center;
-}
-.project__buttons {
-  /* width: 6%; */
-  /* padding-left: 5px; */
-  display: flex;
-  height: 100%;
-  /* align-self: flex-start; */
-}
-.project__buttons > span {
-  display: flex;
-  padding: 5px;
-}
-.project__buttons > span > button {
-  display: flex;
-  align-items: center;
-  width: 30px;
-  height: 30px;
-}
 
+/*  BADGE CSS
+==================================================================================
+*/
 .badge {
   margin-right: 10px;
   display: inline-block;
@@ -223,10 +208,8 @@ button {
   background-color: #dc3545;
 }
 
+/* CLASS HIDDEN CSS  *NEEDS TO STAY AT THE BOTTOM*
+*/
 .hidden {
   display: none;
-}
-
-.date {
-  background-color: grey;
 }
