@@ -52,21 +52,49 @@ router.post('/projects',
             console.log("made new project")
         }))
     // edit selected project
-router.put('/project/:projectId', asyncHandler(async(req, res, next) => {
+// Will need to make a validator
+        //check projectName
+router.put('/projects/:id', asyncHandler(async(req, res, next) => {
         const { userId } = req.session.auth
+        // const userId = 1;
         const { projectName, description, dueDate, url, projectType } = req.body
-        const project = await db.Project.build({
-            userId,
-            projectName,
-            description,
-            dueDate,
-            url,
-            projectType
-        });
-        await project.save()
-        console.log("edit new project")
-    }))
+        const  projectsId  = req.params.id
+
+        // console.log(projectsId)
+        // console.log('---------------------')
+        // console.log(projectName)
+
+        const projectToUpdate = await db.Project.findByPk(projectsId)
+
+        // If project is not associated with current user then cannot update.
+        if (userId === projectToUpdate.userId){
+
+            await projectToUpdate.update({
+                projectName,
+                description,
+                dueDate,
+                url,
+                projectType
+            });
+        }
+
+}));
     // delete selected project
+
+router.delete('/projects/:id', asyncHandler(async(req,res,next) => {
+
+    const { userId } = req.session.auth
+
+    const projectsId = req.params.id
+    const projectToDelete = await db.Project.findByPk(projectsId);
+
+    if (userId)
+
+    if (projectToDelete !== undefined){
+        await projectToDelete.destroy();
+        res.json({ message: "Successfully deleted."})
+    }
+}))
 
 // TASKS
 
