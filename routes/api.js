@@ -9,23 +9,21 @@ const { check, validationResult } = require("express-validator");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 
-// get all projects
+
+// PROJECT
+// Route to get all projects.
 router.get(
     "/",
     asyncHandler(async(req, res, next) => {
         const { userId } = req.session.auth;
-        // we get projects based on userId
 
-        // console.log(userId)
-        console.log("LOOK HERE!")
+        // Will get projects based on userId.
 
         const projects = await db.Project.findAll({
                 where: {
                     userId,
                 }
             })
-            // console.log(userId)
-            // res.send(userId)
 
         res.json({
             projects
@@ -33,12 +31,11 @@ router.get(
     })
 );
 
-// PROJECT
-// '/api/projects'
-// post new project
+// Route to post new project.
 router.post('/projects',
         asyncHandler(async(req, res, next) => {
-            const { userId } = req.session.auth
+            // const { userId } = req.session.auth
+            const userId = 1
             const { projectName, description, dueDate, url, projectType } = req.body
             const project = await db.Project.build({
                 userId,
@@ -54,18 +51,13 @@ router.post('/projects',
                 project
             })
         }))
-    // edit selected project
-    // Will need to make a validator
-    //check projectName
+
 router.put('/projects/:id', asyncHandler(async(req, res, next) => {
-    // const { userId } = req.session.auth
-    const userId = 1;
+    const { userId } = req.session.auth
+    // const userId = 1;
     const { projectName, description, dueDate, url, projectType } = req.body
     const projectsId = req.params.id
 
-    // console.log(projectsId)
-    // console.log('---------------------')
-    // console.log(projectName)
     const projectToUpdate = await db.Project.findByPk(projectsId)
         // If project is not associated with current user then cannot update.
     if (userId === projectToUpdate.userId) {
@@ -82,8 +74,8 @@ router.put('/projects/:id', asyncHandler(async(req, res, next) => {
         projectToUpdate
     })
 }));
-// delete selected project
 
+// Route to delete a selected project.
 router.delete('/projects/:id', asyncHandler(async(req, res, next) => {
 
     const { userId } = req.session.auth
@@ -97,19 +89,11 @@ router.delete('/projects/:id', asyncHandler(async(req, res, next) => {
         await projectToDelete.destroy();
         res.json({ message: "Successfully deleted." })
     }
-}))
+}));
 
-router.get("/projects/:id", asyncHandler(async(req, res, next) => {
-        const { userId } = req.session.auth
-        const projectId = req.params.id
-        const tasksForProject = await db.Task.findAll({ where: { projectId } })
-        res.json({
-            tasksForProject
-        })
-    }))
-    // TASKS
+// TASKS
 
-// get all task for a project
+// Route to get all task for a project.
 router.get("/projects/:id", asyncHandler(async(req, res, next) => {
     const { userId } = req.session.auth
     const projectId = req.params.id
@@ -121,9 +105,9 @@ router.get("/projects/:id", asyncHandler(async(req, res, next) => {
         })
     }
 
-}))
+}));
 
-// post new a task
+// Route to post a new task.
 router.post("/tasks", asyncHandler(async(req, res, next) => {
         const { userId } = req.session.auth
             // const userId = 1;
@@ -146,7 +130,48 @@ router.post("/tasks", asyncHandler(async(req, res, next) => {
         } else {
             res.json({ message: "need to log into create task" })
         }
-    }))
-    // edit selected task
-    // delete selected task
+    }));
+
+// route to edit selected task based on id
+router.put('/tasks/:id', asyncHandler(async (req, res, next) => {
+
+    const { userId } = req.session.auth
+
+    const taskId = req.params.id
+
+    const { taskTitle, description, projectId, dueDate, tag, taskContactId } = req.body
+
+    const taskToUpdate = await db.Task.findByPk(taskId)
+
+    if (userId){
+        await taskToUpdate.update({
+            taskTitle,
+            description,
+            projectId,
+            dueDate,
+            tag,
+            taskContactId
+        })
+    }
+
+    res.json({
+        taskToUpdate
+    })
+}));
+
+// route to delete selected task
+router.delete('/tasks/:id', asyncHandler(async(req,res,next) => {
+
+    const { userId } = req.session.auth;
+    const taskId = req.params.id
+
+    const taskToDelete = await db.Task.findByPk(taskId);
+
+    if (userId){
+        if (taskToDelete !== undefined){
+            await taskToDelete.destroy();
+            res.json({message: "successfully deleted."})
+        }
+    }
+}));
 module.exports = router;
