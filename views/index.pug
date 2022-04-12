@@ -10,12 +10,12 @@ append head
 block content
   h1= title
   p Welcome to your Project Skeleton
+    form(action='/login' method='POST')
+      input(type='hidden' name='_csrf' value=csrfToken)
+      +form('Email Address','email','','email','email@email.com')
+      +form('Password', 'hashedPassword', '', 'password')
+      div
+       button(type='submit') Login
   if locals.authenticated
     form(action='/logout' method='post')
       button(type='submit') Logout
-  form(action='/login' method='POST')
-    input(type='hidden' name='_csrf' value=csrfToken)
-    +form('Email Address','email','','email','email@email.com')
-    +form('Password', 'hashedPassword', '', 'password')
-    div
-      button(type='submit') Login
