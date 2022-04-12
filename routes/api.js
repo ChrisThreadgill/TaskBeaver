@@ -50,59 +50,103 @@ router.post('/projects',
             });
             await project.save()
             console.log("made new project")
+            res.json({
+                project
+            })
         }))
     // edit selected project
-// Will need to make a validator
-        //check projectName
+    // Will need to make a validator
+    //check projectName
 router.put('/projects/:id', asyncHandler(async(req, res, next) => {
-        const { userId } = req.session.auth
-        // const userId = 1;
-        const { projectName, description, dueDate, url, projectType } = req.body
-        const  projectsId  = req.params.id
+    // const { userId } = req.session.auth
+    const userId = 1;
+    const { projectName, description, dueDate, url, projectType } = req.body
+    const projectsId = req.params.id
 
-        // console.log(projectsId)
-        // console.log('---------------------')
-        // console.log(projectName)
-
-        const projectToUpdate = await db.Project.findByPk(projectsId)
-
+    // console.log(projectsId)
+    // console.log('---------------------')
+    // console.log(projectName)
+    const projectToUpdate = await db.Project.findByPk(projectsId)
         // If project is not associated with current user then cannot update.
-        if (userId === projectToUpdate.userId){
+    if (userId === projectToUpdate.userId) {
 
-            await projectToUpdate.update({
-                projectName,
-                description,
-                dueDate,
-                url,
-                projectType
-            });
-        }
-
+        await projectToUpdate.update({
+            projectName,
+            description,
+            dueDate,
+            url,
+            projectType
+        });
+    }
+    res.json({
+        projectToUpdate
+    })
 }));
-    // delete selected project
+// delete selected project
 
-router.delete('/projects/:id', asyncHandler(async(req,res,next) => {
+router.delete('/projects/:id', asyncHandler(async(req, res, next) => {
 
     const { userId } = req.session.auth
-
+        // const userId = 1
     const projectsId = req.params.id
     const projectToDelete = await db.Project.findByPk(projectsId);
 
     if (userId)
 
-    if (projectToDelete !== undefined){
+        if (projectToDelete !== undefined) {
         await projectToDelete.destroy();
-        res.json({ message: "Successfully deleted."})
+        res.json({ message: "Successfully deleted." })
     }
 }))
 
-// TASKS
+router.get("/projects/:id", asyncHandler(async(req, res, next) => {
+        const { userId } = req.session.auth
+        const projectId = req.params.id
+        const tasksForProject = await db.Task.findAll({ where: { projectId } })
+        res.json({
+            tasksForProject
+        })
+    }))
+    // TASKS
 
 // get all task for a project
+router.get("/projects/:id", asyncHandler(async(req, res, next) => {
+    const { userId } = req.session.auth
+    const projectId = req.params.id
+        // *should this check specific user??
+    if (userId) {
+        const tasksForProject = await db.Task.findAll({ where: { projectId } })
+        res.json({
+            tasksForProject
+        })
+    }
+
+}))
+
 // post new a task
-// edit selected task
-// delete selected task
+router.post("/tasks", asyncHandler(async(req, res, next) => {
+        const { userId } = req.session.auth
+            // const userId = 1;
+        const { taskTitle, description, projectId, dueDate, tag, taskContactId } = req.body
+        if (userId) {
+            const task = await db.Task.build({
+                taskTitle,
+                description,
+                projectId,
+                dueDate,
+                tag,
+                taskContactId
+            });
 
+            await task.save()
 
-
+            res.json({
+                task
+            })
+        } else {
+            res.json({ message: "need to log into create task" })
+        }
+    }))
+    // edit selected task
+    // delete selected task
 module.exports = router;
