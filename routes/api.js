@@ -14,14 +14,38 @@ router.get(
     "/",
     asyncHandler(async(req, res, next) => {
         const { userId } = req.session.auth;
-        console.log(userId)
-        res.send(userId)
+        // we get projects based on userId
+
+        // console.log(userId)
+        console.log("LOOK HERE!")
+
+        const projects = await db.Project.findAll({
+            where: {
+                userId,
+            }
+        })
+        // console.log(userId)
+        // res.send(userId)
+
+        res.json({
+            projects
+        })
     })
 );
 
+// PROJECT
+    // '/api/projects'
 // post new project
+
+router.post('/projects',
+asyncHandler(async(req, res, next) => {
+    const { userId } = req.session.auth
+
+}))
 // edit selected project
 // delete selected project
+
+// TASKS
 
 // get all task for a project
 // post new a task

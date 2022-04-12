@@ -189,13 +189,13 @@ router.post(
             }
             errors.push("Login Failed");
         } else {
-            console.log("working")
+            // console.log("working")
             errors = loginErrors.array().map((error) => {
-                console.log(error)
+                // console.log(error)
                 return error.msg
             });
         }
-        console.log(errors)
+        // console.log(errors)
         res.render("index", {
             title: "Home",
             email,
