@@ -20,12 +20,12 @@ router.get(
         console.log("LOOK HERE!")
 
         const projects = await db.Project.findAll({
-            where: {
-                userId,
-            }
-        })
-        // console.log(userId)
-        // res.send(userId)
+                where: {
+                    userId,
+                }
+            })
+            // console.log(userId)
+            // res.send(userId)
 
         res.json({
             projects
@@ -34,16 +34,39 @@ router.get(
 );
 
 // PROJECT
-    // '/api/projects'
+// '/api/projects'
 // post new project
-
 router.post('/projects',
-asyncHandler(async(req, res, next) => {
-    const { userId } = req.session.auth
-
-}))
-// edit selected project
-// delete selected project
+        asyncHandler(async(req, res, next) => {
+            const { userId } = req.session.auth
+            const { projectName, description, dueDate, url, projectType } = req.body
+            const project = await db.Project.build({
+                userId,
+                projectName,
+                description,
+                dueDate,
+                url,
+                projectType
+            });
+            await project.save()
+            console.log("made new project")
+        }))
+    // edit selected project
+router.put('/project/:projectId', asyncHandler(async(req, res, next) => {
+        const { userId } = req.session.auth
+        const { projectName, description, dueDate, url, projectType } = req.body
+        const project = await db.Project.build({
+            userId,
+            projectName,
+            description,
+            dueDate,
+            url,
+            projectType
+        });
+        await project.save()
+        console.log("edit new project")
+    }))
+    // delete selected project
 
 // TASKS
 
