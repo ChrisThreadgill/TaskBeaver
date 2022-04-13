@@ -49,7 +49,7 @@ block content
 
     //- ADD PROJECT FORM
     +errorsSummary()
-    form(action="/api/projects" method="POST" class="hidden")
+    form(action="/api/projects" method="POST" class="" id="addProject")
       input(type="hidden" name="_csrf" value=csrfToken)
       +form("Project Name:", "projectName", "", "text")
       +form("Description:", "description", "", "text")
@@ -67,7 +67,7 @@ block content
 
     //- EDIT PROJECT
     +errorsSummary()
-    form(action="/api/projects/:id" method="PUT" class="hidden")
+    form(action="/api/projects/:id" method="PUT" class="hidden" id="editForm")
       input(type="hidden" name="_csrf" value=csrfToken)
       +form("Project Name:", "projectName", "", "text")
       +form("Description:", "description", "", "text")
