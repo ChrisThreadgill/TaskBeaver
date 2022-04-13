@@ -82,7 +82,8 @@ block content
                 span(class="badge bg-urgent" id=`task-tag-${task.id}`)=task.tag
               div(class='project__task')
                 div(class='task__description' id=`task-description-${task.id}`)=task.description
-                div(class= 'task__dueDate' id=`task-dueDate-${task.id}`)=task.dueDate
+                if(task.dueDate)
+                  div(class= 'task__dueDate' id=`task-dueDate-${task.id}`) #{task.dueDate.toLocaleDateString()}
 
 
 
