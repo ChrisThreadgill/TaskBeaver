@@ -235,7 +235,7 @@ button {
   position: fixed;
   background: red;
   background-color: red;
-  transform: translate(250px, 100px);
+  transform: translate(250px, 50px);
 }
 .hidden {
   display: none;
