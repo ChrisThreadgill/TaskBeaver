@@ -23,6 +23,10 @@ module.exports = {
       dueDate: {
         type: Sequelize.DATE,
       },
+      completed: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
       tag: {
         allowNull: false,
         type: Sequelize.STRING,
