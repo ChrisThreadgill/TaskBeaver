@@ -90,6 +90,7 @@ block content
     //- Modal popup if not signed in
     if !locals.authenticated
       div(class='modal' id='modal')
+        //- DEMO BUTTON
         div(class='modal__forms')
           div(class='modal__header')
             h1 TEST
@@ -99,7 +100,13 @@ block content
             input(type='hidden' name='_csrf' value=csrfToken)
             +form('Email Address','email','','email','email@email.com')
             +form('Password', 'hashedPassword', '', 'password')
-            button(type='submit' class='button-class' id='Sign-up') Login
+            button(type='submit' class='button-class' id='Login') Login
+          //- DEMO FORM
+          form(action="/login" method="POST")
+            input(type='hidden' name='_csrf' value=csrfToken)
+            +form('','email','demo@taskbeaver.com', 'hidden')
+            +form('', 'hashedPassword','Test!ing123', 'hidden')
+            button(type="submit" id="demo__Login__Button") Demo User
           div
           //- Sign-up form
           div(class='modal_sign_up')
@@ -112,4 +119,4 @@ block content
               +form("Password", "hashedPassword", '', "password")
               +form("Confirm Password", "confirmPassword", "", "password")
               div
-                  button(type="submit" class="") Become a Beaver
+                  button(type="submit" class="button-class" id=`Sign-up`) Become a Beaver
