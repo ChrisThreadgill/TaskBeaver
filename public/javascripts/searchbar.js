@@ -19,3 +19,6 @@ searchInput.addEventListener("mouseover", async (e) => {
 searchInput.addEventListener("focus", async (e) => {
   searchInput.setAttribute("class", "");
 });
+searchInput.addEventListener("blur", async (e) => {
+  searchInput.setAttribute("class", "hidden");
+});
