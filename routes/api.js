@@ -20,10 +20,10 @@ router.get(
         // Will get projects based on userId.
 
         const projects = await db.Project.findAll({
-                where: {
-                    userId,
-                }
-            })
+            where: {
+                userId,
+            }
+        })
 
         res.json({
             projects
@@ -32,29 +32,32 @@ router.get(
 );
 
 // Route to post new project.
-router.post('/projects', csrfProtection,
-        asyncHandler(async(req, res, next) => {
-            // const { userId } = req.session.auth
-            const userId = 1
-            const { projectName, description, dueDate, url, projectType } = req.body
-            const project = await db.Project.build({
-                userId,
-                projectName,
-                description,
-                dueDate,
-                url,
-                projectType
-            });
-            await project.save()
-            console.log("made new project")
-            res.json({
-                project
-            })
-        }))
+router.post('/projects',
+    asyncHandler(async(req, res, next) => {
+        console.log("hello")
+        const { userId } = req.session.auth
+        const { projectName, description, dueDate, url, projectType } = req.body
+        console.log("================", projectName, description, dueDate, url, projectType)
+        const project = await db.Project.build({
+            userId,
+            projectName,
+            description,
+            dueDate,
+            url,
+            projectType
+        });
+        console.log(project)
+        console.log("before new project")
+        await project.save()
+        console.log("made new project")
+        res.json({
+            project
+        })
+    }))
 
 router.put('/projects/:id', asyncHandler(async(req, res, next) => {
     const { userId } = req.session.auth
-    // const userId = 1;
+        // const userId = 1;
     const { projectName, description, dueDate, url, projectType } = req.body
     const projectsId = req.params.id
 
@@ -109,31 +112,31 @@ router.get("/projects/:id", asyncHandler(async(req, res, next) => {
 
 // Route to post a new task.
 router.post("/tasks", asyncHandler(async(req, res, next) => {
-        const { userId } = req.session.auth
-            // const userId = 1;
-        const { taskTitle, description, projectId, dueDate, tag, taskContactId } = req.body
-        if (userId) {
-            const task = await db.Task.build({
-                taskTitle,
-                description,
-                projectId,
-                dueDate,
-                tag,
-                taskContactId
-            });
+    const { userId } = req.session.auth
+        // const userId = 1;
+    const { taskTitle, description, projectId, dueDate, tag, taskContactId } = req.body
+    if (userId) {
+        const task = await db.Task.build({
+            taskTitle,
+            description,
+            projectId,
+            dueDate,
+            tag,
+            taskContactId
+        });
 
-            await task.save()
+        await task.save()
 
-            res.json({
-                task
-            })
-        } else {
-            res.json({ message: "need to log into create task" })
-        }
-    }));
+        res.json({
+            task
+        })
+    } else {
+        res.json({ message: "need to log into create task" })
+    }
+}));
 
 // route to edit selected task based on id
-router.put('/tasks/:id', asyncHandler(async (req, res, next) => {
+router.put('/tasks/:id', asyncHandler(async(req, res, next) => {
 
     const { userId } = req.session.auth
 
@@ -143,7 +146,7 @@ router.put('/tasks/:id', asyncHandler(async (req, res, next) => {
 
     const taskToUpdate = await db.Task.findByPk(taskId)
 
-    if (userId){
+    if (userId) {
         await taskToUpdate.update({
             taskTitle,
             description,
@@ -160,17 +163,17 @@ router.put('/tasks/:id', asyncHandler(async (req, res, next) => {
 }));
 
 // route to delete selected task
-router.delete('/tasks/:id', asyncHandler(async(req,res,next) => {
+router.delete('/tasks/:id', asyncHandler(async(req, res, next) => {
 
     const { userId } = req.session.auth;
     const taskId = req.params.id
 
     const taskToDelete = await db.Task.findByPk(taskId);
 
-    if (userId){
-        if (taskToDelete !== undefined){
+    if (userId) {
+        if (taskToDelete !== undefined) {
             await taskToDelete.destroy();
-            res.json({message: "successfully deleted."})
+            res.json({ message: "successfully deleted." })
         }
     }
 }));
