@@ -32,7 +32,9 @@ block content
   div(class='home__display')
     div(class='project__list__div')
       div(class='project__add')
-        button(id='project__add__button') Add a New Project!
+        p New project
+        button(id='project__add__button')
+          i(class='fa-solid fa-folder-plus')
       div(class='project__list')
 
         //- Example if not logged in
@@ -52,14 +54,19 @@ block content
       div(class='project__header')
         div(class='project__buttons')
           span
-            button E
+            button
+              i(class='fa-solid fa-pen-to-square')
           span
-            button D
+            button
+              i(class='fa-solid fa-trash-can')
           span
-            button C
+            button
+              i(class='fa-solid fa-address-card')
         span=projectDisplay.projectName
         span
-          button Search Bar
+          input(type='text' id='search__input' class='hidden')
+          button(id='search__button')
+            i(class='fa-solid fa-magnifying-glass')
 
       //- Project dashboard main which displays tasks under a project
       //- Example task layout if not logged in
