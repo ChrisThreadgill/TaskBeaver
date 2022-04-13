@@ -1,199 +1,114 @@
+extends layout.pug
+
 include utils.pug
 
-head
-  link(rel='stylesheet' href='/stylesheets/modal.css')
+block content
 
-body
-div(class='nav-container')
-  div(id='welcome__user')
-    span Welcome!
-    span You have the current tasks!
-  div(id='current__tasks')
-    a(class='nav-link active' href='#') test
-    a(class='nav-link' href='#') test
-    a(class='nav-link' href='#') test
-  div(id='logout__button')
-    form(action='/logout' method='post')
-      button(type='submit') Logout
-div(class='home__display')
-  div(class='project__list__div')
-    div(class='project__add')
-      button(id='project__add__button') Add a New Project!
-    div(class='project__list')
-      div(class='project__link')
-        a(href="#") This is a project link
-      div(class='project__link')
-        a(href="#") This is a project link
-        button(class='project__list__delete') D
-      div(class='project__link')
-        a(href="#") This is a project linkkkkkkkkkkkkkkkk
-      div(class='project__link')
-        a(href="#") This is a project link
-      div(class='project__link')
-        a(href="#") This is a project link
-      div(class='project__link')
-        a(href="#") This is a project linkkkkkkkkkkkkkkkk
-      div(class='project__link')
-        a(href="#") This is a project link
-      div(class='project__link')
-        a(href="#") This is a project link
-      div(class='project__link')
-        a(href="#") This is a project linkkkkkkkkkkkkkkkk
-      div(class='project__link')
-        a(href="#") This is a project link
-  div(class='project__board')
-    div(class='project__header')
-      div(class='project__buttons')
+  //- Nav Bar for user information and logout
+  div(class='nav-container')
+
+    //- Display message to user if they are logged in
+    div(id='welcome__user')
+      if locals.authenticated
+        span=`Welcome ${user.firstName}`
+        span You have the current tasks!
+      else
+        span Login New Beaver!
+        span You have no tasks to be done!
+
+    //- Display of how many task are done.
+    div(id='current__tasks')
+      a(class='nav-link active' href='#')=`${navBarTasks.inProgress} In progress`
+      a(class='nav-link' href='#')=`${navBarTasks.dueToday} Due Today`
+      a(class='nav-link' href='#')=`${navBarTasks.completed} Completed`
+
+    //- If logged in display button to logout
+    if locals.authenticated
+      div(id='logout__button')
+        form(action='/logout' method='post')
+          button(type='submit') Logout
+
+  //- Where all our project names is at
+  div(class='home__display')
+    div(class='project__list__div')
+      div(class='project__add')
+        button(id='project__add__button') Add a New Project!
+      div(class='project__list')
+
+        //- Example if not logged in
+        if !locals.authenticated
+          div(class='project__link')
+            a(href="#")=`Project name Example`
+        //- Actual list
+        else
+          each project in projects
+            div(class='project__link' id=`project-id-${project.id}`)
+              a(href=`/projects/${project.id}`)=`${project.projectName}`
+
+    //- Entire project dashboard
+    div(class='project__board')
+
+      //- Project dashboard header
+      div(class='project__header')
+        div(class='project__buttons')
+          span
+            button E
+          span
+            button D
+          span
+            button C
+        span=projectDisplay.projectName
         span
-          button E
-        span
-          button D
-        span
-          button C
-      span PROJECT NAME
-      span
-        button Search Bar
-    div(class='project__task__container')
-      div(class='task__title') Task Title1
-      div(class='task__tag')
-        span(class="badge bg-urgent") Urgent
-      div(class='project__task' class='hidden')
-        div(class='task__description') Task Description
-    div(class='project__task__container')
-      div(class='task__title') Task Title
-      div(class='task__tag')
-        span(class="badge bg-urgent") Urgent
-      div(class='project__task' class='hidden')
-        div(class='task__description') Task Description
-          input(type='date' class='date')
-    div(class='project__task__container')
-      div(class='task__title') Task Title 5
-      div(class='task__tag')
-        span(class="badge bg-urgent") Urgent
-      div(class='project__task' class='hidden')
-        div(class='task__description') Task Description
-    div(class='project__task__container')
-      div(class='task__title') Task Title 6
-      div(class='task__tag')
-        span(class="badge bg-urgent") Urgent
-      div(class='project__task' class='hidden')
-        div(class='task__description') Task Description
-    div(class='project__task__container')
-      div(class='task__title') Task Title 7
-      div(class='task__tag')
-        span(class="badge bg-urgent") Urgent
-      div(class='project__task' class='hidden')
-        div(class='task__description') Task Description
-          input(type='date' class='date')
-    div(class='project__task__container')
-      div(class='task__title') Task Title 8
-      div(class='task__tag')
-        span(class="badge bg-urgent") Urgent
-      div(class='project__task' class='hidden')
-        div(class='task__description') Task Description
-    div(class='project__task__container')
-      div(class='task__title') Task Title
-      div(class='task__tag')
-        span(class="badge bg-urgent") Urgent
-      div(class='project__task' class='hidden')
-        div(class='task__description') Task Description
-    div(class='project__task__container')
-      div(class='task__title') Task Title
-      div(class='task__tag')
-        span(class="badge bg-urgent") Urgent
-      div(class='project__task' class='hidden')
-        div(class='task__description') Task Description
-          input(type='date' class='date')
-    div(class='project__task__container')
-      div(class='task__title') Task Title
-      div(class='task__tag')
-        span(class="badge bg-urgent") Urgent
-      div(class='project__task' class='hidden')
-        div(class='task__description') Task Description
-    div(class='project__task__container')
-      div(class='task__title') Task Title
-      div(class='task__tag')
-        span(class="badge bg-urgent") Urgent
-      div(class='project__task' class='hidden')
-        div(class='task__description') Task Description
-    div(class='project__task__container')
-      div(class='task__title') Task Title
-      div(class='task__tag')
-        span(class="badge bg-urgent") Urgent
-      div(class='project__task' class='hidden')
-        div(class='task__description') Task Description
-          input(type='date' class='date')
-    div(class='project__task__container')
-      div(class='task__title') Task Title
-      div(class='task__tag')
-        span(class="badge bg-urgent") Urgent
-      div(class='project__task' class='hidden')
-        div(class='task__description') Task Description
-    div(class='project__task__container')
-      div(class='task__title') Task Title
-      div(class='task__tag')
-        span(class="badge bg-urgent") Urgent
-      div(class='project__task' class='hidden')
-        div(class='task__description') Task Description
-    div(class='project__task__container')
-      div(class='task__title') Task Title
-      div(class='task__tag')
-        span(class="badge bg-urgent") Urgent
-      div(class='project__task' class='hidden')
-        div(class='task__description') Task Description
-    div(class='project__task__container')
-      div(class='task__title') Task Title
-      div(class='task__tag')
-        span(class="badge bg-urgent") Urgent
-      div(class='project__task' class='hidden')
-        div(class='task__description') Task Description
-    div(class='project__task__container')
-      div(class='task__title') Task Title
-      div(class='task__tag')
-        span(class="badge bg-urgent") Urgent
-      div(class='project__task' class='hidden')
-        div(class='task__description') Task Description
-    div(class='project__task__container')
-      div(class='task__title') Task Title
-      div(class='task__tag')
-        span(class="badge bg-urgent") Urgent
-      div(class='project__task' class='hidden')
-        div(class='task__description') Task Description
-    div(class='project__task__container')
-      div(class='task__title') Task Title
-      div(class='task__tag')
-        span(class="badge bg-urgent") Urgent
-      div(class='project__task' class='hidden')
-        div(class='task__description') Task Description
-    div(class='project__task__container')
-      div(class='task__title') Task Title
-      div(class='task__tag')
-        span(class="badge bg-urgent") Urgent
-      div(class='project__task' class='hidden')
-        div(class='task__description') Task Description
+          button Search Bar
+
+      //- Project dashboard main which displays tasks under a project
+      //- Example task layout if not logged in
+      if !locals.authenticated
+        div(class="project__main")
+          div(class='project__task__container')
+            div(class='task__title') Task Title 1 Example
+            div(class='task__tag')
+              span(class="badge bg-urgent") Urgent
+            div(class='project__task' class='')
+              div(class='task__description') Task Description
+              div(class= 'task__dueDate') date
+      //- Actual task list
+      else
+        div(class="project__main")
+          each task in tasks
+            div(class='project__task__container' id=`task-container-${task.id}`)
+              div(class='task__title' id=`task-title-${task.id}`)=`${task.taskTitle}`
+              div(class='task__tag')
+                span(class="badge bg-urgent" id=`task-tag-${task.id}`)=task.tag
+              div(class='project__task')
+                div(class='task__description' id=`task-description-${task.id}`)=task.description
+                div(class= 'task__dueDate' id=`task-dueDate-${task.id}`)=task.dueDate
 
 
 
-  if !locals.authenticated
-    div(class='modal' id='modal')
-      div(class='modal__forms')
-        div(class='modal__header')
-          h1 TEST
-        +errorsSummary(errors)
-        form(action='/login' method='POST')
-          input(type='hidden' name='_csrf' value=csrfToken)
-          +form('Email Address','email','','email','email@email.com')
-          +form('Password', 'hashedPassword', '', 'password')
-          button(type='submit' class='button-class' id='Sign-up') Login
-        div
-        div(class='modal_sign_up')
-          +errorsSummary(errorArray)
-          form(action="/sign-up" method="POST")
-            input(type="hidden" name="_csrf" value=csrfToken)
-            +form("First Name", "firstName", '', "text")
-            +form("Last Name", "lastName", '', "text")
-            +form("Email", "email", '', "email")
-            +form("Password", "hashedPassword", '', "password")
-            +form("Confirm Password", "confirmPassword", "", "password")
-            div
-                button(type="submit" class="") Become a Beaver
+    //- Modal popup if not signed in
+    if !locals.authenticated
+      div(class='modal' id='modal')
+        div(class='modal__forms')
+          div(class='modal__header')
+            h1 TEST
+          +errorsSummary(errors)
+          //- Login form
+          form(action='/login' method='POST')
+            input(type='hidden' name='_csrf' value=csrfToken)
+            +form('Email Address','email','','email','email@email.com')
+            +form('Password', 'hashedPassword', '', 'password')
+            button(type='submit' class='button-class' id='Sign-up') Login
+          div
+          //- Sign-up form
+          div(class='modal_sign_up')
+            +errorsSummary(errorArray)
+            form(action="/sign-up" method="POST")
+              input(type="hidden" name="_csrf" value=csrfToken)
+              +form("First Name", "firstName", '', "text")
+              +form("Last Name", "lastName", '', "text")
+              +form("Email", "email", '', "email")
+              +form("Password", "hashedPassword", '', "password")
+              +form("Confirm Password", "confirmPassword", "", "password")
+              div
+                  button(type="submit" class="") Become a Beaver
