@@ -120,7 +120,7 @@ block content
       div(class='project__header')
         div(class='project__buttons')
           span
-            button
+            button(id="edit__form")
               i(class='fa-solid fa-pen-to-square')
           span
             button
@@ -133,6 +133,21 @@ block content
           input(type='text' id='search__input' class='hidden')
           button(id='search__button')
             i(class='fa-solid fa-magnifying-glass')
+      div(class='')
+        form(action="/api/projects/:id" method="PUT" class="hidden" id='hidden__form')
+          input(type="hidden" name="_csrf" value=csrfToken)
+          +form("Project Name:", "projectName", "", "text")
+          +form("Description:", "description", "", "text")
+          +form("Due Date:", "dueDate", "", "date")
+          +form("Url:", "url", "", "text")
+          label(for="projectType") Project Type:
+          select(name="projectType")
+            option(value="personal") Personal
+            option(value="groceries") Groceries
+            option(value="project") Project
+            option(value="company") Company
+          button(type="submit" id="edit__Project__Button") Edit
+          button(type="click" id="cancel-edit__Project__Button") Cancel
 
       //- Project dashboard main which displays tasks under a project
       //- Example task layout if not logged in

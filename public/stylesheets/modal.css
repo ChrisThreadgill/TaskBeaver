@@ -229,7 +229,14 @@ button {
 
 /* CLASS HIDDEN CSS  *NEEDS TO STAY AT THE BOTTOM*
 */
-
+#hidden__form {
+  border: 1px red solid;
+  flex-direction: row;
+  position: fixed;
+  background: red;
+  background-color: red;
+  transform: translate(250px, 100px);
+}
 .hidden {
   display: none;
 }
