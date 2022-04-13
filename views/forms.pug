@@ -1,0 +1,29 @@
+  //- LOGIN FORM
+  +errorsSummary(errors)
+  form(action='/login' method='POST')
+    input(type='hidden' name='_csrf' value=csrfToken)
+    +form('Email Address','email','','email','email@email.com')
+    +form('Password', 'hashedPassword', '', 'password')
+    div
+      button(type='submit') Login
+
+  //- LOGOUT FORM
+  if locals.authenticated
+    form(action='/logout' method='post')
+      button(type='submit') Logout
+
+  //- SIGN UP FORM
+  +errorsSummary(errorArray)
+  form(action="/sign-up" method="POST")
+      input(type="hidden" name="_csrf" value=csrfToken)
+      +form("First Name*", "firstName", user.firstName, "text")
+      +form("Last Name*", "lastName", user.lastName, "text")
+      +form("Phone Number", "phoneNumber", user.phoneNumber, "tel")
+      +form("Occupation", "occupation", user.occupation, "text")
+      +form("Bio", "bio", user.bio, "textarea")
+      +form("Email*", "email", user.email, "email")
+      +form("Password*", "hashedPassword", user.hashedPassword, "password")
+      +form("Confirm Password*", "confirmPassword", "", "password")
+      div
+          button(type="submit" class="") Become a Beaver
+          a(href="/sign-in") Already a Beaver? Sign-In

@@ -32,7 +32,7 @@ router.get(
 );
 
 // Route to post new project.
-router.post('/projects',
+router.post('/projects', csrfProtection,
         asyncHandler(async(req, res, next) => {
             // const { userId } = req.session.auth
             const userId = 1
