@@ -4,7 +4,7 @@ mixin form(label, fieldName, fieldValue, fieldType = "text", placeholder = null)
         if fieldType === "textarea"
             textarea(name=fieldName, id=fieldName, rows="10")
         else
-            input(type=fieldType, name=fieldName, id=fieldName, value=fieldValue, placeholder=placeholder)
+            input(type=fieldType, name=fieldName, id=fieldName, value=fieldValue, placeholder=placeholder, class='test')
 
 mixin errorsSummary(errors)
     if errors
