@@ -89,6 +89,14 @@ button {
 /*PROJECT LIST CSS
 =============================================================================
 */
+#project__add__button {
+  background: none;
+  border: none;
+  text-align: end;
+  width: fit-content;
+  height: fit-content;
+  align-self: center;
+}
 .project__list {
   display: flex;
   flex-direction: column;
@@ -112,8 +120,9 @@ button {
 }
 .project__add {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   height: fit-content;
+  justify-content: center;
 }
 .project__list__delete {
   width: 25px;
@@ -162,9 +171,15 @@ button {
 }
 .project__buttons > span > button {
   display: flex;
+  background: none;
+  border: none;
   align-items: center;
   width: 30px;
   height: 30px;
+}
+#search__button {
+  background: none;
+  border: none;
 }
 
 /* TASK CONTAINERS CSS
@@ -214,6 +229,7 @@ button {
 
 /* CLASS HIDDEN CSS  *NEEDS TO STAY AT THE BOTTOM*
 */
+
 .hidden {
   display: none;
 }
