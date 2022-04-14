@@ -8,6 +8,26 @@ window.addEventListener("load", (event) => {
 
 })
 
+//  Will reset the values after clicking add Task.
+
+// const toggleHidden = (e) => {
+//     e.preventDefault();
+//     document.getElementById("projectNameAdd").value = "";
+//     document.getElementById("descriptionAdd").value = "";
+//     document.getElementById("dueDateAdd").value = "";
+//     document.getElementById("urlAdd").value = "";
+//     document.getElementById("projectTypeAdd").value = "personal";
+//     const addForm = document.getElementById("addProject");
+
+//     addForm.classList.toggle("hidden");
+// };
+
+// const addProject = document.getElementById("project__add__button");
+// addProject.addEventListener("click", toggleHidden);
+
+// const cancelProject = document.getElementById("cancel-add__Project__Button");
+// cancelProject.addEventListener("click", toggleHidden);
+
 
 const info = { "projectName": "poop1", "description": "this is poop", "dueDate": "2040-02-10 16:00:00-08", "url": "", "projectType": "homework" }
 // todo add form values
