@@ -30,18 +30,10 @@ router.get(
 // Route to post new project.
 router.post(
   "/projects",
+  csrfProtection,
   asyncHandler(async (req, res, next) => {
-    console.log("hello");
     const { userId } = req.session.auth;
     const { projectName, description, dueDate, url, projectType } = req.body;
-    console.log(
-      "================",
-      projectName,
-      description,
-      dueDate,
-      url,
-      projectType
-    );
     const project = await db.Project.build({
       userId,
       projectName,
@@ -50,10 +42,7 @@ router.post(
       url,
       projectType,
     });
-    console.log(project);
-    console.log("before new project");
     await project.save();
-    console.log("made new project");
     res.json({
       project,
     });
@@ -66,13 +55,11 @@ router.put(
     const { userId } = req.session.auth;
     // const userId = 1;
     const { projectName, description, dueDate, url, projectType } = req.body;
-    console.log("working", "**************");
     const projectsId = req.params.id;
 
     const projectToUpdate = await db.Project.findByPk(projectsId);
     // If project is not associated with current user then cannot update.
     if (userId === projectToUpdate.userId) {
-      console.log("working");
       await projectToUpdate.update({
         projectName,
         description,
@@ -95,16 +82,14 @@ router.delete(
     // const userId = 1
     const projectsId = req.params.id;
     const projectToDelete = await db.Project.findByPk(projectsId);
-
-    if (userId)
-      if (projectToDelete !== undefined) {
-        await projectToDelete.destroy();
-        res.json({ message: "Successfully deleted." });
-      }
+    if (projectToDelete !== undefined) {
+      await projectToDelete.destroy();
+      res.json({ message: "Successfully deleted." });
+    }
   })
 );
 
-// TASKS
+
 router.get(
   "/projects/:id",
   asyncHandler(async (req, res, next) => {
@@ -119,7 +104,7 @@ router.get(
     }
   })
 );
-
+// TASKS
 // Route to get all task for a project.
 router.get(
   "/projects/:id/tasks",

@@ -44,8 +44,29 @@ block content
         //- Actual list
         else
           each project in projects
-            div(class='project__link' id=`project__link__${project.id}`)
-              a(href=`/projects/${project.id}`)=`${project.projectName}`
+            div(class='project__link' id=`project-id-${project.id}`)
+              p(class=`project__List__Name` id=`project__List__Name${project.id}`)=`${project.projectName}`
+              span
+                button(class=`delete__Project` id=`delete__Project__${project.id}`)
+                  i(class='fa-solid fa-trash-can' id=`trash__icon__${project.id}`)
+
+
+    //- ADD PROJECT FORM
+    +errorsSummary()
+    form(class="hidden" id="addProject")
+      input(type='hidden' name='_csrf' value=csrfToken id="csurfId")
+      +form("Project Name:", "projectNameAdd", "", "text")
+      +form("Description:", "descriptionAdd", "", "text")
+      +form("Due Date:", "dueDateAdd", "", "date")
+      +form("Url:", "urlAdd", "", "text")
+      label(for="projectType") Project Type:
+      select(name="projectType" id="projectTypeAdd")
+        option(value="personal") Personal
+        option(value="groceries") Groceries
+        option(value="project") Project
+        option(value="company") Company
+      button(type="submit" id="confirm__Project__Button") Confirm
+      button(type="click" id="cancel-add__Project__Button") Cancel
 
     //- Entire project dashboard
     div(class='project__board')
@@ -83,6 +104,7 @@ block content
               option(value="company") Company
             button(type="submit" class="edit__project__button") Edit
             button(type="click" id="cancel__edit__Project__Button") Cancel
+
 
       //- Project dashboard main which displays tasks under a project
       //- Example task layout if not logged in
