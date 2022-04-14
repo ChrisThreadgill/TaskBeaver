@@ -6,12 +6,14 @@ window.addEventListener("load", (event) => {
 
 const addProject = document.getElementById("project__add__button");
 addProject.addEventListener("click", (e) => {
+
   document.getElementById("projectNameAdd").value = "";
   document.getElementById("descriptionAdd").value = "";
   document.getElementById("dueDateAdd").value = "";
   document.getElementById("urlAdd").value = "";
   document.getElementById("projectTypeAdd").value = "company";
   const addForm = document.getElementById("addProject");
+  
   addForm.classList.toggle("hidden");
 });
 
@@ -67,9 +69,9 @@ newProject.addEventListener("click", async (e) => {
   projectLink.setAttribute("id", `project-id-${id}`);
   projectList.appendChild(projectLink);
 
-//   div(class='project__link' id=`project-id-${project.id}`)
-//     p(class=`project__List__Name` id=`project__List__Name${project.id}`)=`${project.projectName}`
-//     span
-//     button(class=`delete__Project` id=`delete__Project__${project.id}`)
-//       i(class='fa-solid fa-trash-can')
+  //   div(class='project__link' id=`project-id-${project.id}`)
+  //     p(class=`project__List__Name` id=`project__List__Name${project.id}`)=`${project.projectName}`
+  //     span
+  //     button(class=`delete__Project` id=`delete__Project__${project.id}`)
+  //       i(class='fa-solid fa-trash-can')
 });

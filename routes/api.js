@@ -83,11 +83,10 @@ router.delete(
     const projectsId = req.params.id;
     const projectToDelete = await db.Project.findByPk(projectsId);
 
-    if (userId)
-      if (projectToDelete !== undefined) {
-        await projectToDelete.destroy();
-        res.json({ message: "Successfully deleted." });
-      }
+    if (projectToDelete !== undefined) {
+      await projectToDelete.destroy();
+      res.json({ message: "Successfully deleted." });
+    }
   })
 );
 
