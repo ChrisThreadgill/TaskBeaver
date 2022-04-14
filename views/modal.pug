@@ -40,12 +40,13 @@ block content
         //- Example if not logged in
         if !locals.authenticated
           div(class='project__link')
+
             a(href="#")=`Project name Example`
         //- Actual list
         else
           each project in projects
-            div(class='project__link' id=`project-id-${project.id}`)
-              p(class=`project__list__name` id=`project__list__name${project.id}`)=`${project.projectName}`
+            div(class='project__link' id=`project__link__div__${project.id}`)
+              a(class=`project__list__name` id=`project__link__${project.id}`)=`${project.projectName}`
               span
                 button(class=`delete__project` id=`delete__project__${project.id}`)
                   i(class='fa-solid fa-trash-can' id=`trash__icon__${project.id}`)
@@ -72,6 +73,7 @@ block content
     div(class='project__board')
       //- project__header__unhidden
       //- Project dashboard header
+      div(class="project__header" id="")
       each project in projects
         div(class='project__header' class='hidden' id=`project__header__${project.id}`)
           div(class='project__buttons')
@@ -104,6 +106,15 @@ block content
               option(value="company") Company
             button(type="submit" class="edit__project__button") Edit
             button(type="click" id="cancel__edit__Project__Button") Cancel
+        each task in project.Tasks
+          div(class='project__task__container' id=`task__container__${task.id}`)
+            div(class='task__title' id=`task__title__${task.id}`)=`${task.taskTitle}`
+            div(class='task__tag')
+              span(class="badge bg-urgent" id=`task__tag__${task.id}`)=task.tag
+            div(class='project__task')
+              div(class='task__description' id=`task__description__${task.id}`)=task.description
+              if(task.dueDate)
+                div(class= 'task__dueDate' id=`task__dueDate__${task.id}`) #{task.dueDate.toLocaleDateString()}
 
 
       //- Project dashboard main which displays tasks under a project
@@ -119,16 +130,16 @@ block content
               div(class= 'task__dueDate') date
       //- Actual task list
       else
-        div(class="project__main")
-          each task in tasks
-            div(class='project__task__container' id=`task-container-${task.id}`)
-              div(class='task__title' id=`task-title-${task.id}`)=`${task.taskTitle}`
-              div(class='task__tag')
-                span(class="badge bg-urgent" id=`task-tag-${task.id}`)=task.tag
-              div(class='project__task')
-                div(class='task__description' id=`task-description-${task.id}`)=task.description
-                if(task.dueDate)
-                  div(class= 'task__dueDate' id=`task-dueDate-${task.id}`) #{task.dueDate.toLocaleDateString()}
+        //- div(class="project__main")
+        //-   each task in tasks
+        //-     div(class='project__task__container' id=`task__container__${task.id}`)
+        //-       div(class='task__title' id=`task__title__${task.id}`)=`${task.taskTitle}`
+        //-       div(class='task__tag')
+        //-         span(class="badge bg-urgent" id=`task__tag__${task.id}`)=task.tag
+        //-       div(class='project__task')
+        //-         div(class='task__description' id=`task__description__${task.id}`)=task.description
+        //-         if(task.dueDate)
+        //-           div(class= 'task__dueDate' id=`task__dueDate__${task.id}`) #{task.dueDate.toLocaleDateString()}
 
 
 
