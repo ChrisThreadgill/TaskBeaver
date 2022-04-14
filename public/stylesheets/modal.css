@@ -163,7 +163,20 @@ button {
 }
 .project__buttons {
   display: flex;
+  justify-content: space-between;
   height: 100%;
+}
+.project__edit__buttons > span > button {
+  /* display: flex; */
+  background: none;
+  border: none;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+}
+.project__name__display {
+  display: flex;
+  align-self: center;
 }
 .project__buttons > span {
   display: flex;
@@ -177,7 +190,15 @@ button {
   width: 30px;
   height: 30px;
 }
+#search__input {
+  position: fixed;
+  transform: translate(-165px, 4px);
+  /* transform: translate(2px, 165px); */
+  /* transform: translateY(2px); */
+}
 #search__button {
+  /* display: flex; */
+  /* justify-self: flex-end; */
   background: none;
   border: none;
 }
@@ -240,5 +261,5 @@ button {
   z-index: 10;
 }
 .hidden {
-  /* display: none; */
+  display: none;
 }

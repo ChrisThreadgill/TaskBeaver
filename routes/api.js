@@ -66,7 +66,7 @@ router.put(
     const { userId } = req.session.auth;
     // const userId = 1;
     const { projectName, description, dueDate, url, projectType } = req.body;
-    console.log(req.body, "**************");
+    console.log("working", "**************");
     const projectsId = req.params.id;
 
     const projectToUpdate = await db.Project.findByPk(projectsId);

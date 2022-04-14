@@ -44,46 +44,45 @@ block content
         //- Actual list
         else
           each project in projects
-            div(class='project__link' id=`project-id-${project.id}`)
+            div(class='project__link' id=`project__link__${project.id}`)
               a(href=`/projects/${project.id}`)=`${project.projectName}`
 
     //- Entire project dashboard
     div(class='project__board')
-
+      //- project__header__unhidden
       //- Project dashboard header
       each project in projects
-        div(class='project__header' class='hidden' id=`project__id__${project.id}`)
+        div(class='project__header' class='hidden' id=`project__header__${project.id}`)
           div(class='project__buttons')
-            span
-              button(id='edit__form')
-                i(class='fa-solid fa-pen-to-square')
-            span
-              button(id='delete__button')
-                i(class='fa-solid fa-trash-can')
-            span
-              button(class='add__contact')
-                i(class='fa-solid fa-address-card')
-            span(class='project__display__name') #{project.projectName}
-            span
+            div(class='project__edit__buttons')
+              span
+                button(class='edit__form' id=`edit__form__${project.id}`)
+                  i(class='fa-solid fa-pen-to-square')
+              span
+                button(class='delete__button' id=`delete__button__${project.id}`)
+                  i(class='fa-solid fa-trash-can')
+              span
+                button(class='add__contact__button' id=`add__contact__button__${project.id}`)
+                  i(class='fa-solid fa-address-card')
+            span(id=`project__header__display__${project.id}`) #{project.projectName}
+            span(id='search__span')
               input(type='text' id='search__input' class='hidden')
               button(id='search__button')
                 i(class='fa-solid fa-magnifying-glass')
-
-      div(class='')
-        form(action=`/api/projects/${projectDisplay.id}` method="PUT" class="hidden hidden__edit__form" id=`hidden__form__${projectDisplay.id}`)
-          input(type="hidden" name="_csrf" value=csrfToken)
-          +form("Project Name:", "projectName", "", "text")
-          +form("Description:", "description", "", "text")
-          +form("Due Date:", "dueDate", "", "date")
-          +form("Url:", "url", "", "text")
-          label(for="projectType") Project Type:
-          select(name="projectType" class='test')
-            option(value="personal") Personal
-            option(value="groceries") Groceries
-            option(value="project") Project
-            option(value="company") Company
-          button(type="submit" id="edit__project__button") Edit
-          button(type="click" id="cancel__edit__Project__Button") Cancel
+        div(id=`hidden__edit__form__div__${project.id}`)
+          form(action=`/api/projects/${project.id}` method="PUT" class=`hidden hidden__edit__form` )
+            input(type="hidden" name="_csrf" value=csrfToken)
+            +hiddenForm("Project Name:", "projectName", "", "text", `hidden__form__input__${project.id}` )
+            +hiddenForm("Description:", "description", "", "text", `hidden__form__input__${project.id}`)
+            +hiddenForm("Due Date:", "dueDate", "", "date", `hidden__form__input__${project.id}`)
+            +hiddenForm("Url:", "url", "", "text", `hidden__form__input__${project.id}`)
+            select(name="projectType" class=`hidden__form__input__${project.id}`)
+              option(value="personal") Personal
+              option(value="groceries") Groceries
+              option(value="project") Project
+              option(value="company") Company
+            button(type="submit" class="edit__project__button") Edit
+            button(type="click" id="cancel__edit__Project__Button") Cancel
 
       //- Project dashboard main which displays tasks under a project
       //- Example task layout if not logged in
