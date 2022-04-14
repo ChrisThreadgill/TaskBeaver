@@ -1,23 +1,26 @@
 window.addEventListener("load", (e) => {
   console.log("hello from edit project script");
 });
-const contentTypeJson = { "Content-type": "application/json; charset=UTF-8" };
+const contentTypeJson = { "Content-type": "application/json" };
 
 const hiddenForm = document.querySelectorAll(".hidden__edit__form");
 const formInputs = document.querySelectorAll(".test");
 const editForm = document.getElementById("edit__form");
 const submitEdit = document.getElementById("edit__project__button");
+
 const inputFields = Array.from(formInputs);
 const hiddenForms = Array.from(hiddenForm);
+
 editForm.addEventListener("click", async (e) => {
-  // console.log(hiddenForms[0].id.split("__")[2]);
+  //grabs the project ID from the id of the element
   const projectId = hiddenForms[0].id.split("__")[2];
   console.log(projectId);
 
   const currentProject = await fetch(`api/projects/${projectId}`, {
     method: "GET",
-    header: contentTypeJson,
+    headers: contentTypeJson,
   });
+
   const projectDetails = await currentProject.json();
 
   let { projectName, description, dueDate, url, projectType } =
@@ -35,9 +38,10 @@ editForm.addEventListener("click", async (e) => {
     if (currentField.name === "projectType")
       currentField.value = projectType.toLowerCase();
   }
+
   hiddenForms[0].classList.toggle("hidden");
 
-  // editForm.setAttribute("class", "visible");
+  editForm.setAttribute("class", "visible");
   submitEdit.addEventListener("click", async (e) => {
     e.preventDefault();
     for (let i = 0; i < inputFields.length; i++) {
@@ -57,8 +61,7 @@ editForm.addEventListener("click", async (e) => {
     const projectEdit = await fetch(`/api/projects/${projectId}`, {
       method: "PUT",
       body,
-      header: contentTypeJson,
+      headers: contentTypeJson,
     });
-    // console.log(projectEdit);
   });
 });

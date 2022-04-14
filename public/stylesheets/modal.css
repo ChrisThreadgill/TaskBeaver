@@ -240,5 +240,5 @@ button {
   z-index: 10;
 }
 .hidden {
-  display: none;
+  /* display: none; */
 }

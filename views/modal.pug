@@ -51,22 +51,24 @@ block content
     div(class='project__board')
 
       //- Project dashboard header
-      div(class='project__header')
-        div(class='project__buttons')
-          span
-            button(id="edit__form")
-              i(class='fa-solid fa-pen-to-square')
-          span
-            button
-              i(class='fa-solid fa-trash-can')
-          span
-            button
-              i(class='fa-solid fa-address-card')
-        span=projectDisplay.projectName
-        span
-          input(type='text' id='search__input' class='hidden')
-          button(id='search__button')
-            i(class='fa-solid fa-magnifying-glass')
+      each project in projects
+        div(class='project__header' class='hidden' id=`project__id__${project.id}`)
+          div(class='project__buttons')
+            span
+              button(id='edit__form')
+                i(class='fa-solid fa-pen-to-square')
+            span
+              button(id='delete__button')
+                i(class='fa-solid fa-trash-can')
+            span
+              button(class='add__contact')
+                i(class='fa-solid fa-address-card')
+            span(class='project__display__name') #{project.projectName}
+            span
+              input(type='text' id='search__input' class='hidden')
+              button(id='search__button')
+                i(class='fa-solid fa-magnifying-glass')
+
       div(class='')
         form(action=`/api/projects/${projectDisplay.id}` method="PUT" class="hidden hidden__edit__form" id=`hidden__form__${projectDisplay.id}`)
           input(type="hidden" name="_csrf" value=csrfToken)
