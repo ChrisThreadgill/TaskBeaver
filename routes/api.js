@@ -82,7 +82,6 @@ router.delete(
     // const userId = 1
     const projectsId = req.params.id;
     const projectToDelete = await db.Project.findByPk(projectsId);
-
     if (projectToDelete !== undefined) {
       await projectToDelete.destroy();
       res.json({ message: "Successfully deleted." });
@@ -90,11 +89,25 @@ router.delete(
   })
 );
 
-// TASKS
 
-// Route to get all task for a project.
 router.get(
   "/projects/:id",
+  asyncHandler(async (req, res, next) => {
+    const { userId } = req.session.auth;
+    const projectId = req.params.id;
+    // *should this check specific user??
+    if (userId) {
+      const projectDetails = await db.Project.findByPk(projectId);
+      res.json({
+        projectDetails,
+      });
+    }
+  })
+);
+// TASKS
+// Route to get all task for a project.
+router.get(
+  "/projects/:id/tasks",
   asyncHandler(async (req, res, next) => {
     const { userId } = req.session.auth;
     const projectId = req.params.id;

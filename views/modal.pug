@@ -68,75 +68,43 @@ block content
       button(type="submit" id="confirm__Project__Button") Confirm
       button(type="click" id="cancel-add__Project__Button") Cancel
 
-
-    //- EDIT PROJECT
-    +errorsSummary()
-    form(action="/api/projects/:id" method="PUT" class="hidden" id="editForm")
-      input(type="hidden" name="_csrf" value=csrfToken)
-      +form("Project Name:", "projectName", "", "text")
-      +form("Description:", "description", "", "text")
-      +form("Due Date:", "dueDate", "", "date")
-      +form("Url:", "url", "", "text")
-      label(for="projectType") Project Type:
-      select(name="projectType")
-        option(value="personal") Personal
-        option(value="groceries") Groceries
-        option(value="project") Project
-        option(value="company") Company
-      button(type="submit" id="edit__Project__Button") Edit
-      button(type="click" id="cancel-edit__Project__Button") Cancel
-
-    //- ADD TASK PROJECT
-    +errorsSummary()
-    form(action="/api/tasks" method="POST" class="hidden")
-      input(type="hidden" name="_csrf" value=csrfToken)
-      +form("Task Title:", "taskTitle", taskTitle, "text")
-      +form("Description:", "description", description, "text")
-      +form("Due Date:", "dueDate", dueDate, "date")
-      label(for="tag") Tag Type:
-      select(name="tag")
-        option(value="urgent") Urgent
-        option(value="important") Important
-        option(value="notAtIssue") Not at Issue
-        option(value="noDamGiven") NoDamGiven
-      button(type="submit" id="confirm__Task__Button") Confirm
-      button(type="click" id="cancel-add__Task__Button") Cancel
-
-    //-EDIT TASK PROJECT
-    form(action="/api//tasks/:id" method="POST" class="hidden")
-      input(type="hidden" name="_csrf" value=csrfToken)
-      +form("Task Title:", "taskTitle", taskTitle, "text")
-      +form("Description:", "description", description, "text")
-      +form("Due Date:", "dueDate", dueDate, "date")
-      label(for="tag") Tag Type:
-      select(name="tag")
-        option(value="urgent") Urgent
-        option(value="important") Important
-        option(value="notAtIssue") Not at Issue
-        option(value="noDamGiven") NoDamGiven
-      button(type="submit" id="confirm__Task__Button") Confirm
-      button(type="click" id="cancel-add__Task__Button") Cancel
-
     //- Entire project dashboard
     div(class='project__board')
-
+      //- project__header__unhidden
       //- Project dashboard header
-      div(class='project__header')
-        div(class='project__buttons')
-          span
-            button
-              i(class='fa-solid fa-pen-to-square')
-          span
-            button(id="delete__Project")
-              i(class='fa-solid fa-trash-can')
-          span
-            button
-              i(class='fa-solid fa-address-card')
-        span=projectDisplay.projectName
-        span
-          input(type='text' id='search__input' class='hidden')
-          button(id='search__button')
-            i(class='fa-solid fa-magnifying-glass')
+      each project in projects
+        div(class='project__header' class='hidden' id=`project__header__${project.id}`)
+          div(class='project__buttons')
+            div(class='project__edit__buttons')
+              span
+                button(class='edit__form' id=`edit__form__${project.id}`)
+                  i(class='fa-solid fa-pen-to-square')
+              span
+                button(class='delete__button' id=`delete__button__${project.id}`)
+                  i(class='fa-solid fa-trash-can')
+              span
+                button(class='add__contact__button' id=`add__contact__button__${project.id}`)
+                  i(class='fa-solid fa-address-card')
+            span(id=`project__header__display__${project.id}`) #{project.projectName}
+            span(id='search__span')
+              input(type='text' id='search__input' class='hidden')
+              button(id='search__button')
+                i(class='fa-solid fa-magnifying-glass')
+        div(id=`hidden__edit__form__div__${project.id}`)
+          form(action=`/api/projects/${project.id}` method="PUT" class=`hidden hidden__edit__form` )
+            input(type="hidden" name="_csrf" value=csrfToken)
+            +hiddenForm("Project Name:", "projectName", "", "text", `hidden__form__input__${project.id}` )
+            +hiddenForm("Description:", "description", "", "text", `hidden__form__input__${project.id}`)
+            +hiddenForm("Due Date:", "dueDate", "", "date", `hidden__form__input__${project.id}`)
+            +hiddenForm("Url:", "url", "", "text", `hidden__form__input__${project.id}`)
+            select(name="projectType" class=`hidden__form__input__${project.id}`)
+              option(value="personal") Personal
+              option(value="groceries") Groceries
+              option(value="project") Project
+              option(value="company") Company
+            button(type="submit" class="edit__project__button") Edit
+            button(type="click" id="cancel__edit__Project__Button") Cancel
+
 
       //- Project dashboard main which displays tasks under a project
       //- Example task layout if not logged in
