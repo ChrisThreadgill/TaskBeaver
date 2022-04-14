@@ -138,13 +138,14 @@ block content
             +form("Task Title:", "taskTitle", taskTitle, "text")
             +form("Description:", "description", description, "text")
             +form("Due Date:", "dueDate", dueDate, "date")
+            input(type='integer' name='projectId' value=`${projectDisplay.id}` class='add__task__id')
             label(for="tag") Tag Type:
             select(name="tag" class="task__select")
               option(value="urgent") Urgent
               option(value="important") Important
               option(value="notAtIssue") Not at Issue
               option(value="noDamGiven") NoDamGiven
-            button(type="submit" id="confirm__Task__Button") Confirm
+            button(type="submit" id="confirm__Task__Button" class = 'test__task__add') Confirm
             button(type="click" id="cancel-add__Task__Button") Cancel
               div(class="project__main")
           each task in tasks
