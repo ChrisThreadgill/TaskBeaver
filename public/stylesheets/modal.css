@@ -191,8 +191,8 @@ button {
   height: 30px;
 }
 #search__input {
-  position: fixed;
-  transform: translate(-165px, 4px);
+  /* position: fixed; */
+  /* transform: translate(-165px, 4px); */
   /* transform: translate(2px, 165px); */
   /* transform: translateY(2px); */
 }
@@ -261,5 +261,5 @@ button {
   z-index: 10;
 }
 .hidden {
-  display: none;
+  /* display: none; */
 }
