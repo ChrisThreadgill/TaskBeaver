@@ -209,6 +209,31 @@ button {
   align-self: flex-end;
 }
 
+/*
+--------------------------------
+*/
+
+.test__task__form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: red;
+  height: 100px;
+}
+
+#cancel-add__Task__Button {
+  height: 35px;
+}
+
+#confirm__Task__Button {
+  height: 35px;
+}
+
+.task__select {
+  height: 35px;
+}
+
+
 /*  BADGE CSS
 ==================================================================================
 */
