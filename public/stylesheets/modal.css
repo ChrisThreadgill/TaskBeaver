@@ -9,11 +9,18 @@ body {
   background-color: #d3d0cb;
 }
 button {
+  width: 40px;
+  height: 30px;
   padding: 0.5rem 0.5rem;
   font-size: 1rem;
   cursor: pointer;
   border: 1px solid brown;
   border-radius: 15%;
+}
+
+.task__buttons {
+  display: flex;
+  justify-content: flex-start;
 }
 
 .date {
@@ -261,5 +268,5 @@ button {
   z-index: 10;
 }
 .hidden {
-  /* display: none; */
+  display: none;
 }
