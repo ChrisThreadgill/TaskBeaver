@@ -45,18 +45,22 @@ block content
         else
           each project in projects
             div(class='project__link' id=`project-id-${project.id}`)
-              a(href=`/projects/${project.id}`)=`${project.projectName}`
+              p(class=`project__List__Name` id=`project__List__Name${project.id}`)=`${project.projectName}`
+              span
+                button(class=`delete__Project` id=`delete__Project__${project.id}`)
+                  i(class='fa-solid fa-trash-can' id=`trash__icon__${project.id}`)
+
 
     //- ADD PROJECT FORM
     +errorsSummary()
-    form(action="/api/projects" method="POST" class="" id="addProject")
-      input(type="hidden" name="_csrf" value=csrfToken)
-      +form("Project Name:", "projectName", "", "text")
-      +form("Description:", "description", "", "text")
-      +form("Due Date:", "dueDate", "", "date")
-      +form("Url:", "url", "", "text")
+    form(class="hidden" id="addProject")
+      input(type='hidden' name='_csrf' value=csrfToken id="csurfId")
+      +form("Project Name:", "projectNameAdd", "", "text")
+      +form("Description:", "descriptionAdd", "", "text")
+      +form("Due Date:", "dueDateAdd", "", "date")
+      +form("Url:", "urlAdd", "", "text")
       label(for="projectType") Project Type:
-      select(name="projectType")
+      select(name="projectType" id="projectTypeAdd")
         option(value="personal") Personal
         option(value="groceries") Groceries
         option(value="project") Project
@@ -123,7 +127,7 @@ block content
             button
               i(class='fa-solid fa-pen-to-square')
           span
-            button
+            button(id="delete__Project")
               i(class='fa-solid fa-trash-can')
           span
             button
