@@ -21,11 +21,12 @@ const toggleHidden = (e) => {
 const addProject = document.getElementById("project__add__button");
 addProject.addEventListener("click", toggleHidden);
 
-const cancelProject = document.getElementById("cancel-add__Project__Button");
+const cancelProject = document.getElementById("cancel-add__project__button");
 cancelProject.addEventListener("click", toggleHidden);
 
 // todo add form values
-const newProject = document.getElementById("confirm__Project__Button");
+const newProject = document.getElementById("confirm__project__button");
+console.log(newProject);
 newProject.addEventListener("click", async(e) => {
     e.preventDefault();
 
@@ -44,7 +45,7 @@ newProject.addEventListener("click", async(e) => {
         projectType,
         _csrf,
     };
-
+    console.log(info);
     const newProject = await fetch("/api/projects", {
         method: "post",
         body: JSON.stringify(info),
@@ -63,11 +64,11 @@ newProject.addEventListener("click", async(e) => {
     console.log(id);
 
     projectLink.innerHTML = `
-  <p class=project__List__Name id=project__List__Name${id}>
+  <a class=project__list__name id=project__link__${id}>
   ${projectName}
-  </p>
+  </a>
   <span>
-  <button class=delete__Project id=delete__Project__${id}>
+  <button class=delete__project id=delete__project__${id}>
   <i class="fa-solid fa-trash-can" id=trash__icon__${id}>
   </i>
   </button>
@@ -75,15 +76,14 @@ newProject.addEventListener("click", async(e) => {
   `;
 
     projectLink.setAttribute("class", "project__link");
-    projectLink.setAttribute("id", `project-id-${id}`);
-    projectList.appendChild(projectLink)
+    projectLink.setAttribute("id", `project__link__${id}`);
+    projectList.appendChild(projectLink);
 
-    const newDeleteButton = document.getElementById(`delete__Project__${id}`);
+    const newDeleteButton = document.getElementById(`delete__project__${id}`);
     const trashcans = document.querySelectorAll(".fa-trash-can");
     for (let i = 0; i < trashcans.length; i++) {
         let trashcan = trashcans[i];
         trashcan.addEventListener("click", deleteProject);
     }
     newDeleteButton.addEventListener("click", deleteProject);
-
 });

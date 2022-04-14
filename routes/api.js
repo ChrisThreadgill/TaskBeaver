@@ -89,7 +89,6 @@ router.delete(
   })
 );
 
-
 router.get(
   "/projects/:id",
   asyncHandler(async (req, res, next) => {
