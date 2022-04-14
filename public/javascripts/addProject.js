@@ -1,34 +1,28 @@
-const contentTypeJson = { "Content-Type": "application/json" };
-
 window.addEventListener("load", (event) => {
   console.log("hello from javascript!");
 });
 
-const addProject = document.getElementById("project__add__button");
-addProject.addEventListener("click", (e) => {
+import { deleteProject } from "./deleteProject.js";
 
-  document.getElementById("projectNameAdd").value = "";
-  document.getElementById("descriptionAdd").value = "";
-  document.getElementById("dueDateAdd").value = "";
-  document.getElementById("urlAdd").value = "";
-  document.getElementById("projectTypeAdd").value = "company";
-  const addForm = document.getElementById("addProject");
-  
-  addForm.classList.toggle("hidden");
-});
+const contentTypeJson = { "Content-Type": "application/json" };
 
-const cancelProject = document.getElementById("cancel-add__Project__Button");
-cancelProject.addEventListener("click", (e) => {
+const toggleHidden = (e) => {
   e.preventDefault();
   document.getElementById("projectNameAdd").value = "";
   document.getElementById("descriptionAdd").value = "";
   document.getElementById("dueDateAdd").value = "";
   document.getElementById("urlAdd").value = "";
-  document.getElementById("projectTypeAdd").value = "company";
-
+  document.getElementById("projectTypeAdd").value = "personal";
   const addForm = document.getElementById("addProject");
+
   addForm.classList.toggle("hidden");
-});
+};
+
+const addProject = document.getElementById("project__add__button");
+addProject.addEventListener("click", toggleHidden);
+
+const cancelProject = document.getElementById("cancel-add__Project__Button");
+cancelProject.addEventListener("click", toggleHidden);
 
 // todo add form values
 const newProject = document.getElementById("confirm__Project__Button");
@@ -64,14 +58,29 @@ newProject.addEventListener("click", async (e) => {
   const projectList = document.querySelector(".project__list");
 
   const projectLink = document.createElement("div");
-  projectLink.innerHTML = `<a href=/projects/${id}> ${projectName}</a>`;
+
+  console.log(projectName);
+  console.log(id);
+
+  projectLink.innerHTML = `
+  <p class=project__List__Name id=project__List__Name${id}>
+  ${projectName}
+  </p>
+  <span>
+  <button class=delete__Project id=delete__Project__${id}>
+  <i class="fa-solid fa-trash-can">
+  </i>
+  </button>
+  </span>
+  `;
+
   projectLink.setAttribute("class", "project__link");
   projectLink.setAttribute("id", `project-id-${id}`);
-  projectList.appendChild(projectLink);
 
-  //   div(class='project__link' id=`project-id-${project.id}`)
-  //     p(class=`project__List__Name` id=`project__List__Name${project.id}`)=`${project.projectName}`
-  //     span
-  //     button(class=`delete__Project` id=`delete__Project__${project.id}`)
-  //       i(class='fa-solid fa-trash-can')
+  const newDeleteButton = document.getElementById(`delete__Project__${id}`);
+  console.log(newDeleteButton);
+
+  // console.log(newDeleteButton.childNodes)[0];
+
+  // newDeleteButton.addEventListener("click", deleteProject);
 });
