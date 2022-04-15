@@ -59,7 +59,6 @@ router.post(
       occupation,
       bio,
     } = req.body;
-    console.log(db);
     const user = await db.User.build({
       firstName,
       lastName,
@@ -108,7 +107,6 @@ router.post(
     const { email, hashedPassword } = req.body;
     let errors = [];
     const loginErrors = validationResult(req);
-    // console.log(req.body);
 
     if (loginErrors.isEmpty()) {
       const user = await db.User.findOne({ where: { email } });

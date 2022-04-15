@@ -4,7 +4,6 @@ window.addEventListener("load", (e) => {
 
 const searchBar = document.getElementById("search__button");
 const searchInput = document.getElementById("search__input");
-console.log(searchInput);
 searchBar.addEventListener("mouseover", async (e) => {
   searchInput.classList.toggle("hidden");
 });
