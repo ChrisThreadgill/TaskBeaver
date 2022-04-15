@@ -95,10 +95,21 @@ const loginValidators = [
     .withMessage("Don't forget your password!"),
 ];
 
+
 const dateView = (date) => {
     const [year, month, day] = date.split("-");
     return month + "/" + day + "/" + year;
-};
+
+const projectValidator =[
+  check("projectName")
+    .exists({ checkFalsy: true })
+    .withMessage("Please provide a project name."),
+  check("dueDate")
+    .exists({ checkFalsy: true })
+    .withMessage("Please provide a due date.")
+]
+
+
 
 module.exports = {
     csrfProtection,
@@ -106,5 +117,6 @@ module.exports = {
     userValidators,
     loginValidators,
     contentTypeJson,
+   projectValidator,
     dateView
 };
