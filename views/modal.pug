@@ -137,9 +137,9 @@ block content
                 div(class='task__tag')
                   span(class="badge bg-urgent" id=`task__tag__${task.id}`)=task.tag
                 div(class=`hidden project__task__details__hidden project__task__${project.id}` id=`project__task__details__${task.id}`)
-                  div(class='task__description' id=`task__description__${task.id}`)=task.description
+                  div(class='task__description' id=`task__description__${task.id}`) Description: #{task.description}
                   if(task.dueDate)
-                    div(class= 'task__dueDate' id=`task__dueDate__${task.id}`) #{task.dueDate.toLocaleDateString()}
+                    div(class= 'task__dueDate' id=`task__dueDate__${task.id}`) Due Date: #{task.dueDate.toLocaleDateString()}
                 div(class=`hidden__task__edit__${project.id}`)
                   form(action=`/api/tasks/${task.id}` method="PUT" class=`hidden` id=`hidden__task__edit__${task.id}` )
                     input(type="hidden" name="_csrf" value=csrfToken)
