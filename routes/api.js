@@ -27,25 +27,56 @@ router.get(
   })
 );
 
+const projectValidator =[
+  check("projectName")
+    .exists({ checkFalsy: true })
+    .withMessage("Please provide a project name."),
+  check("dueDate")
+    .exists({ checkFalsy: true })
+    .withMessage("Please provide a due date.")
+]
+
 // Route to post new project.
 router.post(
   "/projects",
   csrfProtection,
+  projectValidator,
   asyncHandler(async (req, res, next) => {
     const { userId } = req.session.auth;
     const { projectName, description, dueDate, url, projectType } = req.body;
-    const project = await db.Project.build({
-      userId,
-      projectName,
-      description,
-      dueDate,
-      url,
-      projectType,
-    });
-    await project.save();
-    res.json({
-      project,
-    });
+
+
+    const validatorErrors = validationResult(req);
+
+    if (validatorErrors.isEmpty()){
+
+
+      const project = await db.Project.build({
+        userId,
+        projectName,
+        description,
+        dueDate,
+        url,
+        projectType,
+      });
+      await project.save();
+      res.json({
+        project,
+      });
+
+
+    } else {
+
+
+      const errorArray = validatorErrors.array().map(error => error.msg)
+      res.json({
+        message: 'Unsuccessful',
+        errorArray
+      });
+
+
+    }
+
   })
 );
 

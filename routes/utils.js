@@ -95,10 +95,21 @@ const loginValidators = [
     .withMessage("Don't forget your password!"),
 ];
 
+const projectValidator =[
+  check("projectName")
+    .exists({ checkFalsy: true })
+    .withMessage("Please provide a project name."),
+  check("dueDate")
+    .exists({ checkFalsy: true })
+    .withMessage("Please provide a due date.")
+]
+
+
 module.exports = {
   csrfProtection,
   asyncHandler,
   userValidators,
   loginValidators,
   contentTypeJson,
+  projectValidator,
 };
