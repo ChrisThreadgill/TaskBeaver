@@ -103,10 +103,10 @@ block content
             input(type='integer' name='projectId' value=`${project.id}` class='hidden add__task__id')
             label(for="tag") Tag Type:
             select(name="tag" class='task__select' id=`task__select__${project.id}`)
-              option(value="noDamGiven") NoDamGiven
-              option(value="urgent") Urgent
-              option(value="important") Important
-              option(value="notAtIssue") Not at Issue
+              option(value="NoDamGiven") NoDamGiven
+              option(value="Flexible") Flexible
+              option(value="Important") Important
+              option(value="Urgent") Urgent
             button(type="submit" id=`confirm__task__button__${project.id}` class ='confirm__task__add') Confirm
             button(type="click" id=`cancel__task__${project.id}`) Cancel
 
@@ -148,11 +148,11 @@ block content
                     +hiddenForm("Description:", "description", "", "text", `hidden__task__input__${task.id}`)
                     +hiddenForm("Due Date:", "dueDate", "", "date", `hidden__task__input__${task.id}`)
                     select(name="tag" class=`hidden__task__input__${task.id}`)
-                      option(value="noDamGiven") NoDamGiven
-                      option(value="urgent") Urgent
-                      option(value="important") Important
-                      option(value="notAtIssue") Not An Issue
-                    button(type="submit" class="edit__task__button") Edit
+                      option(value="NoDamGiven") NoDamGiven
+                      option(value="Flexible") Flexible
+                      option(value="Important") Important
+                      option(value="Urgent") Urgent
+                    button(type="submit" class="edit__task__button" id=`edit__task__submit__${task.id}`) Edit
                     button(type="click" id="cancel__edit__task__button") Cancel
 
       //- Project dashboard main which displays tasks under a project
