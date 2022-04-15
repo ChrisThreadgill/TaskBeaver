@@ -92,6 +92,23 @@ block content
               input(type='text' id='search__input' class='hidden')
               button(id='search__button')
                 i(class='fa-solid fa-magnifying-glass')
+        div(class='test')
+          +errorsSummary()
+          form(action="/api/tasks" method="POST" class="test__task__form")
+            input(type="hidden" name="_csrf" value=csrfToken)
+            +form("Task Title:", "taskTitle", taskTitle, "text")
+            +form("Description:", "description", description, "text")
+            +form("Due Date:", "dueDate", dueDate, "date")
+            input(type='integer' name='projectId' value=`${project.id}` class='hidden add__task__id')
+            label(for="tag") Tag Type:
+            select(name="tag" class="task__select")
+              option(value="noDamGiven") NoDamGiven
+              option(value="urgent") Urgent
+              option(value="important") Important
+              option(value="notAtIssue") Not at Issue
+            button(type="submit" id="confirm__task__button" class = 'test__task__add') Confirm
+            button(type="click" id="cancel__add__task__button") Cancel
+
         div(id=`hidden__edit__form__div__${project.id}`)
           form(action=`/api/projects/${project.id}` method="PUT" class=`hidden hidden__edit__form` )
             input(type="hidden" name="_csrf" value=csrfToken)
@@ -105,9 +122,16 @@ block content
               option(value="project") Project
               option(value="company") Company
             button(type="submit" class="edit__project__button") Edit
-            button(type="click" id="cancel__edit__Project__Button") Cancel
+            button(type="click" id="cancel__edit__project__button") Cancel
         each task in project.Tasks
           div(class='project__task__container' id=`task__container__${task.id}`)
+            div(class='task__buttons')
+              button()
+                i(class="fa-solid fa-pen-to-square")
+              button()
+                i(class="fa-solid fa-trash-can")
+              button()
+                i(class="fa-solid fa-angle-down")
             div(class='task__title' id=`task__title__${task.id}`)=`${task.taskTitle}`
             div(class='task__tag')
               span(class="badge bg-urgent" id=`task__tag__${task.id}`)=task.tag
@@ -115,7 +139,19 @@ block content
               div(class='task__description' id=`task__description__${task.id}`)=task.description
               if(task.dueDate)
                 div(class= 'task__dueDate' id=`task__dueDate__${task.id}`) #{task.dueDate.toLocaleDateString()}
-
+            div(class='test')
+              form(action=`/api/tasks/${task.id}` method="PUT" class=`hidden__edit__form` )
+                input(type="hidden" name="_csrf" value=csrfToken)
+                +hiddenForm("Task Title:", "taskTitle", "", "text", `hidden__task__input__${task.id}` )
+                +hiddenForm("Description:", "description", "", "text", `hidden__task__input__${task.id}`)
+                +hiddenForm("Due Date:", "dueDate", "", "date", `hidden__task__input__${task.id}`)
+                select(name="tag" class=`hidden__task__input__${task.id}`)
+                  option(value="noDamGiven") NoDamGiven
+                  option(value="urgent") Urgent
+                  option(value="important") Important
+                  option(value="notAtIssue") Not An Issue
+                button(type="submit" class="edit__task__button") Edit
+                button(type="click" id="cancel__edit__task__button") Cancel
 
       //- Project dashboard main which displays tasks under a project
       //- Example task layout if not logged in
@@ -140,7 +176,6 @@ block content
         //-         div(class='task__description' id=`task__description__${task.id}`)=task.description
         //-         if(task.dueDate)
         //-           div(class= 'task__dueDate' id=`task__dueDate__${task.id}`) #{task.dueDate.toLocaleDateString()}
-
 
 
 
