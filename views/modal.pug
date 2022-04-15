@@ -109,7 +109,6 @@ block content
             button(type="submit" id="confirm__task__button" class = 'test__task__add') Confirm
             button(type="click" id="cancel__add__task__button") Cancel
 
-
         div(id=`hidden__edit__form__div__${project.id}`)
           form(action=`/api/projects/${project.id}` method="PUT" class=`hidden hidden__edit__form` )
             input(type="hidden" name="_csrf" value=csrfToken)
