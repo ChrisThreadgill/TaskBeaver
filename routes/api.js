@@ -5,6 +5,7 @@ const { loginUser, logoutUser } = require("../auth");
 const { check, validationResult } = require("express-validator");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
+const { Op } = require("sequelize")
 
 // PROJECT
 // Route to get all projects.
@@ -12,6 +13,7 @@ router.get(
   "/",
   asyncHandler(async (req, res, next) => {
     const { userId } = req.session.auth;
+
 
     // Will get projects based on userId.
 
@@ -195,4 +197,30 @@ router.delete(
     }
   })
 );
+
+
+router.put(
+  "/tasks/search",
+  asyncHandler(async (req,res,next) => {
+    // const { userId } = req.session.auth;
+    const userId = 1;
+    console.log(req.body)
+    // const searchQuery = req.body.input;
+
+    // console.log(searchQuery)
+
+    const searchResults = await db.Task.findAll();
+
+    // where: {
+    //   taskTitle: {
+    //     [Op.iLike]: `%${searchQuery}%`
+    //   }
+    // },
+    // limit: 5,
+
+    res.json({
+      searchResults
+    })
+  })
+)
 module.exports = router;

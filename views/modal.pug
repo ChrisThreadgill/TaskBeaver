@@ -56,7 +56,8 @@ block content
     +errorsSummary()
     form(class="hidden" id="addProject")
       input(type='hidden' name='_csrf' value=csrfToken id="csurfId")
-      +form("Project Name:", "projectNameAdd", "", "text")
+      label(for=projectNameAdd) Project Name:
+      input(name="projectNameAdd" type="text" id='projectNameAdd' value='' required)
       +form("Description:", "descriptionAdd", "", "text")
       +form("Due Date:", "dueDateAdd", "", "date")
       +form("Url:", "urlAdd", "", "text")

@@ -19,7 +19,7 @@ const addTask = async (e) => {
 
   const projectId = e.target.id.split(`__`)[3];
 
-  console.log(projectId);
+  // console.log(projectId);
 
   const taskTitle = document.getElementById(`task__title__${projectId}`).value;
   const description = document.getElementById(
