@@ -62,6 +62,7 @@ const addTask = async (e) => {
 
   const projectBoard = document.querySelector(".project__board");
 
+  //TODO UPDATE THE HTML UPON CREATION IN EVENT LISTENER TO MATCH PUG NAMING CONVENTIONS
   taskDiv.innerHTML = `
    <div class="task__buttons">
         <button class='task__edit__button' id='task__edit__${id}'><i class="fa-solid fa-pen-to-square"></i></button>
@@ -76,7 +77,7 @@ const addTask = async (e) => {
         <div class="task__description" id='task__description__${id}'>'${description}'</div>
         <div class="task__dueDate" id='task__dueDate__${id}'>'${dueDate}'</div>
     </div>
-    <div class="test">
+    <div class="hidden__task__edit__${id}">
         <form class="hidden__task__edit__form" action='/api/tasks/${id}' method="PUT">
             <input type="hidden" name="_csrf" value=csrfToken>
             <div>

@@ -92,9 +92,10 @@ block content
               input(type='text' id='search__input' class='hidden')
               button(id='search__button')
                 i(class='fa-solid fa-magnifying-glass')
-        div(class='')
+        //- This will get you the add task form for each project
+        div(class=`hidden add__task__div__${project.id}` )
           +errorsSummary()
-          form(action="/api/tasks" method="POST" class="test__task__form")
+          form(action="/api/tasks" method="POST" class="add__task__form" )
             input(type="hidden" name="_csrf" value=csrfToken)
             +form("Task Title:", `task__title__${project.id}`, taskTitle, "text")
             +form("Description:", `description__${project.id}`, description, "text")
@@ -110,7 +111,7 @@ block content
             button(type="click" id=`cancel__task__${project.id}`) Cancel
 
         div(id=`hidden__edit__form__div__${project.id}`)
-          form(action=`/api/projects/${project.id}` method="PUT" class=`hidden hidden__edit__form` )
+          form(action=`/api/projects/${project.id}` method="PUT" class=`hidden hidden__project__edit__form` )
             input(type="hidden" name="_csrf" value=csrfToken)
             +hiddenForm("Project Name:", "projectName", "", "text", `hidden__form__input__${project.id}` )
             +hiddenForm("Description:", "description", "", "text", `hidden__form__input__${project.id}`)
@@ -123,37 +124,36 @@ block content
               option(value="company") Company
             button(type="submit" class="edit__project__button") Edit
             button(type="click" id="cancel__edit__project__button") Cancel
-        each task in project.Tasks
-          div(class='project__task__container' id=`task__container__${task.id}`)
-            div(class='task__buttons')
-              button(class='task__edit__button' id=`task__edit__${task.id}`)
-                i(class="fa-solid fa-pen-to-square")
-              button(class='task__delete__button' id=`task__delete__${task.id}`)
-                i(class="fa-solid fa-trash-can task__trash__icon" id=`trash__task__${task.id}`)
-              button(class='task__details__button' id=`task__details__${task.id}`)
-                i(class="fa-solid fa-angle-down")
-            div(class='task__title' id=`task__title__${task.id}`)=`${task.taskTitle}`
-
-
-            div(class='task__tag')
-              span(class="badge bg-urgent" id=`task__tag__${task.id}`)=task.tag
-            div(class='project__task')
-              div(class='task__description' id=`task__description__${task.id}`)=task.description
-              if(task.dueDate)
-                div(class= 'task__dueDate' id=`task__dueDate__${task.id}`) #{task.dueDate.toLocaleDateString()}
-            div(class='')
-              form(action=`/api/tasks/${task.id}` method="PUT" class=` hidden__task__edit__form` )
-                input(type="hidden" name="_csrf" value=csrfToken)
-                +hiddenForm("Task Title:", "taskTitle", "", "text", `hidden__task__input__${task.id}` )
-                +hiddenForm("Description:", "description", "", "text", `hidden__task__input__${task.id}`)
-                +hiddenForm("Due Date:", "dueDate", "", "date", `hidden__task__input__${task.id}`)
-                select(name="tag" class=`hidden__task__input__${task.id}`)
-                  option(value="noDamGiven") NoDamGiven
-                  option(value="urgent") Urgent
-                  option(value="important") Important
-                  option(value="notAtIssue") Not An Issue
-                button(type="submit" class="edit__task__button") Edit
-                button(type="click" id="cancel__edit__task__button") Cancel
+        div(id=`tasks__project__${project.id}` class='hidden tasks__container__hidden')
+            each task in project.Tasks
+              div(class=`project__task__container test__project__${task.projectId}` id=`task__container__${task.id}`)
+                div(class='task__buttons')
+                  button(class='task__edit__button' id=`task__edit__${task.id}`)
+                    i(class="fa-solid fa-pen-to-square")
+                  button(class='task__delete__button' id=`task__delete__${task.id}`)
+                    i(class="fa-solid fa-trash-can task__trash__icon" id=`trash__task__${task.id}`)
+                  button(class='task__details__button' id=`task__details__${task.id}`)
+                    i(class="fa-solid fa-angle-down")
+                div(class='task__title' id=`task__title__${task.id}`)=`${task.taskTitle}`
+                div(class='task__tag')
+                  span(class="badge bg-urgent" id=`task__tag__${task.id}`)=task.tag
+                div(class=`hidden project__task__details__hidden project__task__${project.id}` id=`project__task__details__${task.id}`)
+                  div(class='task__description' id=`task__description__${task.id}`)=task.description
+                  if(task.dueDate)
+                    div(class= 'task__dueDate' id=`task__dueDate__${task.id}`) #{task.dueDate.toLocaleDateString()}
+                div(class=`hidden__task__edit__${project.id}`)
+                  form(action=`/api/tasks/${task.id}` method="PUT" class=`hidden` id=`hidden__task__edit__${task.id}` )
+                    input(type="hidden" name="_csrf" value=csrfToken)
+                    +hiddenForm("Task Title:", "taskTitle", "", "text", `hidden__task__input__${task.id}` )
+                    +hiddenForm("Description:", "description", "", "text", `hidden__task__input__${task.id}`)
+                    +hiddenForm("Due Date:", "dueDate", "", "date", `hidden__task__input__${task.id}`)
+                    select(name="tag" class=`hidden__task__input__${task.id}`)
+                      option(value="noDamGiven") NoDamGiven
+                      option(value="urgent") Urgent
+                      option(value="important") Important
+                      option(value="notAtIssue") Not An Issue
+                    button(type="submit" class="edit__task__button") Edit
+                    button(type="click" id="cancel__edit__task__button") Cancel
 
       //- Project dashboard main which displays tasks under a project
       //- Example task layout if not logged in
