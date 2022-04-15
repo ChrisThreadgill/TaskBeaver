@@ -1,3 +1,6 @@
+import {taskDeletes} from './deleteTask.js'
+
+
 window.addEventListener("load", (event) => {
     console.log("hello from addTask!");
   });
@@ -64,9 +67,9 @@ const addTask = async(e) => {
 
    taskDiv.innerHTML = `
    <div class="task__buttons">
-        <button><i class="fa-solid fa-pen-to-square"></i></button>
-        <button><i class="fa-solid fa-trash-can"></i></button>
-        <button><i class="fa-solid fa-angle-down"></i></button>
+        <button class='task__edit__button' id='task__edit__${id}'><i class="fa-solid fa-pen-to-square"></i></button>
+        <button class='task__delete__button' id='task__delete__${id}'><i class="fa-solid fa-trash-can task__trash__icon" id='trash__task__${id}'></i></button>
+        <button class='task__details__button' id='task__details__${id}'><i class="fa-solid fa-angle-down"></i></button>
     </div>
     <div class="task__title" id='task__title__${id}'>'${taskTitle}'</div>
     <div class="task__tag">
@@ -101,8 +104,21 @@ const addTask = async(e) => {
     </div>
 `
 projectBoard.appendChild(taskDiv)
+const trashCansIcons = document.querySelectorAll('.task__trash__icon')
 
+const taskTrashButtons = document.querySelectorAll('.task__delete__button')
+
+    for (let icon of trashCansIcons){
+        // console.log(icon)
+        icon.addEventListener('click', taskDeletes)
+    }
+
+    for (let button of taskTrashButtons){
+        // console.log(button)
+        button.addEventListener('click', taskDeletes)
+    }
 }
+
 
 for (let i = 0; i < addTaskButtons.length; i++){
     let button = addTaskButtons[i];

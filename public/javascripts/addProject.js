@@ -65,7 +65,7 @@ newProject.addEventListener("click", async (e) => {
   </a>
   <span>
   <button class=delete__project id=delete__project__${id}>
-  <i class="fa-solid fa-trash-can" id=trash__icon__${id}>
+  <i class="fa-solid fa-trash-can project__trash__icon" id=trash__icon__${id}>
   </i>
   </button>
   </span>
@@ -76,7 +76,7 @@ newProject.addEventListener("click", async (e) => {
   projectList.appendChild(projectLink);
 
   const newDeleteButton = document.getElementById(`delete__project__${id}`);
-  const trashcans = document.querySelectorAll(".fa-trash-can");
+  const trashcans = document.querySelectorAll(".project__trash__icon");
   for (let i = 0; i < trashcans.length; i++) {
     let trashcan = trashcans[i];
     trashcan.addEventListener("click", deleteProject);

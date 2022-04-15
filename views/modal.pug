@@ -49,7 +49,7 @@ block content
               a(class=`project__list__name` id=`project__link__${project.id}`)=`${project.projectName}`
               span
                 button(class=`delete__project` id=`delete__project__${project.id}`)
-                  i(class='fa-solid fa-trash-can' id=`trash__icon__${project.id}`)
+                  i(class='fa-solid fa-trash-can project__trash__icon' id=`trash__icon__${project.id}`)
 
 
     //- ADD PROJECT FORM
@@ -126,11 +126,11 @@ block content
         each task in project.Tasks
           div(class='project__task__container' id=`task__container__${task.id}`)
             div(class='task__buttons')
-              button()
+              button(class='task__edit__button' id=`task__edit__${task.id}`)
                 i(class="fa-solid fa-pen-to-square")
-              button()
-                i(class="fa-solid fa-trash-can")
-              button()
+              button(class='task__delete__button' id=`task__delete__${task.id}`)
+                i(class="fa-solid fa-trash-can task__trash__icon" id=`trash__task__${task.id}`)
+              button(class='task__details__button' id=`task__details__${task.id}`)
                 i(class="fa-solid fa-angle-down")
             div(class='task__title' id=`task__title__${task.id}`)=`${task.taskTitle}`
 

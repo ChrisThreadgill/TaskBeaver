@@ -24,7 +24,7 @@ for (let i = 0; i < deleteButtons.length; i++) {
   deleteBtn.addEventListener("click", deleteProject);
 }
 
-const trashcans = document.querySelectorAll(".fa-trash-can");
+const trashcans = document.querySelectorAll(".project__trash__icon");
 for (let i = 0; i < trashcans.length; i++) {
   let trashcan = trashcans[i];
   trashcan.addEventListener("click", deleteProject);
