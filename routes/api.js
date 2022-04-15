@@ -17,6 +17,7 @@ router.put(
         const userId = 1;
         console.log(req.body)
         const inputs = req.body.input
+        const projectId = req.body.projectId
             // const searchQuery = req.body.input;
 
         // console.log(searchQuery)
@@ -25,7 +26,8 @@ router.put(
             where: {
                 taskTitle: {
                     [Op.iLike]: `%${inputs}%`
-                }
+                },
+                projectId,
             },
             limit: 10,
         });

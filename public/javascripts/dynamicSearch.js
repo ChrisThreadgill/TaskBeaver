@@ -16,21 +16,25 @@ for (let search of searchs) {
     search.addEventListener('input', async(e) => {
         // e.preventDefault();
         e.stopPropagation()
-        const id = e.target.id
-        console.log(id)
+        const projectId = e.target.id.split('__')[2]
+        console.log(projectId)
         const inputValue = e.target.value
-        console.log("hello there")
-        console.log(e.target)
+        // console.log("hello there")
+        // console.log(e.target)
         const data = await fetch("/api/tasks/search", {
             method: "put",
             headers: contentTypeJson,
-            body: JSON.stringify({ input: inputValue })
+            body: JSON.stringify({
+                input: inputValue,
+                projectId,
+            })
         });
 
 
         const dataResults = await data.json();
+        const arrayOfTasks = dataResults.searchResults
 
-        console.log(dataResults.searchResults[0])
+        console.log(arrayOfTasks, "***********************")
 
     })
 }
