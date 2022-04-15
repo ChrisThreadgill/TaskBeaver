@@ -11,9 +11,10 @@ for (let i = 0; i < taskDetailsButtons.length; i++) {
   const taskDetails = document.getElementById(
     `project__task__details__${taskId}`
   );
-  detailsButton.addEventListener("click", async (e) => {
+  const taskDetailsEvent = async (e) => {
     taskDetails.classList.toggle("hidden");
     taskDetails.classList.remove("project__task__details__hidden");
     taskDetails.classList.add("project__task__details__unhidden");
-  });
+  };
+  detailsButton.addEventListener("click", taskDetailsEvent);
 }

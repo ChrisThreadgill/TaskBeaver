@@ -15,6 +15,7 @@ searchBar.addEventListener("mouseout", async (e) => {
 searchInput.addEventListener("mouseover", async (e) => {
   searchInput.setAttribute("class", "");
 });
+
 searchInput.addEventListener("focus", async (e) => {
   searchInput.setAttribute("class", "");
 });

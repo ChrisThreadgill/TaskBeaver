@@ -30,11 +30,9 @@ router.get(
         include: db.Task,
         order: [
           ["id", "ASC"],
-          [db.Task, 'createdAt', 'asc']
+          [db.Task, "createdAt", "asc"],
         ],
       });
-
-      console.log(projects[0].Tasks)
     }
     res.render("modal", {
       title: "Test Modal",
