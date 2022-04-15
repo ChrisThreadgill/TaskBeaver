@@ -90,8 +90,8 @@ block content
                   i(class='fa-solid fa-address-card')
             span(id=`project__header__display__${project.id}`) #{project.projectName}
             span(id='search__span')
-              input(type='text' id='search__input' class='hidden')
-              button(id='search__button')
+              input(type='text' id=`search__input__${project.id}` class='hidden search__input')
+              button(id=`search__button__${project.id}` class='search__button')
                 i(class='fa-solid fa-magnifying-glass')
         div(class='')
           +errorsSummary()
