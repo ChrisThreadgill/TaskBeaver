@@ -53,7 +53,6 @@ block content
 
 
     //- ADD PROJECT FORM
-    +errorsSummary()
     form(class="hidden" id="addProject")
       input(type='hidden' name='_csrf' value=csrfToken id="csurfId")
       +form("Project Name:", "projectNameAdd", "", "text")
@@ -68,6 +67,8 @@ block content
         option(value="company") Company
       button(type="submit" id="confirm__project__button") Confirm
       button(type="click" id="cancel-add__project__button") Cancel
+    div(class="add__project__error")
+
 
     //- Entire project dashboard
     div(class='project__board')
@@ -108,7 +109,6 @@ block content
               option(value="important") Important
               option(value="notAtIssue") Not at Issue
             button(type="submit" id=`confirm__task__button__${project.id}` class ='confirm__task__add') Confirm
-            button(type="click" id=`cancel__task__${project.id}`) Cancel
 
         div(id=`hidden__edit__form__div__${project.id}`)
           form(action=`/api/projects/${project.id}` method="PUT" class=`hidden hidden__project__edit__form` )
@@ -123,7 +123,6 @@ block content
               option(value="project") Project
               option(value="company") Company
             button(type="submit" class="edit__project__button") Edit
-            button(type="click" id="cancel__edit__project__button") Cancel
         div(id=`tasks__project__${project.id}` class='hidden tasks__container__hidden')
             each task in project.Tasks
               div(class=`project__task__container test__project__${task.projectId}` id=`task__container__${task.id}`)
@@ -153,7 +152,6 @@ block content
                       option(value="important") Important
                       option(value="notAtIssue") Not An Issue
                     button(type="submit" class="edit__task__button") Edit
-                    button(type="click" id="cancel__edit__task__button") Cancel
 
       //- Project dashboard main which displays tasks under a project
       //- Example task layout if not logged in

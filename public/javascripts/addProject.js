@@ -8,6 +8,7 @@ const contentTypeJson = { "Content-Type": "application/json" };
 
 const toggleHidden = (e) => {
   e.preventDefault();
+
   document.getElementById("projectNameAdd").value = "";
   document.getElementById("descriptionAdd").value = "";
   document.getElementById("dueDateAdd").value = "";
@@ -44,7 +45,7 @@ newProject.addEventListener("click", async (e) => {
     projectType,
     _csrf,
   };
-  console.log(info);
+  // console.log(info);
   const newProject = await fetch("/api/projects", {
     method: "post",
     body: JSON.stringify(info),
@@ -53,12 +54,36 @@ newProject.addEventListener("click", async (e) => {
 
   const project = await newProject.json();
 
+  // console.log(project.message)
+  // console.log(project.errorArray)
+
+  if(project.errorArray){
+
+    const errorArray = project.errorArray
+    // grab div for error container.
+    const errorSummary = document.querySelector('.add__project__error')
+    // All child nodes of that div.
+    const oldErrors = errorSummary.childNodes
+
+
+    if (oldErrors){
+      // console.log(oldErrors)
+      while(oldErrors.length !== 0){
+        let oldError = oldErrors[0]
+        oldError.remove()
+      }
+    }
+      for (let i = 0; i < errorArray.length; i++){
+        let error = errorArray[i]
+        const p = document.createElement('p')
+        p.innerText = error
+        errorSummary.appendChild(p)
+      }
+  }
+
   const { id } = project.project;
-
   const projectList = document.querySelector(".project__list");
-
   const projectLink = document.createElement("div");
-
   projectLink.innerHTML = `
   <a class=project__list__name id=project__link__${id}>
   ${projectName}
@@ -81,5 +106,28 @@ newProject.addEventListener("click", async (e) => {
     let trashcan = trashcans[i];
     trashcan.addEventListener("click", deleteProject);
   }
+
   newDeleteButton.addEventListener("click", deleteProject);
+
+  if (!project.errorArray){
+    document.getElementById("projectNameAdd").value = "";
+    document.getElementById("descriptionAdd").value = "";
+    document.getElementById("dueDateAdd").value = "";
+    document.getElementById("urlAdd").value = "";
+    document.getElementById("projectTypeAdd").value = "personal";
+    const addForm = document.getElementById("addProject");
+
+    let parentDiv = document.querySelector('.add__project__error').childNodes
+    for (let i = 0; i < parentDiv.length; i++){
+
+      let pTag = parentDiv[i];
+
+      pTag.remove()
+
+    }
+
+    addForm.classList.toggle("hidden");
+
+  }
+
 });
