@@ -125,7 +125,6 @@ router.post(
   "/tasks",
   asyncHandler(async (req, res, next) => {
     const { userId } = req.session.auth;
-    // const userId = 1;
     const { taskTitle, description, projectId, dueDate, tag, taskContactId } =
       req.body;
     if (userId) {
