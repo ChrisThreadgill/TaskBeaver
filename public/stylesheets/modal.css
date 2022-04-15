@@ -11,10 +11,11 @@ body {
 button {
   width: 40px;
   height: 30px;
+  background: none;
   padding: 0.5rem 0.5rem;
   font-size: 1rem;
   cursor: pointer;
-  border: 1px solid brown;
+  border: none;
   border-radius: 15%;
 }
 
