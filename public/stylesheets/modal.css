@@ -4,18 +4,20 @@
   margin: 0;
   padding: 0;
 }
-
+a {
+  cursor: pointer;
+}
 body {
   background-color: #d3d0cb;
+  overflow-x: hidden;
 }
 button {
-  width: 40px;
-  height: 30px;
   background: none;
   padding: 0.5rem 0.5rem;
   font-size: 1rem;
+  border: solid brown 1px;
   cursor: pointer;
-  border: none;
+
   border-radius: 15%;
 }
 
@@ -136,7 +138,11 @@ button {
   width: 25px;
   height: 25px;
 }
-
+.task__container__unhidden {
+  overflow: scroll;
+  overflow-x: hidden;
+  max-height: 642px;
+}
 /* PROJECT BOARD CONTAINER CSS
 ===================================================================================
 */

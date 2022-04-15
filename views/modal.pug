@@ -137,7 +137,7 @@ block content
             button(type="submit" class="edit__project__button") Edit
         div(id=`tasks__project__${project.id}` class='hidden tasks__container__hidden')
             each task in project.Tasks
-              div(class=`project__task__container test__project__${task.projectId}` id=`task__container__${task.id}`)
+              div(class=`project__task__container` id=`task__container__${task.id}`)
                 div(class='task__buttons')
                   button(class='task__edit__button' id=`task__edit__${task.id}`)
                     i(class="fa-solid fa-pen-to-square")
@@ -151,7 +151,7 @@ block content
                 div(class=`hidden project__task__details__hidden project__task__${project.id}` id=`project__task__details__${task.id}`)
                   div(class='task__description' id=`task__description__${task.id}`) Description: #{task.description}
                   if(task.dueDate)
-                    div(class= 'task__dueDate' id=`task__dueDate__${task.id}`) Due Date: #{task.dueDate.toLocaleDateString()}
+                    div(class= 'task__dueDate' id=`task__dueDate__${task.id}`)= `Due Date: ${task.dueDate.toDateString()}`
                 div(class=`hidden__task__edit__${project.id}`)
                   form(action=`/api/tasks/${task.id}` method="PUT" class=`hidden` id=`hidden__task__edit__${task.id}` )
                     input(type="hidden" name="_csrf" value=csrfToken)
@@ -164,8 +164,8 @@ block content
                       option(value="Flexible") Flexible
                       option(value="Important") Important
                       option(value="Urgent") Urgent
-                    button(type="submit" class="edit__task__button" id=`edit__task__submit__${task.id}`) Edit
-                    button(type="click" id="cancel__edit__task__button") Cancel
+                    button(type="submit" class="edit__task__button" id=`edit__task__submit__${task.id}`) Submit
+
 
 
       //- Project dashboard main which displays tasks under a project

@@ -57,28 +57,26 @@ newProject.addEventListener("click", async (e) => {
   // console.log(project.message)
   // console.log(project.errorArray)
 
-  if(project.errorArray){
-
-    const errorArray = project.errorArray
+  if (project.errorArray) {
+    const errorArray = project.errorArray;
     // grab div for error container.
-    const errorSummary = document.querySelector('.add__project__error')
+    const errorSummary = document.querySelector(".add__project__error");
     // All child nodes of that div.
-    const oldErrors = errorSummary.childNodes
+    const oldErrors = errorSummary.childNodes;
 
-
-    if (oldErrors){
+    if (oldErrors) {
       // console.log(oldErrors)
-      while(oldErrors.length !== 0){
-        let oldError = oldErrors[0]
-        oldError.remove()
+      while (oldErrors.length !== 0) {
+        let oldError = oldErrors[0];
+        oldError.remove();
       }
     }
-      for (let i = 0; i < errorArray.length; i++){
-        let error = errorArray[i]
-        const p = document.createElement('p')
-        p.innerText = error
-        errorSummary.appendChild(p)
-      }
+    for (let i = 0; i < errorArray.length; i++) {
+      let error = errorArray[i];
+      const p = document.createElement("p");
+      p.innerText = error;
+      errorSummary.appendChild(p);
+    }
   }
 
   const { id } = project.project;
@@ -109,7 +107,7 @@ newProject.addEventListener("click", async (e) => {
 
   newDeleteButton.addEventListener("click", deleteProject);
 
-  if (!project.errorArray){
+  if (!project.errorArray) {
     document.getElementById("projectNameAdd").value = "";
     document.getElementById("descriptionAdd").value = "";
     document.getElementById("dueDateAdd").value = "";
@@ -117,17 +115,14 @@ newProject.addEventListener("click", async (e) => {
     document.getElementById("projectTypeAdd").value = "personal";
     const addForm = document.getElementById("addProject");
 
-    let parentDiv = document.querySelector('.add__project__error').childNodes
-    for (let i = 0; i < parentDiv.length; i++){
-
+    let parentDiv = document.querySelector(".add__project__error").childNodes;
+    for (let i = 0; i < parentDiv.length; i++) {
       let pTag = parentDiv[i];
 
-      pTag.remove()
-
+      pTag.remove();
     }
 
     addForm.classList.toggle("hidden");
-
+    location.reload();
   }
-
 });
