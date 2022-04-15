@@ -4,7 +4,9 @@ window.addEventListener("load", (e) => {
 const contentTypeJson = { "Content-type": "application/json" };
 
 // gives you all of the form fields with this class
-const hiddenForm = document.querySelectorAll(".hidden__edit__form");
+const hiddenEditProjectForms = document.querySelectorAll(
+  ".hidden__project__edit__form"
+);
 const formInputs = document.querySelectorAll(".edit__form");
 console.log(formInputs);
 
@@ -13,14 +15,13 @@ const submitEdits = document.querySelectorAll(".edit__project__button");
 
 // const inputFields = Array.from(formInputs);
 
-const hiddenForms = Array.from(hiddenForm);
 const editForm = Array.from(editForms);
 const submitEdit = Array.from(submitEdits);
 
 for (let i = 0; i < editForm.length; i++) {
   // console.log(editForm[i]);
   const currentProjectEditPen = editForm[i];
-  console.log(hiddenForms[i]);
+  console.log(hiddenEditProjectForms[i]);
   //gives us all of the edit pens for each project
   console.log(currentProjectEditPen);
 
@@ -29,8 +30,8 @@ for (let i = 0; i < editForm.length; i++) {
     /**                                   *    *      Look an alien!
          /**                                   \  /                             */
     const projectId = currentProjectEditPen.id.split("__")[2];
-    console.log(hiddenForms[i]);
-    const currentHiddenForm = hiddenForms[i];
+    console.log(hiddenEditProjectForms[i]);
+    const currentHiddenForm = hiddenEditProjectForms[i];
     console.log(currentHiddenForm);
     const activeHiddenForm = document.getElementById("hidden__form__active");
 
