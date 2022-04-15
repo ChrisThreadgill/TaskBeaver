@@ -3,27 +3,37 @@ window.addEventListener("load", (e) => {
 });
 const contentTypeJson = { "Content-type": "application/json" };
 
+// gives you all of the form fields with this class
 const hiddenForm = document.querySelectorAll(".hidden__edit__form");
-const formInputs = document.querySelectorAll(".test");
+const formInputs = document.querySelectorAll(".edit__form");
+console.log(formInputs);
+
 const editForms = document.querySelectorAll(".edit__form");
 const submitEdits = document.querySelectorAll(".edit__project__button");
 
-const inputFields = Array.from(formInputs);
+// const inputFields = Array.from(formInputs);
+
 const hiddenForms = Array.from(hiddenForm);
 const editForm = Array.from(editForms);
 const submitEdit = Array.from(submitEdits);
 
 for (let i = 0; i < editForm.length; i++) {
   // console.log(editForm[i]);
-  const currentEdit = editForm[i];
-  // console.log(currentEdit);
-  currentEdit.addEventListener("click", async (e) => {
+  const currentProjectEditPen = editForm[i];
+  console.log(hiddenForms[i]);
+  //gives us all of the edit pens for each project
+  console.log(currentProjectEditPen);
+
+  currentProjectEditPen.addEventListener("click", async (e) => {
     //grabs the project ID from the id of the element
     /**                                   *    *      Look an alien!
          /**                                   \  /                             */
-    const projectId = currentEdit.id.split("__")[2];
+    const projectId = currentProjectEditPen.id.split("__")[2];
+    console.log(hiddenForms[i]);
     const currentHiddenForm = hiddenForms[i];
+    console.log(currentHiddenForm);
     const activeHiddenForm = document.getElementById("hidden__form__active");
+
     if (activeHiddenForm) {
       activeHiddenForm.removeAttribute("id");
       activeHiddenForm.classList.toggle("hidden");
@@ -32,7 +42,6 @@ for (let i = 0; i < editForm.length; i++) {
       const currentInputs = document.getElementsByClassName(
         `hidden__form__input__${projectId}`
       );
-      // console.log(currentInputs, "currentInputs");
 
       const currentProject = await fetch(`api/projects/${projectId}`, {
         method: "GET",
@@ -65,10 +74,8 @@ for (let i = 0; i < editForm.length; i++) {
 
       currentHiddenForm.classList.toggle("hidden");
       currentHiddenForm.setAttribute("id", "hidden__form__active");
-      // editForm.setAttribute("class", "visible");
-      // console.log(submitEdit, "submit edit");
+
       const currentSubmitButton = submitEdit[i];
-      // console.log(currentSubmitButton, "current submit button");
 
       currentSubmitButton.addEventListener("click", async (e) => {
         e.preventDefault();

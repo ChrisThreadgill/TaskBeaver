@@ -1,71 +1,68 @@
-import {taskDeletes} from './deleteTask.js'
-
+import { taskDeletes } from "./deleteTask.js";
 
 window.addEventListener("load", (event) => {
-    console.log("hello from addTask!");
-  });
+  console.log("hello from addTask!");
+});
 
-  const contentTypeJson = { "Content-Type": "application/json" };
+const contentTypeJson = { "Content-Type": "application/json" };
 
-  //addListener for add button
+//addListener for add button
 
-  const addTaskButtons = document.querySelectorAll('.confirm__task__add')
+const addTaskButtons = document.querySelectorAll(".confirm__task__add");
 
 //   console.log(addTaskButtons)
 
-
 // grab all form inputs.
 
+const addTask = async (e) => {
+  e.preventDefault();
 
+  const projectId = e.target.id.split(`__`)[3];
 
-const addTask = async(e) => {
-    e.preventDefault();
+  console.log(projectId);
 
-    const projectId = e.target.id.split(`__`)[3]
+  const taskTitle = document.getElementById(`task__title__${projectId}`).value;
+  const description = document.getElementById(
+    `description__${projectId}`
+  ).value;
+  const dueDate = document.getElementById(`due__date__${projectId}`).value;
+  const tag = document.getElementById(`task__select__${projectId}`).value;
 
-    console.log(projectId)
+  // console.log(taskTitle)
+  // console.log(description.value)
+  // console.log(dueDate.value)
+  // console.log(options.value)
 
-    const taskTitle = document.getElementById(`task__title__${projectId}`).value
-    const description = document.getElementById(`description__${projectId}`).value
-    const dueDate = document.getElementById(`due__date__${projectId}`).value
-    const tag = document.getElementById(`task__select__${projectId}`).value
+  const info = {
+    taskTitle,
+    description,
+    dueDate,
+    tag,
+    projectId,
+  };
 
-    // console.log(taskTitle)
-    // console.log(description.value)
-    // console.log(dueDate.value)
-    // console.log(options.value)
+  const newTask = await fetch("/api/tasks", {
+    method: "POST",
+    headers: contentTypeJson,
+    body: JSON.stringify(info),
+  });
 
-    const info = {
-        taskTitle,
-        description,
-        dueDate,
-        tag,
-        projectId
-    }
+  const res = await newTask.json();
 
-    const newTask = await fetch('/api/tasks', {
-        method: 'POST',
-        headers: contentTypeJson,
-        body: JSON.stringify(info)
-    })
+  // console.log(res)
 
-    const res = await newTask.json();
+  const { id } = res.task;
 
-    // console.log(res)
+  // console.log(id)
 
-    const {id} = res.task
+  const taskDiv = document.createElement("div");
+  taskDiv.setAttribute("class", "project__task__container");
+  taskDiv.setAttribute("id", `task__container__${id}`);
+  //add class to buttons.
 
-    // console.log(id)
+  const projectBoard = document.querySelector(".project__board");
 
-
-   const taskDiv = document.createElement('div')
-   taskDiv.setAttribute('class', 'project__task__container')
-   taskDiv.setAttribute('id', `task__container__${id}`)
-    //add class to buttons.
-
-   const projectBoard = document.querySelector('.project__board')
-
-   taskDiv.innerHTML = `
+  taskDiv.innerHTML = `
    <div class="task__buttons">
         <button class='task__edit__button' id='task__edit__${id}'><i class="fa-solid fa-pen-to-square"></i></button>
         <button class='task__delete__button' id='task__delete__${id}'><i class="fa-solid fa-trash-can task__trash__icon" id='trash__task__${id}'></i></button>
@@ -80,7 +77,7 @@ const addTask = async(e) => {
         <div class="task__dueDate" id='task__dueDate__${id}'>'${dueDate}'</div>
     </div>
     <div class="test">
-        <form class="hidden__edit__form" action='/api/tasks/${id}' method="PUT">
+        <form class="hidden__task__edit__form" action='/api/tasks/${id}' method="PUT">
             <input type="hidden" name="_csrf" value=csrfToken>
             <div>
                 <label for='taskTitle'>Task Title:</label>
@@ -102,26 +99,25 @@ const addTask = async(e) => {
                 <button type="click " id="cancel__edit__task__button ">Cancel</button>
             </form>
     </div>
-`
-projectBoard.appendChild(taskDiv)
-const trashCansIcons = document.querySelectorAll('.task__trash__icon')
+`;
+  projectBoard.appendChild(taskDiv);
+  const trashCansIcons = document.querySelectorAll(".task__trash__icon");
 
-const taskTrashButtons = document.querySelectorAll('.task__delete__button')
+  const taskTrashButtons = document.querySelectorAll(".task__delete__button");
 
-    for (let icon of trashCansIcons){
-        // console.log(icon)
-        icon.addEventListener('click', taskDeletes)
-    }
+  for (let icon of trashCansIcons) {
+    // console.log(icon)
+    icon.addEventListener("click", taskDeletes);
+  }
 
-    for (let button of taskTrashButtons){
-        // console.log(button)
-        button.addEventListener('click', taskDeletes)
-    }
-}
+  for (let button of taskTrashButtons) {
+    // console.log(button)
+    button.addEventListener("click", taskDeletes);
+  }
+};
 
+for (let i = 0; i < addTaskButtons.length; i++) {
+  let button = addTaskButtons[i];
 
-for (let i = 0; i < addTaskButtons.length; i++){
-    let button = addTaskButtons[i];
-
-    button.addEventListener('click', addTask)
+  button.addEventListener("click", addTask);
 }

@@ -63,7 +63,7 @@
     button(type="submit" id="edit__Project__Button") Edit
     button(type="click" id="cancel-edit__Project__Button") Cancel
 
-  //- ADD TASK PROJECT
+  //- ADD PROJECT TASK
   +errorsSummary()
   form(action="/api/tasks" method="POST" class="hidden")
     input(type="hidden" name="_csrf" value=csrfToken)
@@ -79,7 +79,7 @@
     button(type="submit" id="confirm__Task__Button") Confirm
     button(type="click" id="cancel-add__Task__Button") Cancel
 
-  //-EDIT TASK PROJECT
+  //-EDIT PROJECT TASK
   form(action="/api//tasks/:id" method="POST" class="hidden")
     input(type="hidden" name="_csrf" value=csrfToken)
     +form("Task Title:", "taskTitle", taskTitle, "text")

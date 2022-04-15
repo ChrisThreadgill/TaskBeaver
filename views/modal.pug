@@ -92,7 +92,7 @@ block content
               input(type='text' id='search__input' class='hidden')
               button(id='search__button')
                 i(class='fa-solid fa-magnifying-glass')
-        div(class='test')
+        div(class='')
           +errorsSummary()
           form(action="/api/tasks" method="POST" class="test__task__form")
             input(type="hidden" name="_csrf" value=csrfToken)
@@ -141,8 +141,8 @@ block content
               div(class='task__description' id=`task__description__${task.id}`)=task.description
               if(task.dueDate)
                 div(class= 'task__dueDate' id=`task__dueDate__${task.id}`) #{task.dueDate.toLocaleDateString()}
-            div(class='test')
-              form(action=`/api/tasks/${task.id}` method="PUT" class=`hidden hidden__edit__form` )
+            div(class='')
+              form(action=`/api/tasks/${task.id}` method="PUT" class=` hidden__task__edit__form` )
                 input(type="hidden" name="_csrf" value=csrfToken)
                 +hiddenForm("Task Title:", "taskTitle", "", "text", `hidden__task__input__${task.id}` )
                 +hiddenForm("Description:", "description", "", "text", `hidden__task__input__${task.id}`)
