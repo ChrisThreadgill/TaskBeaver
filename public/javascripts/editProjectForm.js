@@ -53,9 +53,8 @@ for (let i = 0; i < projectEditPencils.length; i++) {
     );
 
     currentHiddenForm.classList.toggle("hidden");
-    activeForm.classList.add("hidden__form__active");
-    console.log(currentHiddenForm);
-    console.log(activeForm);
+
+    activeForm.classList.toggle("hidden__form__active");
   });
 }
 
@@ -111,7 +110,8 @@ for (let i = 0; i < submitEditButtons.length; i++) {
     );
 
     currentHiddenForm.classList.toggle("hidden");
-    activeForm.classList.add("hidden__form__active");
+
+    activeForm.classList.remove("hidden__form__active");
   });
 }
 

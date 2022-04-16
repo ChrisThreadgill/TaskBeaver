@@ -42,7 +42,7 @@ for (let i = 0; i < projects.length; i++) {
     const unhiddenHeader = document.querySelector(".project__header__unhidden");
 
     const activeHiddenForm = document.querySelector(".hidden__form__active");
-
+    console.log(activeHiddenForm);
     const activeTaskAddForm = document.getElementById("add__task__unhidden");
 
     if (allOpenEditTaskForms[0]) {
@@ -90,8 +90,10 @@ for (let i = 0; i < projects.length; i++) {
 
     //checking for an active hidden project edit form
     if (activeHiddenForm) {
-      activeHiddenForm.parentNode.classList.toggle("hidden");
-      activeHiddenForm.classList.remove("hidden__form__active");
+      if (currentTargetId !== activeHiddenForm.id.split("__")[2]) {
+        activeHiddenForm.parentNode.classList.toggle("hidden");
+        activeHiddenForm.classList.remove("hidden__form__active");
+      }
     }
 
     //checking for an unhidden project header
