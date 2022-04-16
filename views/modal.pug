@@ -122,6 +122,7 @@ block content
                       if(project.dueDate)
                         div(class= 'project__dueDate' id=`project__dueDate__${project.id}`)= `${project.dueDate.toLocaleDateString()}`
 
+        div(class="add__task__error")
         div(id=`hidden__edit__form__div__${project.id}`)
           form(action=`/api/projects/${project.id}` method="PUT" class=`hidden hidden__project__edit__form` )
             input(type="hidden" name="_csrf" value=csrfToken)
