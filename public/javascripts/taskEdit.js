@@ -84,18 +84,17 @@ for (let i = 0; i < taskEditButtons.length; i++) {
             );
             taskTitleDiv.innerText = taskTitle;
 
-            const taskTag = document.getElementById(`task__tag__${currentTaskId}`);
-            taskTag.innerText = tag;
-            const taskDescription = document.getElementById(
-                `task__description__${currentTaskId}`
-            );
-            taskDescription.innerText = `Description: ${description}`;
-            const taskDueDate = document.getElementById(
-                `task__dueDate__${currentTaskId}`
-            );
-            taskDueDate.innerText = `Due Date: ${dueDate.toDateString()}`;
-            currentHiddenEditForm.classList.toggle("hidden");
-            currentHiddenEditForm.classList.toggle("edit__task__unhidden");
-        });
+      const taskTag = document.getElementById(`task__tag__${currentTaskId}`);
+      taskTag.innerText = tag;
+      const taskDescription = document.getElementById(
+        `task__description__${currentTaskId}`
+      );
+      taskDescription.innerText = `Description: ${description}`;
+      const taskDueDate = document.getElementById(
+        `task__dueDate__${currentTaskId}`
+      );
+      taskDueDate.innerText = `Due Date: ${new Date(dueDate).toDateString()}`;
+      currentHiddenEditForm.classList.toggle("hidden");
+      currentHiddenEditForm.classList.toggle("edit__task__unhidden");
     });
 }

@@ -2,10 +2,9 @@ window.addEventListener("load", (e) => {
   console.log("hello from list populate project script");
 });
 
-const projectLinks = document.querySelectorAll(".project__link");
-const projects = Array.from(projectLinks);
+const projects = document.querySelectorAll(".project__link");
+
 const hiddenForm = document.querySelectorAll(".hidden__project__edit__form");
-const hiddenForms = Array.from(hiddenForm);
 
 for (let i = 0; i < projects.length; i++) {
   //each project link in the project list
@@ -25,7 +24,6 @@ for (let i = 0; i < projects.length; i++) {
     `tasks__project__${projectId}`
   );
 
-  console.log(currentTasksContainer, "task containersssssssssssss");
   currentProjectLink.addEventListener("click", async (e) => {
     e.preventDefault();
     const currentTargetId = e.target.id.split("__")[2];
@@ -40,11 +38,11 @@ for (let i = 0; i < projects.length; i++) {
     const unHiddenTaskContainer = document.querySelector(
       ".task__container__unhidden"
     );
-    //checking for a project header that is already unhidden
-    const unhiddenHeader = document.querySelector(".project__header__unhidden");
-    //checking for a form that is already unhidden
-    const activeHiddenForm = document.getElementById("hidden__form__active");
 
+    const unhiddenHeader = document.querySelector(".project__header__unhidden");
+
+    const activeHiddenForm = document.querySelector(".hidden__form__active");
+    console.log(activeHiddenForm);
     const activeTaskAddForm = document.getElementById("add__task__unhidden");
 
     if (allOpenEditTaskForms[0]) {
@@ -86,16 +84,19 @@ for (let i = 0; i < projects.length; i++) {
     }
 
     if (activeTaskAddForm) {
-      // console.log(activeHiddenForm, "this is the hidden active form");
       activeTaskAddForm.classList.toggle("hidden");
       activeTaskAddForm.removeAttribute("id");
     }
 
+    //checking for an active hidden project edit form
     if (activeHiddenForm) {
-      activeHiddenForm.classList.toggle("hidden");
-      activeHiddenForm.removeAttribute("id");
+      if (currentTargetId !== activeHiddenForm.id.split("__")[2]) {
+        activeHiddenForm.parentNode.classList.toggle("hidden");
+        activeHiddenForm.classList.remove("hidden__form__active");
+      }
     }
 
+    //checking for an unhidden project header
     if (unhiddenHeader) {
       unhiddenHeader.removeAttribute("class");
       unhiddenHeader.setAttribute("class", "hidden");

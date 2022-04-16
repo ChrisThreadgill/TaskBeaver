@@ -230,6 +230,7 @@ const addTask = async(e) => {
         for (let taskDescriptionForm of taskDescriptionForms) {
             taskDescriptionForm.value = ""
         }
+      
         const taskDueDateForms = document.querySelectorAll(".task__add__duedate")
         for (let taskDueDateForm of taskDueDateForms) {
             taskDueDateForm.value = ""
@@ -250,9 +251,7 @@ const addTask = async(e) => {
             }
         }
 
-
     }
-
 };
 
 const moveOffProject = async(e) => {

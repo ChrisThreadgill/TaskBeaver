@@ -10,8 +10,7 @@ const hiddenEditProjectForms = document.querySelectorAll(
 const formInputs = document.querySelectorAll(".edit__form");
 console.log(formInputs);
 
-const editForms = document.querySelectorAll(".edit__form");
-const submitEdits = document.querySelectorAll(".edit__project__button");
+const submitEditButtons = document.querySelectorAll(".edit__project__submit");
 
 // const inputFields = Array.from(formInputs);
 
