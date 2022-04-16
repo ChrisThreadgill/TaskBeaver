@@ -82,6 +82,7 @@ router.post(
 
 router.put(
     "/projects/:id",
+    csrfProtection,
     asyncHandler(async(req, res, next) => {
         const { userId } = req.session.auth;
         // const userId = 1;
@@ -170,6 +171,7 @@ router.get(
 // Route to post a new task.
 router.post(
     "/tasks",
+    csrfProtection,
     taskValidator,
     asyncHandler(async(req, res, next) => {
         const { userId } = req.session.auth;
@@ -208,6 +210,7 @@ router.post(
 // route to edit selected task based on id
 router.put(
     "/tasks/:id",
+    csrfProtection,
     asyncHandler(async(req, res, next) => {
         const { userId } = req.session.auth;
 
