@@ -15,7 +15,7 @@ router.put(
     asyncHandler(async(req, res, next) => {
         // const { userId } = req.session.auth;
         const userId = 1;
-        console.log(req.body)
+        // console.log(req.body)
         const inputs = req.body.input
         const projectId = req.body.projectId
             // const searchQuery = req.body.input;
@@ -31,6 +31,8 @@ router.put(
             },
             limit: 10,
         });
+
+        // console.log(searchResults)
 
         res.json({
             searchResults
@@ -149,6 +151,22 @@ router.get(
         }
     })
 );
+
+// Route to get all tasks for user.
+
+router.get(
+    '/user/tasks',
+    asyncHandler(async(req, res, next) => {
+        const { userId } = req.session.auth;
+        const projectId = req.params.id;
+
+        const allTasks = await db.Task.findAll()
+
+        res.json({
+            allTasks
+        })
+    })
+)
 
 // Route to post a new task.
 router.post(
