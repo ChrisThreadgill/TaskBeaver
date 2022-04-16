@@ -53,19 +53,53 @@ const addTask = async(e) => {
     });
 
     const res = await newTask.json();
-    console.log(res)
-    if (res.message === "Unsuccessful") {
-        // const errorSummary = document.querySelector(".add__project__error");
+    // console.log(res)
 
-        const errorSummary = document.querySelector(".add__task__error")
-        console.log(errorSummary)
-        console.log(res.errorArray)
-        for (let error of res.errorArray) {
-            const errorSpan = document.createElement('span')
-            errorSpan.innerText = error
-            errorSummary.append(errorSpan)
+
+    // if (res.message === "Unsuccessful") {
+    //     // const errorSummary = document.querySelector(".add__project__error");
+
+    //     const errorSummary = document.querySelector(".add__task__error")
+    //     // console.log(errorSummary)
+    //     // console.log(res.errorArray)
+    //     for (let error of res.errorArray) {
+    //         const errorSpan = document.createElement('span')
+    //         errorSpan.innerText = error
+    //         errorSummary.append(errorSpan)
+    //     }
+    //     return
+    // }
+
+    // let parentDiv = document.querySelector('.add__task__error')
+    // const spanError = parentDiv.childNodes
+    // // console.log(parentDiv.childNodes, 'This is error summary')
+    // while(spanError !== 0){
+    //     let span = spanError[0]
+    //     // console.log(span, "LOOOOOOOOOK HERE")
+    //     span.remove()
+    // }
+
+    if (res.errorArray){
+        const array = res.errorArray;
+
+        const parentDiv = document.querySelector('.add__task__error')
+        const oldErrors = parentDiv.childNodes
+
+        if (oldErrors){
+            while (oldErrors.length !== 0){
+                let oldErr = oldErrors[0];
+                oldErr.remove()
+            }
         }
-        return
+
+        for (let i = 0; i < array.length; i++ ){
+            let errMsg = array[i];
+
+            let p = document.createElement('p')
+            p.innerText = errMsg
+
+            parentDiv.appendChild(p)
+        }
     }
 
     console.log(res);
@@ -73,6 +107,42 @@ const addTask = async(e) => {
     const { id } = res.task;
 
     // console.log(id)
+
+    // will add event listener to add button
+
+    const addButtons = document.querySelectorAll(`.confirm__task__add`)
+
+    // console.log(addButtons, 'ADD BUTTON RIGHT HERE!!!!')
+
+    // for (let button of addButtons){
+    //     console.log(button, 'This is what you are looking for...')
+    //     button.addEventListener('click', (e) => {
+
+    //         console.log(e.target.id, 'EVENTTTTTTT TARGET ID')
+    //         if(oldErrors === undefined){
+
+    //         } else {
+    //             if (oldErrors.length !== 0){
+    //                 if(oldErrors.length === 1){
+    //                     oldErrors[0].remove()
+    //                 }
+    //                 if(oldErrors.length === 2){
+    //                     oldErrors[0].remove()
+    //                     oldErrors[0].remove()
+    //                 }
+    //             }
+
+    //         }
+    //         // grabs taskTitle input
+    //         const title = document.querySelector(`#task__title__${id}`)
+    //         title.value = ''
+    //         const description = document.querySelector(`#description__${id}`)
+    //         description.value = ''
+    //         const dateInput = document.querySelector(`due__date__${id}`)
+    //         dateInput.value = ''
+    //     })
+    // }
+
 
     const taskDiv = document.createElement("div");
     taskDiv.setAttribute("class", "project__task__container");
