@@ -53,7 +53,7 @@ block content
 
 
     //- ADD PROJECT FORM
-    form(class="hidden" id="addProject")
+    form(class="hidden addProject" id="addProject")
       input(type='hidden' name='_csrf' value=csrfToken id="csurfId")
       +form("Project Name:", "projectNameAdd", "", "text")
       +form("Description:", "descriptionAdd", "", "text")

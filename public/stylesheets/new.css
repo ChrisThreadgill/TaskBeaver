@@ -133,7 +133,7 @@ div#current__tasks > a#dueTodayTasks {
   border: 1px black solid;
 }
 
-.addProject {
+#addProject {
   display: flex;
   flex-direction: column;
   border: 1px black solid;
