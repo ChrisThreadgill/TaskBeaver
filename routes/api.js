@@ -1,5 +1,5 @@
 const express = require("express");
-const { csrfProtection, asyncHandler, projectValidator, taskValidator } = require("./utils.js");
+const { csrfProtection, asyncHandler } = require("./utils.js");
 const db = require("../db/models");
 const { loginUser, logoutUser } = require("../auth");
 const { check, validationResult } = require("express-validator");
@@ -27,62 +27,62 @@ router.get(
     })
 );
 
-// const projectValidator =[
-//   check("projectName")
-//     .exists({ checkFalsy: true })
-//     .withMessage("Please provide a project name."),
-//   check("dueDate")
-//     .exists({ checkFalsy: true })
-//     .withMessage("Please provide a due date.")
-// ]
+const projectValidator =[
+  check("projectName")
+    .exists({ checkFalsy: true })
+    .withMessage("Please provide a project name."),
+  check("dueDate")
+    .exists({ checkFalsy: true })
+    .withMessage("Please provide a due date.")
+]
 
 // Route to post new project.
 router.post(
-    "/projects",
-    csrfProtection,
-    projectValidator,
-    asyncHandler(async(req, res, next) => {
-        const { userId } = req.session.auth;
-        const { projectName, description, dueDate, url, projectType } = req.body;
+  "/projects",
+  csrfProtection,
+  projectValidator,
+  asyncHandler(async (req, res, next) => {
+    const { userId } = req.session.auth;
+    const { projectName, description, dueDate, url, projectType } = req.body;
 
 
-        const validatorErrors = validationResult(req);
-        if (validatorErrors.isEmpty()) {
+    const validatorErrors = validationResult(req);
+
+    if (validatorErrors.isEmpty()){
 
 
-            const project = await db.Project.build({
-                userId,
-                projectName,
-                description,
-                dueDate,
-                url,
-                projectType,
-            });
-            await project.save();
-            res.json({
-                project,
-            });
+      const project = await db.Project.build({
+        userId,
+        projectName,
+        description,
+        dueDate,
+        url,
+        projectType,
+      });
+      await project.save();
+      res.json({
+        project,
+      });
 
 
-        } else {
+    } else {
 
 
-            const errorArray = validatorErrors.array().map(error => error.msg)
-            res.json({
-                message: 'Unsuccessful',
-                errorArray
-            });
+      const errorArray = validatorErrors.array().map(error => error.msg)
+      res.json({
+        message: 'Unsuccessful',
+        errorArray
+      });
 
 
-        }
+    }
 
-    })
+  })
 
 );
 
 router.put(
     "/projects/:id",
-    csrfProtection,
     asyncHandler(async(req, res, next) => {
         const { userId } = req.session.auth;
         // const userId = 1;
@@ -171,38 +171,27 @@ router.get(
 // Route to post a new task.
 router.post(
     "/tasks",
-    csrfProtection,
-    taskValidator,
     asyncHandler(async(req, res, next) => {
         const { userId } = req.session.auth;
         const { taskTitle, description, projectId, dueDate, tag, taskContactId } =
         req.body;
-        console.log(req.body)
-        const validatorErrors = validationResult(req);
-        console.log(validatorErrors)
-        if (validatorErrors.isEmpty()) {
-            if (userId) {
-                const task = await db.Task.build({
-                    taskTitle,
-                    description,
-                    projectId,
-                    dueDate,
-                    tag,
-                    taskContactId,
-                });
+        if (userId) {
+            const task = await db.Task.build({
+                taskTitle,
+                description,
+                projectId,
+                dueDate,
+                tag,
+                taskContactId,
+            });
 
-                await task.save();
+            await task.save();
 
-                res.json({
-                    task,
-                });
-            }
-        } else {
-            const errorArray = validatorErrors.array().map(error => error.msg)
             res.json({
-                message: "Unsuccessful",
-                errorArray
-            })
+                task,
+            });
+        } else {
+            res.json({ message: "need to log into create task" });
         }
     })
 );
@@ -210,7 +199,6 @@ router.post(
 // route to edit selected task based on id
 router.put(
     "/tasks/:id",
-    csrfProtection,
     asyncHandler(async(req, res, next) => {
         const { userId } = req.session.auth;
 
