@@ -96,7 +96,9 @@ for (let i = 0; i < taskEditButtons.length; i++) {
       const taskDueDate = document.getElementById(
         `task__dueDate__${currentTaskId}`
       );
-      taskDueDate.innerText = `Due Date: ${dueDate.toDateString()}`;
+      console.log(taskDueDate);
+      console.log(dueDate);
+      taskDueDate.innerText = `Due Date: ${new Date(dueDate).toDateString()}`;
       currentHiddenEditForm.classList.toggle("hidden");
       currentHiddenEditForm.classList.toggle("edit__task__unhidden");
     });

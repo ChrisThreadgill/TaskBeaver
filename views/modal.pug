@@ -80,7 +80,7 @@ block content
           div(class='project__buttons')
             div(class='project__edit__buttons')
               span
-                button(class='edit__form' id=`edit__form__${project.id}`)
+                button(class='project__edit__pencil' id=`edit__form__${project.id}`)
                   i(class='fa-solid fa-pen-to-square')
               span
                 button(class='delete__button' id=`delete__button__${project.id}`)
@@ -89,9 +89,9 @@ block content
                 button(class='add__contact__button' id=`add__contact__button__${project.id}`)
                   i(class='fa-solid fa-address-card')
             span(id=`project__header__display__${project.id}`) #{project.projectName}
-              span
-                button(class='project__details__button' id=`project__details__button__${project.id}`)
-                  i(class='fa-solid fa-circle-info')
+            span
+              button(class='project__details__button' id=`project__details__button__${project.id}`)
+                i(class='fa-solid fa-circle-info')
             span(id='search__span')
               input(type='text' id='search__input' class='hidden')
               button(id='search__button')
@@ -115,15 +115,15 @@ block content
 
         div(id=`project__details__div__${project.id}`)
           div(class=`project__details__container hidden` id=`project__details__${project.id}`)
-                    div(class=`project__title` id=`project__title__${project.id}`)=`${project.projectName}`
+                    div(class=`project__title` id=`project__title__${project.id}`)= `Project Name${project.projectName}`
                     div(class='project__type')
-                      span(class="badge bg-urgent" id=`project__type__${project.projectType}`)=project.projectType
-                    div(class='project__description' id=`project__description__${project.id}`)=project.description
+                      span(class="badge bg-urgent" id=`project__type__${project.projectType}`)= `Project Type: ${project.projectType}`
+                    div(class='project__description' id=`project__description__${project.id}`)= `Project Details: ${project.description}`
                       if(project.dueDate)
-                        div(class= 'project__dueDate' id=`project__dueDate__${project.id}`)= `${project.dueDate.toLocaleDateString()}`
+                        div(class= 'project__dueDate' id=`project__dueDate__${project.id}`)= `Due Date: ${project.dueDate.toDateString()}`
 
-        div(id=`hidden__edit__form__div__${project.id}`)
-          form(action=`/api/projects/${project.id}` method="PUT" class=`hidden hidden__project__edit__form` )
+        div(class=`hidden hidden__edit__form__div` id=`hidden__edit__form__div__${project.id}`)
+          form(action=`/api/projects/${project.id}` method="PUT" class=`` id=`hidden__project__edit__${project.id}` )
             input(type="hidden" name="_csrf" value=csrfToken)
             +hiddenForm("Project Name:", "projectName", "", "text", `hidden__form__input__${project.id}` )
             +hiddenForm("Description:", "description", "", "text", `hidden__form__input__${project.id}`)
@@ -134,7 +134,7 @@ block content
               option(value="groceries") Groceries
               option(value="project") Project
               option(value="company") Company
-            button(type="submit" class="edit__project__button") Edit
+            button(type="submit" class="edit__project__submit" id=`project__submit__${project.id}`) Edit
         div(id=`tasks__project__${project.id}` class='hidden tasks__container__hidden')
             each task in project.Tasks
               div(class=`project__task__container` id=`task__container__${task.id}`)

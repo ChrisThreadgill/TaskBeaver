@@ -15,8 +15,6 @@ const dateView = (date) => {
 
 const addTaskButtons = document.querySelectorAll(".confirm__task__add");
 
-//   console.log(addTaskButtons)
-
 // grab all form inputs.
 
 const addTask = async (e) => {
@@ -30,13 +28,8 @@ const addTask = async (e) => {
   const description = document.getElementById(
     `description__${projectId}`
   ).value;
-  const dueDate = document.getElementById(`due__date__${projectId}`).value;
+  let dueDate = document.getElementById(`due__date__${projectId}`).value;
   const tag = document.getElementById(`task__select__${projectId}`).value;
-
-  // console.log(taskTitle)
-  // console.log(description.value)
-  console.log(dueDate);
-  // console.log(options.value)
 
   const info = {
     taskTitle,
@@ -54,18 +47,18 @@ const addTask = async (e) => {
 
   const res = await newTask.json();
 
-  console.log(res);
+  console.log(res, "ressssssssssssssss");
 
   const { id } = res.task;
 
-  // console.log(id)
+  dueDate = new Date(dueDate).toDateString();
 
   const taskDiv = document.createElement("div");
   taskDiv.setAttribute("class", "project__task__container");
   taskDiv.setAttribute("id", `task__container__${id}`);
   //add class to buttons.
 
-  const projectBoard = document.querySelector(`.project__board`);
+  const projectBoard = document.getElementById(`tasks__project__${projectId}`);
   console.log(projectId);
 
   taskDiv.innerHTML = `
@@ -105,8 +98,7 @@ const addTask = async (e) => {
             </form>
     </div>
 `;
-  console.log(projectBoard);
-  console.log(taskDiv);
+
   projectBoard.appendChild(taskDiv);
 
   // adding new event listener for details drop down
@@ -199,7 +191,7 @@ const addTask = async (e) => {
       );
       taskDescription.innerText = description;
       const taskDueDate = document.getElementById(`task__dueDate__${id}`);
-      taskDueDate.innerText = dateView(dueDate);
+      taskDueDate.innerText = `Due Date: ${new Date(dueDate).toDateString()}`;
       newHiddenEditForm.classList.toggle("hidden");
       newHiddenEditForm.classList.toggle("edit__task__unhidden");
     });

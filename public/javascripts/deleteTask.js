@@ -1,49 +1,45 @@
 window.addEventListener("load", (event) => {
-    console.log("hello from deleteTask");
-  });
+  console.log("hello from deleteTask");
+});
 
 const contentTypeJson = { "Content-Type": "application/json" };
 
+const taskDelete = document.querySelectorAll(".task__delete__button");
 
-const taskDelete = document.querySelectorAll('.task__delete__button');
+const trashCansTask = document.querySelectorAll(".task__trash__icon");
 
-const trashCansTask = document.querySelectorAll('.task__trash__icon')
+export const taskDeletes = async (e) => {
+  e.stopPropagation();
 
+  const taskId = e.target.id.split("__")[2];
+  console.log(e.target.id);
+  console.log(taskId);
 
-export const taskDeletes = async(e) => {
+  const taskDelete = await fetch(`/api/tasks/${taskId}`, {
+    method: "DELETE",
+  });
 
-    e.stopPropagation();
+  const data = await taskDelete.json();
 
-    const taskId = e.target.id.split("__")[2]
-    console.log(e.target.id)
-    console.log(taskId)
+  if (data.message) {
+    console.log("CONSOLE");
+    const currentTaskDiv = document.getElementById(
+      `task__container__${taskId}`
+    );
+    console.log(currentTaskDiv);
+    currentTaskDiv.remove();
+  }
+};
 
-    const taskDelete = await fetch(`/api/tasks/${taskId}`, {
-        method: "DELETE",
-    })
+for (let i = 0; i < taskDelete.length; i++) {
+  let taskButton = taskDelete[i];
 
-    const data = await taskDelete.json()
+  // console.log(taskButton)
 
-    if (data.message){
-        console.log('CONSOLE')
-        const currentTaskDiv = document.getElementById(`task__container__${taskId}`)
-        console.log(currentTaskDiv)
-        currentTaskDiv.remove()
-    }
-
+  taskButton.addEventListener("click", taskDeletes);
 }
 
-for (let i = 0; i < taskDelete.length; i++){
-
-    let taskButton = taskDelete[i];
-
-    // console.log(taskButton)
-
-    taskButton.addEventListener('click', taskDeletes);
-
-}
-
-for (let i = 0; i< trashCansTask.length; i++){
-    let taskTrashIcon = trashCansTask[i];
-    taskTrashIcon.addEventListener('click',taskDeletes)
+for (let i = 0; i < trashCansTask.length; i++) {
+  let taskTrashIcon = trashCansTask[i];
+  taskTrashIcon.addEventListener("click", taskDeletes);
 }
