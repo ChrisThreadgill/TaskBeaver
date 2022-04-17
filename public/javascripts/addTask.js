@@ -63,9 +63,14 @@ const addTask = async (e) => {
 
   taskDiv.innerHTML = `
    <div class="task__buttons">
+    <div>
         <button class='task__edit__button' id='task__edit__${id}'><i class="fa-solid fa-pen-to-square"></i></button>
         <button class='task__delete__button' id='task__delete__${id}'><i class="fa-solid fa-trash-can task__trash__icon" id='trash__task__${id}'></i></button>
         <button class='task__details__button' id='task__details__${id}'><i class="fa-solid fa-angle-down"></i></button>
+    </div>
+      <div><input type="checkbox" id="completed__checkbox__${id}">
+      <label class="fa-solid fa-check" for="completed__checkbox__${id}"></label>
+      </div>
     </div>
     <div class="task__title" id='task__title__${id}'>${taskTitle}</div>
     <div class="task__tag">

@@ -239,6 +239,14 @@ button {
   align-self: flex-end;
 }
 
+.task__buttons {
+  display: flex;
+  justify-content: space-between;
+}
+.completed {
+  /* display: none; */
+}
+
 /*  BADGE CSS
 ==================================================================================
 */
@@ -259,6 +267,9 @@ button {
 
 /* CLASS HIDDEN CSS  *NEEDS TO STAY AT THE BOTTOM*
 */
+#completed__toggle {
+  display: contents;
+}
 #hidden__form {
   border: 1px red solid;
   flex-direction: row;

@@ -11,6 +11,18 @@ const asyncHandler = (handler) => {
   };
 };
 
+const getCurrentProjectId = () => {
+  return document.querySelector(".project__header__unhidden").id.split("__")[2];
+};
+
+const getAllTasksByProjectId = async (projectId) => {
+  const tasks = await fetch(`/api/projects/${projectId}/tasks`, {
+    method: "get",
+  });
+  const taskDetails = await tasks.json();
+  return taskDetails.tasksForProject;
+};
+
 const contentTypeJson = { "Content-Type": "application/json" };
 const emailReg = /^[^\s@]+@\w+\.[A-z]{2,3}$/;
 

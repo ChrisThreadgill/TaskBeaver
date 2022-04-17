@@ -6,7 +6,7 @@ const taskDetailsButtons = document.querySelectorAll(".task__details__button");
 
 for (let i = 0; i < taskDetailsButtons.length; i++) {
   const detailsButton = taskDetailsButtons[i];
-  console.log(taskDetailsButtons[i], "hello");
+  // console.log(taskDetailsButtons[i], "hello");
   const taskId = detailsButton.id.split("__")[2];
   const taskDetails = document.getElementById(
     `project__task__details__${taskId}`
