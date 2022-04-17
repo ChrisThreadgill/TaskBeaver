@@ -18,9 +18,9 @@ block content
 
     //- Display of how many task are done.
     div(id='current__tasks')
-      a(class='nav-link active' href='#')=`${navBarTasks.inProgress} In progress`
-      a(class='nav-link' href='#')=`${navBarTasks.dueToday} Due Today`
-      a(class='nav-link' href='#')=`${navBarTasks.completed} Completed`
+      a(class='nav-link active' id=`in__progress__tasks` href='#')=`${navBarTasks.inProgress} In progress`
+      a(class='nav-link' id='due__today__tasks' href='#')=`${navBarTasks.dueToday} Due Today`
+      a(class='nav-link' id='completed__tasks' href='#')=`${navBarTasks.completed} Completed`
 
     //- If logged in display button to logout
     if locals.authenticated
@@ -140,12 +140,16 @@ block content
             each task in project.Tasks
               div(class=`project__task__container` id=`task__container__${task.id}`)
                 div(class='task__buttons')
-                  button(class='task__edit__button' id=`task__edit__${task.id}`)
-                    i(class="fa-solid fa-pen-to-square")
-                  button(class='task__delete__button' id=`task__delete__${task.id}`)
-                    i(class="fa-solid fa-trash-can task__trash__icon" id=`trash__task__${task.id}`)
-                  button(class='task__details__button' id=`task__details__${task.id}`)
-                    i(class="fa-solid fa-angle-down")
+                  div
+                    button(class='task__edit__button' id=`task__edit__${task.id}`)
+                      i(class="fa-solid fa-pen-to-square")
+                    button(class='task__delete__button' id=`task__delete__${task.id}`)
+                      i(class="fa-solid fa-trash-can task__trash__icon" id=`trash__task__${task.id}`)
+                    button(class='task__details__button' id=`task__details__${task.id}`)
+                      i(class="fa-solid fa-angle-down")
+                  div
+                    input(type='checkbox' class='completed__check__box' id=`completed__checkbox__${task.id}`)
+                    label(for=`completed__checkbox__${task.id}` class='fa-solid fa-check')
                 div(class='task__title' id=`task__title__${task.id}`)=`${task.taskTitle}`
                 div(class='task__tag')
                   span(class="badge bg-urgent" id=`task__tag__${task.id}`)=task.tag
