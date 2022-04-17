@@ -22,8 +22,6 @@ const addTask = async (e) => {
 
   const projectId = e.target.id.split(`__`)[3];
 
-  console.log(projectId);
-
   const taskTitle = document.getElementById(`task__title__${projectId}`).value;
   const description = document.getElementById(
     `description__${projectId}`
@@ -31,12 +29,15 @@ const addTask = async (e) => {
   let dueDate = document.getElementById(`due__date__${projectId}`).value;
   const tag = document.getElementById(`task__select__${projectId}`).value;
 
+  const _csrf = document.getElementById("csurfId").value;
+
   const info = {
     taskTitle,
     description,
     dueDate,
     tag,
     projectId,
+    _csrf,
   };
 
   const newTask = await fetch("/api/tasks", {
@@ -47,21 +48,44 @@ const addTask = async (e) => {
 
   const res = await newTask.json();
 
-  console.log(res, "ressssssssssssssss");
+  if (res.errorArray) {
+    const array = res.errorArray;
 
-  const { id } = res.task;
+    const parentDivs = document.querySelectorAll(".add__task__error");
+    for (let parentDiv of parentDivs) {
+      const oldErrors = parentDiv.childNodes;
+      if (oldErrors) {
+        while (oldErrors.length !== 0) {
+          let oldErr = oldErrors[0];
+          oldErr.remove();
+        }
+      }
+      for (let i = 0; i < array.length; i++) {
+        let errMsg = array[i];
 
-  dueDate = new Date(dueDate).toDateString();
+        let p = document.createElement("p");
+        p.innerText = errMsg;
 
-  const taskDiv = document.createElement("div");
-  taskDiv.setAttribute("class", "project__task__container");
-  taskDiv.setAttribute("id", `task__container__${id}`);
-  //add class to buttons.
+        parentDiv.appendChild(p);
+      }
+    }
+  }
 
-  const projectBoard = document.getElementById(`tasks__project__${projectId}`);
-  console.log(projectId);
+  if (res.task) {
+    const { id } = res.task;
 
-  taskDiv.innerHTML = `
+    dueDate = new Date(dueDate).toDateString();
+
+    const taskDiv = document.createElement("div");
+    taskDiv.setAttribute("class", "project__task__container");
+    taskDiv.setAttribute("id", `task__container__${id}`);
+    //add class to buttons.
+
+    const projectBoard = document.getElementById(
+      `tasks__project__${projectId}`
+    );
+
+    taskDiv.innerHTML = `
    <div class="task__buttons">
         <button class='task__edit__button' id='task__edit__${id}'><i class="fa-solid fa-pen-to-square"></i></button>
         <button class='task__delete__button' id='task__delete__${id}'><i class="fa-solid fa-trash-can task__trash__icon" id='trash__task__${id}'></i></button>
@@ -99,116 +123,142 @@ const addTask = async (e) => {
     </div>
 `;
 
-  projectBoard.appendChild(taskDiv);
+    projectBoard.appendChild(taskDiv);
 
-  // adding new event listener for details drop down
-  const newTaskDetailsButton = document.getElementById(`task__details__${id}`);
-  const newTaskDetailContainer = document.getElementById(
-    `project__task__details__${id}`
-  );
-  const taskDetailsEvent = async (e) => {
-    newTaskDetailContainer.classList.toggle("hidden");
-    newTaskDetailContainer.classList.remove("project__task__details__hidden");
-    newTaskDetailContainer.classList.add("project__task__details__unhidden");
-  };
-  newTaskDetailsButton.addEventListener("click", taskDetailsEvent);
-
-  const newTaskEditButton = document.getElementById(`task__edit__${id}`);
-
-  newTaskEditButton.addEventListener("click", async (e) => {
-    const newHiddenEditForm = document.getElementById(
-      `hidden__task__edit__${id}`
+    // adding new event listener for details drop down
+    const newTaskDetailsButton = document.getElementById(
+      `task__details__${id}`
     );
-    const newTaskInputs = document.getElementsByClassName(
-      `hidden__task__input__${id}`
+    const newTaskDetailContainer = document.getElementById(
+      `project__task__details__${id}`
     );
-    const newTaskResponse = await fetch(`/api/tasks/${id}`, {
-      method: "get",
-      headers: contentTypeJson,
-    });
-    const newTaskDetails = await newTaskResponse.json();
-    let { taskTitle, description, completed, dueDate, tag } =
-      newTaskDetails.taskDetails;
-    for (let i = 0; i < newTaskInputs.length; i++) {
-      const taskInput = newTaskInputs[i];
-      console.log(taskInput);
-      if (taskInput.name === "taskTitle") {
-        taskInput.value = taskTitle;
-      }
-      if (taskInput.name === "description") {
-        taskInput.value = description;
-      }
-      if (taskInput.name === "dueDate") {
-        taskInput.value = dueDate.slice(0, 10);
-      }
-      if (taskInput.name === "tag") {
-        taskInput.value = tag;
-      }
-    }
+    const taskDetailsEvent = async (e) => {
+      newTaskDetailContainer.classList.toggle("hidden");
+      newTaskDetailContainer.classList.remove("project__task__details__hidden");
+      newTaskDetailContainer.classList.add("project__task__details__unhidden");
+    };
+    newTaskDetailsButton.addEventListener("click", taskDetailsEvent);
 
-    newHiddenEditForm.classList.toggle("hidden");
-    newHiddenEditForm.classList.toggle("edit__task__unhidden");
+    const newTaskEditButton = document.getElementById(`task__edit__${id}`);
 
-    const newEditSubmitButton = document.getElementById(
-      `edit__task__submit__${id}`
-    );
-    console.log(newEditSubmitButton);
-    newEditSubmitButton.addEventListener("click", async (e) => {
-      e.preventDefault();
+    newTaskEditButton.addEventListener("click", async (e) => {
+      const newHiddenEditForm = document.getElementById(
+        `hidden__task__edit__${id}`
+      );
+      const newTaskInputs = document.getElementsByClassName(
+        `hidden__task__input__${id}`
+      );
+      const newTaskResponse = await fetch(`/api/tasks/${id}`, {
+        method: "get",
+        headers: contentTypeJson,
+      });
+      const newTaskDetails = await newTaskResponse.json();
+      let { taskTitle, description, completed, dueDate, tag } =
+        newTaskDetails.taskDetails;
       for (let i = 0; i < newTaskInputs.length; i++) {
         const taskInput = newTaskInputs[i];
         if (taskInput.name === "taskTitle") {
-          taskTitle = taskInput.value;
+          taskInput.value = taskTitle;
         }
         if (taskInput.name === "description") {
-          description = taskInput.value;
+          taskInput.value = description;
         }
         if (taskInput.name === "dueDate") {
-          dueDate = taskInput.value;
+          taskInput.value = dueDate.slice(0, 10);
         }
         if (taskInput.name === "tag") {
-          console.log("before change =======", tag);
-          tag = taskInput.value;
-          console.log("after change ======", tag);
+          taskInput.value = tag;
         }
       }
-      const options = { taskTitle, description, dueDate, tag };
-      const body = JSON.stringify(options);
-      const newTaskEdit = await fetch(`/api/tasks/${id}`, {
-        method: "put",
-        body,
-        headers: contentTypeJson,
-      });
 
-      const taskTitleDiv = document.getElementById(`task__title__${id}`);
-      taskTitleDiv.innerText = taskTitle;
-
-      const taskTag = document.getElementById(`task__tag__${id}`);
-      taskTag.innerText = tag;
-      console.log(taskTag);
-      const taskDescription = document.getElementById(
-        `task__description__${id}`
-      );
-      taskDescription.innerText = description;
-      const taskDueDate = document.getElementById(`task__dueDate__${id}`);
-      taskDueDate.innerText = `Due Date: ${new Date(dueDate).toDateString()}`;
       newHiddenEditForm.classList.toggle("hidden");
       newHiddenEditForm.classList.toggle("edit__task__unhidden");
+
+      const newEditSubmitButton = document.getElementById(
+        `edit__task__submit__${id}`
+      );
+      newEditSubmitButton.addEventListener("click", async (e) => {
+        e.preventDefault();
+        for (let i = 0; i < newTaskInputs.length; i++) {
+          const taskInput = newTaskInputs[i];
+          if (taskInput.name === "taskTitle") {
+            taskTitle = taskInput.value;
+          }
+          if (taskInput.name === "description") {
+            description = taskInput.value;
+          }
+          if (taskInput.name === "dueDate") {
+            dueDate = taskInput.value;
+          }
+          if (taskInput.name === "tag") {
+            tag = taskInput.value;
+          }
+        }
+        const options = { taskTitle, description, dueDate, tag };
+        const body = JSON.stringify(options);
+        const newTaskEdit = await fetch(`/api/tasks/${id}`, {
+          method: "put",
+          body,
+          headers: contentTypeJson,
+        });
+
+        const taskTitleDiv = document.getElementById(`task__title__${id}`);
+        taskTitleDiv.innerText = taskTitle;
+
+        const taskTag = document.getElementById(`task__tag__${id}`);
+        taskTag.innerText = tag;
+        const taskDescription = document.getElementById(
+          `task__description__${id}`
+        );
+        taskDescription.innerText = description;
+        const taskDueDate = document.getElementById(`task__dueDate__${id}`);
+        taskDueDate.innerText = `Due Date: ${new Date(dueDate).toDateString()}`;
+        newHiddenEditForm.classList.toggle("hidden");
+        newHiddenEditForm.classList.toggle("edit__task__unhidden");
+      });
     });
-  });
 
-  const trashCansIcons = document.querySelectorAll(".task__trash__icon");
+    const trashCansIcons = document.querySelectorAll(".task__trash__icon");
 
-  const taskTrashButtons = document.querySelectorAll(".task__delete__button");
+    const taskTrashButtons = document.querySelectorAll(".task__delete__button");
 
-  for (let icon of trashCansIcons) {
-    // console.log(icon)
-    icon.addEventListener("click", taskDeletes);
-  }
+    for (let icon of trashCansIcons) {
+      icon.addEventListener("click", taskDeletes);
+    }
 
-  for (let button of taskTrashButtons) {
-    // console.log(button)
-    button.addEventListener("click", taskDeletes);
+    for (let button of taskTrashButtons) {
+      button.addEventListener("click", taskDeletes);
+    }
+
+    const taskTitleForms = document.querySelectorAll(".task__add__title");
+    for (let taskTitleForm of taskTitleForms) {
+      taskTitleForm.value = "";
+    }
+    const taskDescriptionForms = document.querySelectorAll(
+      ".task__add__description"
+    );
+    for (let taskDescriptionForm of taskDescriptionForms) {
+      taskDescriptionForm.value = "";
+    }
+    const taskDueDateForms = document.querySelectorAll(".task__add__duedate");
+    for (let taskDueDateForm of taskDueDateForms) {
+      taskDueDateForm.value = "";
+    }
+    const taskSelectForms = document.querySelectorAll(".task__select");
+    for (let taskSelectForm of taskSelectForms) {
+      taskSelectForm.value = "NoDamGiven";
+    }
+
+    const parentDivs = document.querySelectorAll(".add__task__error");
+    for (let parentDiv of parentDivs) {
+      const oldErrors = parentDiv.childNodes;
+      if (oldErrors) {
+        while (oldErrors.length !== 0) {
+          let oldErr = oldErrors[0];
+          oldErr.remove();
+        }
+      }
+    }
   }
 };
 
