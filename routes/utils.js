@@ -111,6 +111,7 @@ const dateView = (date) => {
   const [year, month, day] = date.split("-");
   return month + "/" + day + "/" + year;
 };
+
 const projectValidator = [
   check("projectName")
     .exists({ checkFalsy: true })
@@ -120,6 +121,16 @@ const projectValidator = [
     .withMessage("Please provide a due date."),
 ];
 
+const taskValidator = [
+  check("taskTitle")
+  .exists({ checkFalsy: true })
+  .withMessage("Please provide a task name"),
+  check("dueDate")
+  .exists({ checkFalsy: true })
+  .withMessage("Please provide a due date"),
+]
+
+
 module.exports = {
   csrfProtection,
   asyncHandler,
@@ -127,5 +138,6 @@ module.exports = {
   loginValidators,
   contentTypeJson,
   projectValidator,
+  taskValidator,
   dateView,
 };

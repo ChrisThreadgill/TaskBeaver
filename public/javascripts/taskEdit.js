@@ -74,7 +74,12 @@ for (let i = 0; i < taskEditButtons.length; i++) {
           console.log("after change ======", tag);
         }
       }
-      const options = { taskTitle, description, dueDate, tag };
+
+      let _csrf = document.getElementById(
+        `hidden__task__edit__${currentTaskId}`
+      ).firstChild.value;
+      console.log(_csrf);
+      const options = { taskTitle, description, dueDate, tag, _csrf };
       const body = JSON.stringify(options);
       const taskEdit = await fetch(`/api/tasks/${currentTaskId}`, {
         method: "put",
