@@ -174,6 +174,7 @@ button {
   position: absolute;
   flex-direction: column;
   transform: translateY(100px);
+  /* top: 100px; */
   z-index: 10;
   border: 1px rgb(148, 44, 44) solid;
   border-radius: 12px;
@@ -211,7 +212,8 @@ button {
 
 .project__list__div {
   position: absolute;
-  transform: translateX(-525px);
+  /* transform: translateX(-525px); */
+  left: 10%;
   align-self: flex-start;
   width: 200px;
   /* border: 1px black solid; */
@@ -263,9 +265,10 @@ button {
   background-color: #aea39c;
   flex-direction: column;
   justify-content: center;
-  max-width: 800px;
-  max-height: 80%;
-  height: 797px;
+  max-width: 50%;
+  max-height: 50%;
+  height: 45%;
+  /* padding-bottom: 10px; */
 }
 .project__main {
   height: 741px;
