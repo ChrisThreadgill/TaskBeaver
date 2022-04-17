@@ -18,6 +18,7 @@ body {
   background: linear-gradient(to bottom right, rgb(60, 55, 56), #b88c60);
   margin: 0px;
   overflow-x: hidden;
+  padding: 2vh;
 }
 
 button {
@@ -49,6 +50,9 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-size: cover;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.9), transparent),
+    url("/images/Task_Beaver_Logo-01.png");
 }
 .modal__header {
   display: flex;
@@ -81,6 +85,7 @@ button {
   background-color: #b88c60;
   justify-content: space-around;
   align-items: center;
+  border-radius: 12px;
 }
 #logged__in__user {
   display: flex;
@@ -145,7 +150,7 @@ button {
 }
 
 .home__display {
-  background-color: #aea39c;
+  /* background-color: #aea39c; */
   display: flex;
   justify-content: center;
   margin-left: 3rem;
@@ -153,7 +158,7 @@ button {
   margin-top: 15px;
   width: auto;
   height: 88%;
-  border: 1.5px #aea39c solid;
+  /* border: 1.5px #aea39c solid; */
   border-radius: 12px;
 }
 /*PROJECT LIST CSS
@@ -208,6 +213,7 @@ button {
   align-self: center;
   background-color: #aea39c;
   text-align: center;
+  border-radius: 12px;
 }
 
 .project__list__div {
@@ -255,7 +261,9 @@ button {
 .task__container__unhidden {
   overflow: scroll;
   overflow-x: hidden;
-  max-height: 642px;
+  max-height: 60vh;
+  border-bottom: 5px rgb(53, 50, 50) ridge;
+  border-radius: 12px;
 }
 /* PROJECT BOARD CONTAINER CSS
 ===================================================================================
@@ -266,8 +274,9 @@ button {
   flex-direction: column;
   justify-content: center;
   max-width: 50%;
-  max-height: 50%;
-  height: 45%;
+  max-height: 85vh;
+  height: 83vh;
+  border-radius: 12px;
   /* padding-bottom: 10px; */
 }
 .project__main {
@@ -409,7 +418,7 @@ i:hover {
 }
 
 .project__task__container {
-  background-color: rgba(170, 84, 50, 0.582);
+  background-color: rgba(170, 84, 50, 0.589);
   border-radius: 12px;
   margin-bottom: 5px;
   margin-right: 75px;
@@ -440,7 +449,7 @@ i:hover {
 
 .task__add__title {
   display: inline-block;
-  width: 800px;
+  width: 80%;
   border-radius: 12px;
   margin-right: 20px;
 }
@@ -483,11 +492,14 @@ i:hover {
   justify-content: center;
   margin-bottom: 10px;
   position: absolute;
-  width: 800px;
+  width: 85vh;
+  /* flex-shrink: 1; */
   height: 136px;
   border: 1px solid rgb(0, 0, 0);
   background-color: rgba(151, 118, 97);
-  transform: translateY(-152px);
+  /* transform: translateY(-152px); */
+  top: 21.5%;
+  right: 28.5%;
   border-radius: 12px;
   /* transform: translateX(); */
 }
@@ -500,11 +512,13 @@ i:hover {
   justify-content: space-around;
   margin-bottom: 10px;
   position: absolute;
-  width: 800px;
+  width: 85vh;
   height: 136px;
   border: 1px solid rgb(0, 0, 0);
   background-color: rgba(151, 118, 97);
-  transform: translateY(-152px);
+  /* transform: translateY(-152px); */
+  top: 21.5%;
+  right: 28.5%;
   border-radius: 12px;
 }
 .project__description {

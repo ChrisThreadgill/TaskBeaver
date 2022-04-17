@@ -4,6 +4,10 @@ include utils.pug
 
 block content
 
+  //- if !locals.authenticated
+  //-   img(src="/images/Task_Beaver_Logo-01.png")
+
+
   //- Nav Bar for user information and logout
   div(class='nav-container')
 
@@ -91,10 +95,7 @@ block content
             span
               button(class='project__details__button' id=`project__details__button__${project.id}`)
                 i(class='fa-solid fa-circle-info')
-            //- span(id='search__span')
-            //-   input(type='text' id='search__input' class='hidden')
-            //-   button(id='search__button')
-            //-     i(class='fa-solid fa-magnifying-glass')
+
         //- This will get you the add task form for each project
         div(class=`hidden add__task__div__${project.id}` )
           +errorsSummary()
@@ -169,34 +170,6 @@ block content
                       option(value="Important") Important
                       option(value="Urgent") Urgent
                     button(type="submit" class="edit__task__button" id=`edit__task__submit__${task.id}`) Submit
-
-
-
-      //- Project dashboard main which displays tasks under a project
-      //- Example task layout if not logged in
-      if !locals.authenticated
-        div(class="project__main")
-          div(class='project__task__container')
-            div(class='task__title') Task Title 1 Example
-            div(class='task__tag')
-              span(class="badge bg-urgent") Urgent
-            div(class='project__task' class='')
-              div(class='task__description') Task Description
-              div(class= 'task__dueDate') date
-      //- Actual task list
-      else
-        //- div(class="project__main")
-        //-   each task in tasks
-        //-     div(class='project__task__container' id=`task__container__${task.id}`)
-        //-       div(class='task__title' id=`task__title__${task.id}`)=`${task.taskTitle}`
-        //-       div(class='task__tag')
-        //-         span(class="badge bg-urgent" id=`task__tag__${task.id}`)=task.tag
-        //-       div(class='project__task')
-        //-         div(class='task__description' id=`task__description__${task.id}`)=task.description
-        //-         if(task.dueDate)
-        //-           div(class= 'task__dueDate' id=`task__dueDate__${task.id}`) #{task.dueDate.toLocaleDateString()}
-
-
 
     //- Modal popup if not signed in
     if !locals.authenticated
