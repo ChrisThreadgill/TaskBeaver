@@ -131,12 +131,15 @@ button {
 }
 
 .home__display {
+  background-color: #aea39c;
   display: flex;
+  justify-content: center;
   margin-left: 3rem;
   margin-right: 3rem;
   margin-top: 15px;
   height: 88%;
-  border: 1px black solid;
+  border: 1.5px #aea39c solid;
+  border-radius: 12px;
 }
 /*PROJECT LIST CSS
 =============================================================================
@@ -153,11 +156,17 @@ button {
 
 .add__project {
   display: flex;
+  position:absolute;
   flex-direction: column;
-  border: 1px black solid;
-  background-color: #aea39c;
+  transform: translateY(100px);
+  z-index: 10;
+  border: 1px rgb(148, 44, 44) solid;
+  border-radius: 12px;
+  background-color: #977661;
   text-align: center;
+  padding: 20px;
   display: hidden;
+  box-shadow: 0px 0px 5px 4px rgba(155, 84, 37, 0.4);
 }
 
 .project__add > p {
@@ -175,7 +184,7 @@ button {
   overflow: scroll;
   overflow-x: hidden;
   overflow-y: auto;
-  width: fit-content;
+  width: 400px;
   height: 730px;
   min-width: 150px;
   max-width: 200px;
@@ -186,13 +195,19 @@ button {
 }
 
 .project__list__div {
+  position: absolute;
+  transform: translateX(-525px);
   align-self: flex-start;
-  border: 1px black solid;
+  width: 200px;
+  /* border: 1px black solid; */
+  /* border-radius: 8px; */
 }
 .project__link {
   padding-top: 10px;
   padding-bottom: 10px;
-  border: 1px black solid;
+  width: 190px;
+  border: 1px rgb(100, 20, 20) solid;
+  border-radius: 8px;
 }
 
 .project__link > span {
@@ -206,7 +221,10 @@ button {
   height: fit-content;
   justify-content: center;
   background-color: #aea39c;
-  border: 1px black solid;
+  border-top: 2.5px black ridge;
+  border-radius: 8px;
+  margin-top: 5px;
+  /* border: 1px black solid; */
 }
 .project__list__delete {
   width: 25px;
@@ -226,9 +244,9 @@ button {
   background-color: #aea39c;
   flex-direction: column;
   justify-content: center;
-  width: 100%;
-  height: 797px;
+  max-width: 800px;
   max-height: 80%;
+  height: 797px;
 }
 .project__main {
   height: 741px;
@@ -348,4 +366,77 @@ button {
 }
 .hidden {
   display: none;
+}
+
+i {
+  color: #462c11;
+}
+
+/*only do bounce for trashcans.*/
+
+i:hover {
+  /* transform: translateY(-35%); */
+  color: rgb(172, 65, 65);
+  animation: bounce 0.8s linear;
+}
+
+@keyframes bounce{
+  20%, 50%, 80%, to {
+    transform: translateY(0);
+  }
+  40%{
+    transform: translateY(-15px);
+  }
+  70%{
+    transform: translateY(-8px);
+  }
+  90%{
+    transform: translateY(-2px);
+  }
+}
+
+.project__task__container{
+  background-color: rgba(170, 84, 50, 0.582);
+  border-radius: 12px;
+  margin-bottom: 5px;
+  margin-right: 75px;
+}
+
+::-webkit-scrollbar {
+  background-color: rgba(151, 113, 56,0);
+  width: 8px;
+}
+
+::-webkit-scrollbar-corner{
+  background-color: aquamarine;
+}
+
+::-webkit-scrollbar-thumb{
+  background-color: #462c11;
+  background: linear-gradient(to left, #8F724D,#462c11);
+  border-radius: 10px;
+  width: 5px;
+}
+
+.add__task__form{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.task__add__title{
+  display: inline-block;
+  width: 800px;
+  border-radius: 12px;
+  margin-right: 20px;
+}
+
+.div__task__add__title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 800px;
+  margin-top: 25px;
+  margin-bottom: 18px;
 }

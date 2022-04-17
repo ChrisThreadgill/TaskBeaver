@@ -1,5 +1,5 @@
 mixin form(label, fieldName, fieldValue, fieldType = 'text', className)
-    div
+    div(class=`div__${className}`)
         label(for=fieldName)= label
         if fieldType === "textarea"
             textarea(name=fieldName, id=fieldName, rows="10")
