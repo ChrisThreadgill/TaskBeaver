@@ -1,8 +1,13 @@
 const express = require("express");
-const { csrfProtection, asyncHandler, taskValidator, projectValidator } = require("./utils.js");
+const {
+  csrfProtection,
+  asyncHandler,
+  taskValidator,
+  projectValidator,
+} = require("./utils.js");
 const db = require("../db/models");
 const { loginUser, logoutUser } = require("../auth");
-const { check, validationResult, } = require("express-validator");
+const { check, validationResult } = require("express-validator");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 
@@ -26,7 +31,6 @@ router.get(
     });
   })
 );
-
 
 // Route to post new project.
 router.post(
@@ -153,40 +157,39 @@ router.get(
 
 // Route to post a new task.
 router.post(
-    "/tasks",
-    csrfProtection,
-    taskValidator,
-    asyncHandler(async(req, res, next) => {
-        const { userId } = req.session.auth;
-        const { taskTitle, description, projectId, dueDate, tag, taskContactId } =
-        req.body;
-        const validatorErrors = validationResult(req);
-        console.log(validatorErrors)
-        if (validatorErrors.isEmpty()) {
-            if (userId) {
-                const task = await db.Task.build({
-                    taskTitle,
-                    description,
-                    projectId,
-                    dueDate,
-                    tag,
-                    taskContactId,
-                });
+  "/tasks",
+  csrfProtection,
+  taskValidator,
+  asyncHandler(async (req, res, next) => {
+    const { userId } = req.session.auth;
+    const { taskTitle, description, projectId, dueDate, tag, taskContactId } =
+      req.body;
+    const validatorErrors = validationResult(req);
+    if (validatorErrors.isEmpty()) {
+      if (userId) {
+        const task = await db.Task.build({
+          taskTitle,
+          description,
+          projectId,
+          dueDate,
+          tag,
+          taskContactId,
+        });
 
-                await task.save();
+        await task.save();
 
-                res.json({
-                    task,
-                });
-            }
-        } else {
-            const errorArray = validatorErrors.array().map(error => error.msg)
-            res.json({
-                message: "Unsuccessful",
-                errorArray
-            })
-        }
-    })
+        res.json({
+          task,
+        });
+      }
+    } else {
+      const errorArray = validatorErrors.array().map((error) => error.msg);
+      res.json({
+        message: "Unsuccessful",
+        errorArray,
+      });
+    }
+  })
 );
 
 // route to edit selected task based on id
@@ -207,7 +210,6 @@ router.put(
       tag,
       taskContactId,
     } = req.body;
-    console.log();
     const taskToUpdate = await db.Task.findByPk(taskId);
 
     if (userId) {

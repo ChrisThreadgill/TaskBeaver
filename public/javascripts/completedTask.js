@@ -19,7 +19,9 @@ export const taskComplete = async (e) => {
     completed = false;
   }
 
-  const options = { completed };
+  const _csrf = document.getElementById("csurfId").value;
+
+  const options = { completed, _csrf };
   const body = JSON.stringify(options);
   const completedUpdate = await fetch(`/api/tasks/${taskId}`, {
     method: "put",
