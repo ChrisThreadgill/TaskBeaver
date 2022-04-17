@@ -143,7 +143,7 @@ block content
                   div
                     input(type='checkbox' class='completed__check__box' id=`completed__checkbox__${task.id}`)
                     label(for=`completed__checkbox__${task.id}` class='fa-solid fa-check')
-                div(class='task__title' id=`task__title__${task.id}`)=`${task.taskTitle}`
+                div(class=`task__title task__title__${task.id}` )=`${task.taskTitle}`
                 div(class='task__tag')
                   span(class="badge bg-urgent" id=`task__tag__${task.id}`)=task.tag
                 div(class=`hidden project__task__details__hidden project__task__${project.id}` id=`project__task__details__${task.id}`)
