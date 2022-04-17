@@ -13,20 +13,18 @@ block content
         span=`Welcome ${user.firstName}`
         span You have the current tasks!
       else
-        span Login New Beaver!
-        span You have no tasks to be done!
-
     //- Display of how many task are done.
     div(id='current__tasks')
       a(class='nav-link active' id=`in__progress__tasks` href='#')=`${navBarTasks.inProgress} In progress`
       a(class='nav-link' id='due__today__tasks' href='#')=`${navBarTasks.dueToday} Due Today`
       a(class='nav-link' id='completed__tasks' href='#')=`${navBarTasks.completed} Completed`
-
     //- If logged in display button to logout
     if locals.authenticated
       div(id='logout__button')
         form(action='/logout' method='post')
           button(type='submit') Logout
+    else
+      span Login New Beaver!
 
   //- Where all our project names is at
   div(class='home__display')
@@ -53,7 +51,7 @@ block content
 
 
     //- ADD PROJECT FORM
-    form(class="hidden" id="addProject")
+    form(class="hidden add__project" id="addProject")
       input(type='hidden' name='_csrf' value=csrfToken id="csurfId")
       +form("Project Name:", "projectNameAdd", "", "text")
       +form("Description:", "descriptionAdd", "", "text")
