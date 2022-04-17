@@ -23,7 +23,9 @@ const addTask = async (e) => {
   const projectId = e.target.id.split(`__`)[3];
 
   const taskTitle = document.getElementById(`task__title__${projectId}`).value;
-  const description = document.getElementById(`description__${projectId}`).value;
+  const description = document.getElementById(
+    `description__${projectId}`
+  ).value;
   let dueDate = document.getElementById(`due__date__${projectId}`).value;
   const tag = document.getElementById(`task__select__${projectId}`).value;
 
@@ -79,7 +81,9 @@ const addTask = async (e) => {
     taskDiv.setAttribute("id", `task__container__${id}`);
     //add class to buttons.
 
-    const projectBoard = document.getElementById(`tasks__project__${projectId}`);
+    const projectBoard = document.getElementById(
+      `tasks__project__${projectId}`
+    );
     taskDiv.classList.add("task__add__animation");
 
     taskDiv.innerHTML = `
@@ -128,8 +132,12 @@ const addTask = async (e) => {
     projectBoard.appendChild(taskDiv);
 
     // adding new event listener for details drop down
-    const newTaskDetailsButton = document.getElementById(`task__details__${id}`);
-    const newTaskDetailContainer = document.getElementById(`project__task__details__${id}`);
+    const newTaskDetailsButton = document.getElementById(
+      `task__details__${id}`
+    );
+    const newTaskDetailContainer = document.getElementById(
+      `project__task__details__${id}`
+    );
     const taskDetailsEvent = async (e) => {
       newTaskDetailContainer.classList.toggle("hidden");
       newTaskDetailContainer.classList.remove("project__task__details__hidden");
@@ -140,14 +148,19 @@ const addTask = async (e) => {
     const newTaskEditButton = document.getElementById(`task__edit__${id}`);
 
     newTaskEditButton.addEventListener("click", async (e) => {
-      const newHiddenEditForm = document.getElementById(`hidden__task__edit__${id}`);
-      const newTaskInputs = document.getElementsByClassName(`hidden__task__input__${id}`);
+      const newHiddenEditForm = document.getElementById(
+        `hidden__task__edit__${id}`
+      );
+      const newTaskInputs = document.getElementsByClassName(
+        `hidden__task__input__${id}`
+      );
       const newTaskResponse = await fetch(`/api/tasks/${id}`, {
         method: "get",
         headers: contentTypeJson,
       });
       const newTaskDetails = await newTaskResponse.json();
-      let { taskTitle, description, completed, dueDate, tag } = newTaskDetails.taskDetails;
+      let { taskTitle, description, completed, dueDate, tag } =
+        newTaskDetails.taskDetails;
       for (let i = 0; i < newTaskInputs.length; i++) {
         const taskInput = newTaskInputs[i];
         if (taskInput.name === "taskTitle") {
@@ -167,7 +180,9 @@ const addTask = async (e) => {
       newHiddenEditForm.classList.toggle("hidden");
       newHiddenEditForm.classList.toggle("edit__task__unhidden");
 
-      const newEditSubmitButton = document.getElementById(`edit__task__submit__${id}`);
+      const newEditSubmitButton = document.getElementById(
+        `edit__task__submit__${id}`
+      );
       newEditSubmitButton.addEventListener("click", async (e) => {
         e.preventDefault();
         for (let i = 0; i < newTaskInputs.length; i++) {
@@ -198,7 +213,9 @@ const addTask = async (e) => {
 
         const taskTag = document.getElementById(`task__tag__${id}`);
         taskTag.innerText = tag;
-        const taskDescription = document.getElementById(`task__description__${id}`);
+        const taskDescription = document.getElementById(
+          `task__description__${id}`
+        );
         taskDescription.innerText = description;
         const taskDueDate = document.getElementById(`task__dueDate__${id}`);
         taskDueDate.innerText = `Due Date: ${new Date(dueDate).toDateString()}`;
@@ -223,7 +240,9 @@ const addTask = async (e) => {
     for (let taskTitleForm of taskTitleForms) {
       taskTitleForm.value = "";
     }
-    const taskDescriptionForms = document.querySelectorAll(".task__add__description");
+    const taskDescriptionForms = document.querySelectorAll(
+      ".task__add__description"
+    );
     for (let taskDescriptionForm of taskDescriptionForms) {
       taskDescriptionForm.value = "";
     }
@@ -255,7 +274,9 @@ const moveOffProject = async (e) => {
   for (let taskTitleForm of taskTitleForms) {
     taskTitleForm.value = "";
   }
-  const taskDescriptionForms = document.querySelectorAll(".task__add__description");
+  const taskDescriptionForms = document.querySelectorAll(
+    ".task__add__description"
+  );
   for (let taskDescriptionForm of taskDescriptionForms) {
     taskDescriptionForm.value = "";
   }

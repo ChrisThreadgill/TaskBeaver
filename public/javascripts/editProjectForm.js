@@ -91,7 +91,16 @@ for (let i = 0; i < submitEditButtons.length; i++) {
       if (currentField.name === "projectType") projectType = currentField.value;
     }
 
-    const options = { projectName, description, dueDate, url, projectType };
+    const _csrf = document.getElementById("csurfId").value;
+
+    const options = {
+      projectName,
+      description,
+      dueDate,
+      url,
+      projectType,
+      _csrf,
+    };
     const body = JSON.stringify(options);
     const projectEdit = await fetch(`/api/projects/${projectId}`, {
       method: "PUT",
