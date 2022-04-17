@@ -118,13 +118,32 @@ button {
   -webkit-text-stroke-color: black;
 }
 
-#current__tasks > a {
+/* #current__tasks > a {
   border: 3px solid black;
   border-radius: 10px;
   margin-right: 15px;
 
   box-shadow: 2px 2px 20px 5px rgba(0, 0, 0, 0.4);
+} */
+
+#current__tasks>a {
+  border: 3px solid rgb(0, 0, 0);
+  border-radius: 10px;
+  margin-right: 20px;
+  /* box-shadow: 2px 2px 20px 5px rgba(0, 0, 0, 0.4); */
+  transition: ease-out .5s;
+  padding: 5px 20px;
 }
+
+#current__tasks>a:hover {
+  box-shadow: 2px 2px 20px 5px rgba(0, 0, 0, 0.2);
+  transform: scale(1.1, 1.1) translateY(10px);
+}
+
+
+
+
+
 
 #current__tasks > a#dueTodayTasks {
   color: red;
@@ -185,13 +204,14 @@ button {
   overflow-x: hidden;
   overflow-y: auto;
   width: 400px;
-  height: 730px;
+  height: 727px;
   min-width: 150px;
   max-width: 200px;
   min-height: 400px;
   align-self: center;
   background-color: #aea39c;
   text-align: center;
+
 }
 
 .project__list__div {
@@ -207,7 +227,11 @@ button {
   padding-bottom: 10px;
   width: 190px;
   border: 1px rgb(100, 20, 20) solid;
-  border-radius: 8px;
+  border-radius: 15px;
+  border-right: none;
+  border-top: 25px rgba(141, 68, 39, 0.699) ridge;
+  border-bottom: none;
+  border-left: none;
 }
 
 .project__link > span {
@@ -268,13 +292,16 @@ button {
   position: sticky;
   justify-content: space-between;
   align-items: center;
-  border: 1px black solid;
+  /* border: 1px black solid; */
 }
 .project__buttons {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   height: 100%;
-  border: 1px black solid;
+  border: 2px rgba(141, 68, 39, 0.699) solid;
+  border-radius: 12px;
+  margin-top: 18px;
 }
 .project__edit__buttons > span > button {
   /* display: flex; */
@@ -439,4 +466,37 @@ i:hover {
   width: 800px;
   margin-top: 25px;
   margin-bottom: 18px;
+}
+
+.tasks__container__hidden{
+  height: 630px;
+  /* border-bottom: 1px black solid; */
+}
+
+.task__add__description{
+  border-radius: 12px;
+}
+
+.task__add__duedate{
+  border-radius: 12px;
+}
+
+.task__select{
+  border-radius: 12px;
+  margin-right: 5px;
+}
+
+.project__header__name{
+  font-size: 24pt;
+  font-weight: bold;
+}
+
+.hidden__form__active{
+  position: absolute;
+  width: 800px;
+  height: 100px;
+  border: 1px solid limegreen;
+  /* background-color: #977661; */
+  transform: translateY(-110px);
+  /* transform: translateX(); */
 }

@@ -1,10 +1,10 @@
-mixin form(label, fieldName, fieldValue, fieldType = 'text', className)
+mixin form(label, fieldName, fieldValue, fieldType = 'text', className, placeHolder)
     div(class=`div__${className}`)
         label(for=fieldName)= label
         if fieldType === "textarea"
             textarea(name=fieldName, id=fieldName, rows="10")
         else
-            input(type=fieldType, name=fieldName, id=fieldName, value=fieldValue, class=className)
+            input(type=fieldType, name=fieldName, id=fieldName, value=fieldValue, class=className, placeHolder=placeHolder)
 
 mixin errorsSummary(errors)
     if errors
