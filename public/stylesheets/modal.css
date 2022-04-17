@@ -10,6 +10,46 @@ a {
   color: black;
 }
 
+.task__add__animation {
+  /* opacity: 10%; */
+  z-index: 10;
+  animation: back 0.5s linear;
+}
+
+@keyframes back {
+  0%,
+  50%,
+  100%,
+  to {
+    transform: translateY(0px);
+  }
+  0% {
+    transform: translateY(-50px);
+  }
+  50% {
+    transform: translateY(-30px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* animate deleting a task */
+
+.text__delete__animation {
+  /* opacity: 10%; */
+  animation: fadeOut 2s;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 html {
   height: 100%;
 }
@@ -18,6 +58,7 @@ body {
   background: linear-gradient(to bottom right, rgb(60, 55, 56), #b88c60);
   margin: 0px;
   overflow-x: hidden;
+  padding: 2vh;
 }
 
 button {
@@ -49,6 +90,8 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-size: cover;
+  background-image: linear-gradient(rgba(0, 0, 0, 0), transparent), url("/images/Task_Beaver_Logo-01.png");
 }
 .modal__header {
   display: flex;
@@ -81,6 +124,7 @@ button {
   background-color: #b88c60;
   justify-content: space-around;
   align-items: center;
+  border-radius: 12px;
 }
 #logged__in__user {
   display: flex;
@@ -118,12 +162,26 @@ button {
   -webkit-text-stroke-color: black;
 }
 
-#current__tasks > a {
+/* #current__tasks > a {
   border: 3px solid black;
   border-radius: 10px;
   margin-right: 15px;
 
   box-shadow: 2px 2px 20px 5px rgba(0, 0, 0, 0.4);
+} */
+
+#current__tasks > a {
+  border: 3px solid rgb(0, 0, 0);
+  border-radius: 10px;
+  margin-right: 20px;
+  /* box-shadow: 2px 2px 20px 5px rgba(0, 0, 0, 0.4); */
+  transition: ease-out 0.5s;
+  padding: 5px 20px;
+}
+
+#current__tasks > a:hover {
+  box-shadow: 2px 2px 20px 5px rgba(0, 0, 0, 0.2);
+  transform: scale(1.1, 1.1) translateY(10px);
 }
 
 #current__tasks > a#dueTodayTasks {
@@ -131,12 +189,16 @@ button {
 }
 
 .home__display {
+  /* background-color: #aea39c; */
   display: flex;
+  justify-content: center;
   margin-left: 3rem;
   margin-right: 3rem;
   margin-top: 15px;
+  width: auto;
   height: 88%;
-  border: 1px black solid;
+  /* border: 1.5px #aea39c solid; */
+  border-radius: 12px;
 }
 /*PROJECT LIST CSS
 =============================================================================
@@ -153,11 +215,18 @@ button {
 
 .add__project {
   display: flex;
+  position: absolute;
   flex-direction: column;
-  border: 1px black solid;
-  background-color: #aea39c;
+  transform: translateY(100px);
+  /* top: 100px; */
+  z-index: 10;
+  border: 1px rgb(148, 44, 44) solid;
+  border-radius: 12px;
+  background-color: #977661;
   text-align: center;
+  padding: 20px;
   display: hidden;
+  box-shadow: 0px 0px 5px 4px rgba(155, 84, 37, 0.4);
 }
 
 .project__add > p {
@@ -175,24 +244,36 @@ button {
   overflow: scroll;
   overflow-x: hidden;
   overflow-y: auto;
-  width: fit-content;
-  height: 730px;
+  width: 400px;
+  height: 727px;
   min-width: 150px;
   max-width: 200px;
   min-height: 400px;
   align-self: center;
   background-color: #aea39c;
   text-align: center;
+  border-radius: 12px;
 }
 
 .project__list__div {
+  position: absolute;
+  /* transform: translateX(-525px); */
+  left: 10%;
   align-self: flex-start;
-  border: 1px black solid;
+  width: 200px;
+  /* border: 1px black solid; */
+  /* border-radius: 8px; */
 }
 .project__link {
   padding-top: 10px;
   padding-bottom: 10px;
-  border: 1px black solid;
+  width: 190px;
+  border: 1px rgb(100, 20, 20) solid;
+  border-radius: 15px;
+  border-right: none;
+  border-top: 25px rgba(141, 68, 39, 0.699) ridge;
+  border-bottom: none;
+  border-left: none;
 }
 
 .project__link > span {
@@ -206,7 +287,10 @@ button {
   height: fit-content;
   justify-content: center;
   background-color: #aea39c;
-  border: 1px black solid;
+  border-top: 2.5px black ridge;
+  border-radius: 8px;
+  margin-top: 5px;
+  /* border: 1px black solid; */
 }
 .project__list__delete {
   width: 25px;
@@ -216,7 +300,9 @@ button {
 .task__container__unhidden {
   overflow: scroll;
   overflow-x: hidden;
-  max-height: 642px;
+  max-height: 60vh;
+  border-bottom: 5px rgb(53, 50, 50) ridge;
+  border-radius: 12px;
 }
 /* PROJECT BOARD CONTAINER CSS
 ===================================================================================
@@ -226,9 +312,11 @@ button {
   background-color: #aea39c;
   flex-direction: column;
   justify-content: center;
-  width: 100%;
-  height: 797px;
-  max-height: 80%;
+  max-width: 50%;
+  max-height: 85vh;
+  height: 83vh;
+  border-radius: 12px;
+  /* padding-bottom: 10px; */
 }
 .project__main {
   height: 741px;
@@ -250,13 +338,17 @@ button {
   position: sticky;
   justify-content: space-between;
   align-items: center;
-  border: 1px black solid;
+  /* border: 1px black solid; */
 }
+
 .project__buttons {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   height: 100%;
-  border: 1px black solid;
+  border: 2px rgba(141, 68, 39, 0.699) solid;
+  border-radius: 12px;
+  margin-top: 18px;
 }
 .project__edit__buttons > span > button {
   /* display: flex; */
@@ -332,6 +424,204 @@ button {
 }
 .bg-urgent {
   background-color: #dc3545;
+}
+
+i {
+  color: #462c11;
+}
+
+/*only do bounce for trashcans.*/
+
+i:hover {
+  /* transform: translateY(-35%); */
+  color: rgb(172, 65, 65);
+  animation: bounce 0.8s linear;
+}
+
+@keyframes bounce {
+  20%,
+  50%,
+  80%,
+  to {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-15px);
+  }
+  70% {
+    transform: translateY(-8px);
+  }
+  90% {
+    transform: translateY(-2px);
+  }
+}
+
+.project__task__container {
+  background-color: rgba(170, 84, 50, 0.589);
+  border-radius: 12px;
+  margin-bottom: 5px;
+  margin-right: 75px;
+}
+
+::-webkit-scrollbar {
+  background-color: rgba(151, 113, 56, 0);
+  width: 8px;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: aquamarine;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #462c11;
+  background: linear-gradient(to left, #8f724d, #462c11);
+  border-radius: 10px;
+  width: 5px;
+}
+
+.add__task__form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.task__add__title {
+  display: inline-block;
+  width: 80%;
+  border-radius: 12px;
+  margin-right: 20px;
+}
+
+.div__task__add__title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 800px;
+  margin-top: 25px;
+  margin-bottom: 18px;
+}
+
+.tasks__container__hidden {
+  height: 630px;
+  /* border-bottom: 1px black solid; */
+}
+
+.task__add__description {
+  border-radius: 12px;
+}
+
+.task__add__duedate {
+  border-radius: 12px;
+}
+
+.task__select {
+  border-radius: 12px;
+  margin-right: 5px;
+}
+
+.project__header__name {
+  font-size: 24pt;
+  font-weight: bold;
+}
+
+.hidden__form__active {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 10px;
+  position: absolute;
+  width: 85vh;
+  /* flex-shrink: 1; */
+  height: 136px;
+  border: 1px solid rgb(0, 0, 0);
+  background-color: rgba(151, 118, 97);
+  /* transform: translateY(-152px); */
+  top: 21.5%;
+  right: 28.5%;
+  border-radius: 12px;
+  /* transform: translateX(); */
+}
+.project__header__unhidden {
+  margin-bottom: 28px;
+}
+.project__details__container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-bottom: 10px;
+  position: absolute;
+  width: 85vh;
+  height: 136px;
+  border: 1px solid rgb(0, 0, 0);
+  background-color: rgba(151, 118, 97);
+  /* transform: translateY(-152px); */
+  top: 21.5%;
+  right: 28.5%;
+  border-radius: 12px;
+}
+.project__description {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 14pt;
+  width: 790px;
+  margin-top: 25px;
+  margin-bottom: 18px;
+  border-radius: 12px;
+  border: 1px black solid;
+  border-radius: 12px;
+  background-color: rgba(170, 84, 50, 0.582);
+}
+.project__title {
+  display: flex;
+  align-items: center;
+  /* border: solid black 1px; */
+  border-radius: 12px;
+  font-weight: bold;
+  /* background-color: rgba(170, 84, 50, 0.582); */
+}
+.project__dueDate {
+  display: flex;
+  align-items: center;
+  /* border: solid black 1px; */
+  border-radius: 12px;
+  font-weight: bold;
+}
+.project__type {
+  display: inline-block;
+  justify-content: flex-end;
+  /* border: solid black 1px; */
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+#projectName {
+  border-radius: 12px;
+}
+
+#url {
+  border-radius: 12px;
+}
+
+#description {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 790px;
+  margin-top: 25px;
+  margin-bottom: 18px;
+  border-radius: 12px;
+}
+
+#dueDate {
+  border-radius: 12px;
+}
+
+.hidden__form__input {
+  border-radius: 12px;
+  margin-right: 5px;
 }
 
 /* CLASS HIDDEN CSS  *NEEDS TO STAY AT THE BOTTOM*

@@ -4,12 +4,16 @@ include utils.pug
 
 block content
 
+  //- if !locals.authenticated
+  //-   img(src="/images/Task_Beaver_Logo-01.png")
+
+
   //- Nav Bar for user information and logout
   div(class='nav-container')
 
     //- Display message to user if they are logged in
     div(id='nav__logo')
-      img(src='/images/Task_Beaver_Logo-02.png' id='nav__logo')
+      img(src='/images/Logo.svg' id='nav__logo')
 
 
     //- Display of how many task are done.
@@ -87,20 +91,17 @@ block content
               span
                 button(class='add__contact__button' id=`add__contact__button__${project.id}`)
                   i(class='fa-solid fa-address-card')
-            span(id=`project__header__display__${project.id}`) #{project.projectName}
+            span(id=`project__header__display__${project.id}` class="project__header__name") #{project.projectName}
             span
               button(class='project__details__button' id=`project__details__button__${project.id}`)
                 i(class='fa-solid fa-circle-info')
-            span(id='search__span')
-              input(type='text' id='search__input' class='hidden')
-              button(id='search__button')
-                i(class='fa-solid fa-magnifying-glass')
+
         //- This will get you the add task form for each project
         div(class=`hidden add__task__div__${project.id}` )
           +errorsSummary()
           form(action="/api/tasks" method="POST" class="add__task__form" )
             input(type="hidden" name="_csrf" value=csrfToken)
-            +form("Task Title:", `task__title__${project.id}`, taskTitle, "text", "task__add__title")
+            +form("", `task__title__${project.id}`, taskTitle, "text", "task__add__title", 'Add Task Here...')
             +form("Description:", `description__${project.id}`, description, "text", "task__add__description")
             +form("Due Date:", `due__date__${project.id}`, dueDate, "date", "task__add__duedate")
             input(type='integer' name='projectId' value=`${project.id}` class='hidden add__task__id')
@@ -113,23 +114,23 @@ block content
             button(type="submit" id=`confirm__task__button__${project.id}` class ='confirm__task__add') Add
           div(class="add__task__error")
 
-        div(id=`project__details__div__${project.id}`)
+        div(id=`project__details__div__${project.id}` class="project__details__div")
           div(class=`project__details__container hidden` id=`project__details__${project.id}`)
-                    div(class=`project__title` id=`project__title__${project.id}`)= `Project Name${project.projectName}`
-                    div(class='project__type')
-                      span(class="badge bg-urgent" id=`project__type__${project.projectType}`)= `Project Type: ${project.projectType}`
                     div(class='project__description' id=`project__description__${project.id}`)= `Project Details: ${project.description}`
-                      if(project.dueDate)
-                        div(class= 'project__dueDate' id=`project__dueDate__${project.id}`)= `Due Date: ${project.dueDate.toDateString()}`
+                    div(class=`project__title` id=`project__title__${project.id}`)= `Project Name: ${project.projectName}`
+                    if(project.dueDate)
+                      div(class= 'project__dueDate' id=`project__dueDate__${project.id}`)= `Due Date: ${project.dueDate.toDateString()}`
+                    div(class='project__type')
+                      span(class="badge bg-urgent" id=`project__type__${project.projectType}`)= `${project.projectType}`
 
         div(class=`hidden hidden__edit__form__div` id=`hidden__edit__form__div__${project.id}`)
           form(action=`/api/projects/${project.id}` method="PUT" class=`` id=`hidden__project__edit__${project.id}` )
             input(type="hidden" name="_csrf" value=csrfToken)
+            +hiddenForm("", "description", "", "textarea", `hidden__form__input__${project.id}`)
             +hiddenForm("Project Name:", "projectName", "", "text", `hidden__form__input__${project.id}` )
-            +hiddenForm("Description:", "description", "", "text", `hidden__form__input__${project.id}`)
             +hiddenForm("Due Date:", "dueDate", "", "date", `hidden__form__input__${project.id}`)
             +hiddenForm("Url:", "url", "", "text", `hidden__form__input__${project.id}`)
-            select(name="projectType" class=`hidden__form__input__${project.id}`)
+            select(name="projectType" class=`hidden__form__input hidden__form__input__${project.id}`)
               option(value="personal") Personal
               option(value="groceries") Groceries
               option(value="project") Project
@@ -169,34 +170,6 @@ block content
                       option(value="Important") Important
                       option(value="Urgent") Urgent
                     button(type="submit" class="edit__task__button" id=`edit__task__submit__${task.id}`) Submit
-
-
-
-      //- Project dashboard main which displays tasks under a project
-      //- Example task layout if not logged in
-      if !locals.authenticated
-        div(class="project__main")
-          div(class='project__task__container')
-            div(class='task__title') Task Title 1 Example
-            div(class='task__tag')
-              span(class="badge bg-urgent") Urgent
-            div(class='project__task' class='')
-              div(class='task__description') Task Description
-              div(class= 'task__dueDate') date
-      //- Actual task list
-      else
-        //- div(class="project__main")
-        //-   each task in tasks
-        //-     div(class='project__task__container' id=`task__container__${task.id}`)
-        //-       div(class='task__title' id=`task__title__${task.id}`)=`${task.taskTitle}`
-        //-       div(class='task__tag')
-        //-         span(class="badge bg-urgent" id=`task__tag__${task.id}`)=task.tag
-        //-       div(class='project__task')
-        //-         div(class='task__description' id=`task__description__${task.id}`)=task.description
-        //-         if(task.dueDate)
-        //-           div(class= 'task__dueDate' id=`task__dueDate__${task.id}`) #{task.dueDate.toLocaleDateString()}
-
-
 
     //- Modal popup if not signed in
     if !locals.authenticated
