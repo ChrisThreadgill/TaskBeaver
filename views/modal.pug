@@ -8,11 +8,10 @@ block content
   div(class='nav-container')
 
     //- Display message to user if they are logged in
-    div(id='welcome__user')
-      if locals.authenticated
-        span=`Welcome ${user.firstName}`
-        span You have the current tasks!
-      else
+    div(id='nav__logo')
+      img(src='/images/Task_Beaver_Logo-02.png' id='nav__logo')
+
+
     //- Display of how many task are done.
     div(id='current__tasks')
       a(class='nav-link active' id=`in__progress__tasks` href='#')=`${navBarTasks.inProgress} In progress`
@@ -20,9 +19,11 @@ block content
       a(class='nav-link' id='completed__tasks' href='#')=`${navBarTasks.completed} Completed`
     //- If logged in display button to logout
     if locals.authenticated
-      div(id='logout__button')
-        form(action='/logout' method='post')
-          button(type='submit') Logout
+      div(id='logged__in__user')
+        span(id='welcome__user')=`Welcome ${user.firstName}`
+        div(id='logout__button')
+          form(action='/logout' method='post')
+            button(type='submit') Logout
     else
       span Login New Beaver!
 

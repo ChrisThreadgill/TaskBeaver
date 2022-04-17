@@ -71,18 +71,29 @@ button {
 /* NAV CONTAINER CSS
 =================================================================================
 */
+
+#nav__logo {
+  width: 225px;
+  height: 100px;
+}
 .nav-container {
   display: flex;
   background-color: #b88c60;
   justify-content: space-around;
   align-items: center;
-  height: 200px;
 }
-
+#logged__in__user {
+  display: flex;
+  flex-direction: row;
+}
+#logged__in__user > div {
+  margin-right: 20px;
+}
 #welcome__user {
   width: fit-content;
   display: flex;
   justify-self: center;
+  margin-right: 20px;
   font-size: 20px;
   text-align: center;
 }
@@ -90,7 +101,13 @@ button {
 #current__tasks {
   width: 100%;
   display: flex;
-  justify-self: flex-start;
+  justify-content: space-around;
+}
+#in__progress__tasks {
+  margin-left: 30px;
+}
+#completed__tasks {
+  margin-right: 30px;
 }
 
 #current__tasks > a {
@@ -101,14 +118,15 @@ button {
   -webkit-text-stroke-color: black;
 }
 
-div#current__tasks > a {
+#current__tasks > a {
   border: 3px solid black;
   border-radius: 10px;
   margin-right: 15px;
+
   box-shadow: 2px 2px 20px 5px rgba(0, 0, 0, 0.4);
 }
 
-div#current__tasks > a#dueTodayTasks {
+#current__tasks > a#dueTodayTasks {
   color: red;
 }
 
