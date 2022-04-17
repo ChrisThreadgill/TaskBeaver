@@ -10,6 +10,46 @@ a {
   color: black;
 }
 
+.task__add__animation {
+  /* opacity: 10%; */
+  z-index: 10;
+  animation: back 0.5s linear;
+}
+
+@keyframes back {
+  0%,
+  50%,
+  100%,
+  to {
+    transform: translateY(0px);
+  }
+  0% {
+    transform: translateY(-50px);
+  }
+  50% {
+    transform: translateY(-30px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* animate deleting a task */
+
+.text__delete__animation {
+  /* opacity: 10%; */
+  animation: fadeOut 2s;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 html {
   height: 100%;
 }
@@ -51,8 +91,7 @@ button {
   justify-content: center;
   align-items: center;
   background-size: cover;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.9), transparent),
-    url("/images/Task_Beaver_Logo-01.png");
+  background-image: linear-gradient(rgba(0, 0, 0, 0), transparent), url("/images/Task_Beaver_Logo-01.png");
 }
 .modal__header {
   display: flex;

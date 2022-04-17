@@ -22,12 +22,15 @@ export const taskDeletes = async (e) => {
   const data = await taskDelete.json();
 
   if (data.message) {
-    console.log("CONSOLE");
-    const currentTaskDiv = document.getElementById(
-      `task__container__${taskId}`
-    );
-    console.log(currentTaskDiv);
-    currentTaskDiv.remove();
+    // console.log("CONSOLE");
+    const currentTaskDiv = document.getElementById(`task__container__${taskId}`);
+    // console.log(currentTaskDiv);
+    currentTaskDiv.classList.add("text__delete__animation");
+
+    setTimeout(() => {
+      currentTaskDiv.remove();
+    }, 2000);
+    // currentTaskDiv.remove();
   }
 };
 
