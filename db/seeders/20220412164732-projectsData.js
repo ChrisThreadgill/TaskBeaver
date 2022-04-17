@@ -22,7 +22,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          userId: 2,
+          userId: 1,
           projectName: "Build a Dam Project Now",
           description: "This is for myself and only myself",
           dueDate: new Date("2040-02-11"),
@@ -32,7 +32,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          userId: 3,
+          userId: 1,
           projectName: "Build a Dam Project Now",
           description: "This is for myself and only myself",
           dueDate: new Date("2040-02-11"),
@@ -42,7 +42,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          userId: 4,
+          userId: 1,
           projectName: "Build a Dam Project Now",
           description: "This is for myself and only myself",
           dueDate: new Date("2040-02-11"),
@@ -52,7 +52,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          userId: 5,
+          userId: 1,
           projectName: "Build a Dam Project Now",
           description: "This is for myself and only myself",
           dueDate: new Date("2040-02-11"),
@@ -62,7 +62,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          userId: 6,
+          userId: 1,
           projectName: "Build a Dam Project Now",
           description: "This is for myself and only myself",
           dueDate: new Date("2040-02-11"),

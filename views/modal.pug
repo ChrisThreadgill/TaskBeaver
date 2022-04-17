@@ -115,21 +115,21 @@ block content
 
         div(id=`project__details__div__${project.id}` class="project__details__div")
           div(class=`project__details__container hidden` id=`project__details__${project.id}`)
-                    div(class=`project__title` id=`project__title__${project.id}`)= `Project Name${project.projectName}`
-                    div(class='project__type')
-                      span(class="badge bg-urgent" id=`project__type__${project.projectType}`)= `Project Type: ${project.projectType}`
                     div(class='project__description' id=`project__description__${project.id}`)= `Project Details: ${project.description}`
-                      if(project.dueDate)
-                        div(class= 'project__dueDate' id=`project__dueDate__${project.id}`)= `Due Date: ${project.dueDate.toDateString()}`
+                    div(class=`project__title` id=`project__title__${project.id}`)= `Project Name: ${project.projectName}`
+                    if(project.dueDate)
+                      div(class= 'project__dueDate' id=`project__dueDate__${project.id}`)= `Due Date: ${project.dueDate.toDateString()}`
+                    div(class='project__type')
+                      span(class="badge bg-urgent" id=`project__type__${project.projectType}`)= `${project.projectType}`
 
         div(class=`hidden hidden__edit__form__div` id=`hidden__edit__form__div__${project.id}`)
           form(action=`/api/projects/${project.id}` method="PUT" class=`` id=`hidden__project__edit__${project.id}` )
             input(type="hidden" name="_csrf" value=csrfToken)
+            +hiddenForm("", "description", "", "textarea", `hidden__form__input__${project.id}`)
             +hiddenForm("Project Name:", "projectName", "", "text", `hidden__form__input__${project.id}` )
-            +hiddenForm("Description:", "description", "", "text", `hidden__form__input__${project.id}`)
             +hiddenForm("Due Date:", "dueDate", "", "date", `hidden__form__input__${project.id}`)
             +hiddenForm("Url:", "url", "", "text", `hidden__form__input__${project.id}`)
-            select(name="projectType" class=`hidden__form__input__${project.id}`)
+            select(name="projectType" class=`hidden__form__input hidden__form__input__${project.id}`)
               option(value="personal") Personal
               option(value="groceries") Groceries
               option(value="project") Project

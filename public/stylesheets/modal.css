@@ -126,24 +126,19 @@ button {
   box-shadow: 2px 2px 20px 5px rgba(0, 0, 0, 0.4);
 } */
 
-#current__tasks>a {
+#current__tasks > a {
   border: 3px solid rgb(0, 0, 0);
   border-radius: 10px;
   margin-right: 20px;
   /* box-shadow: 2px 2px 20px 5px rgba(0, 0, 0, 0.4); */
-  transition: ease-out .5s;
+  transition: ease-out 0.5s;
   padding: 5px 20px;
 }
 
-#current__tasks>a:hover {
+#current__tasks > a:hover {
   box-shadow: 2px 2px 20px 5px rgba(0, 0, 0, 0.2);
   transform: scale(1.1, 1.1) translateY(10px);
 }
-
-
-
-
-
 
 #current__tasks > a#dueTodayTasks {
   color: red;
@@ -156,6 +151,7 @@ button {
   margin-left: 3rem;
   margin-right: 3rem;
   margin-top: 15px;
+  width: auto;
   height: 88%;
   border: 1.5px #aea39c solid;
   border-radius: 12px;
@@ -175,7 +171,7 @@ button {
 
 .add__project {
   display: flex;
-  position:absolute;
+  position: absolute;
   flex-direction: column;
   transform: translateY(100px);
   z-index: 10;
@@ -211,7 +207,6 @@ button {
   align-self: center;
   background-color: #aea39c;
   text-align: center;
-
 }
 
 .project__list__div {
@@ -294,6 +289,7 @@ button {
   align-items: center;
   /* border: 1px black solid; */
 }
+
 .project__buttons {
   display: flex;
   justify-content: space-between;
@@ -379,6 +375,199 @@ button {
   background-color: #dc3545;
 }
 
+i {
+  color: #462c11;
+}
+
+/*only do bounce for trashcans.*/
+
+i:hover {
+  /* transform: translateY(-35%); */
+  color: rgb(172, 65, 65);
+  animation: bounce 0.8s linear;
+}
+
+@keyframes bounce {
+  20%,
+  50%,
+  80%,
+  to {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-15px);
+  }
+  70% {
+    transform: translateY(-8px);
+  }
+  90% {
+    transform: translateY(-2px);
+  }
+}
+
+.project__task__container {
+  background-color: rgba(170, 84, 50, 0.582);
+  border-radius: 12px;
+  margin-bottom: 5px;
+  margin-right: 75px;
+}
+
+::-webkit-scrollbar {
+  background-color: rgba(151, 113, 56, 0);
+  width: 8px;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: aquamarine;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #462c11;
+  background: linear-gradient(to left, #8f724d, #462c11);
+  border-radius: 10px;
+  width: 5px;
+}
+
+.add__task__form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.task__add__title {
+  display: inline-block;
+  width: 800px;
+  border-radius: 12px;
+  margin-right: 20px;
+}
+
+.div__task__add__title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 800px;
+  margin-top: 25px;
+  margin-bottom: 18px;
+}
+
+.tasks__container__hidden {
+  height: 630px;
+  /* border-bottom: 1px black solid; */
+}
+
+.task__add__description {
+  border-radius: 12px;
+}
+
+.task__add__duedate {
+  border-radius: 12px;
+}
+
+.task__select {
+  border-radius: 12px;
+  margin-right: 5px;
+}
+
+.project__header__name {
+  font-size: 24pt;
+  font-weight: bold;
+}
+
+.hidden__form__active {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 10px;
+  position: absolute;
+  width: 800px;
+  height: 136px;
+  border: 1px solid rgb(0, 0, 0);
+  background-color: rgba(151, 118, 97);
+  transform: translateY(-152px);
+  border-radius: 12px;
+  /* transform: translateX(); */
+}
+.project__header__unhidden {
+  margin-bottom: 28px;
+}
+.project__details__container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-bottom: 10px;
+  position: absolute;
+  width: 800px;
+  height: 136px;
+  border: 1px solid rgb(0, 0, 0);
+  background-color: rgba(151, 118, 97);
+  transform: translateY(-152px);
+  border-radius: 12px;
+}
+.project__description {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 14pt;
+  width: 790px;
+  margin-top: 25px;
+  margin-bottom: 18px;
+  border-radius: 12px;
+  border: 1px black solid;
+  border-radius: 12px;
+  background-color: rgba(170, 84, 50, 0.582);
+}
+.project__title {
+  display: flex;
+  align-items: center;
+  /* border: solid black 1px; */
+  border-radius: 12px;
+  font-weight: bold;
+  /* background-color: rgba(170, 84, 50, 0.582); */
+}
+.project__dueDate {
+  display: flex;
+  align-items: center;
+  /* border: solid black 1px; */
+  border-radius: 12px;
+  font-weight: bold;
+}
+.project__type {
+  display: inline-block;
+  justify-content: flex-end;
+  /* border: solid black 1px; */
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+#projectName {
+  border-radius: 12px;
+}
+
+#url {
+  border-radius: 12px;
+}
+
+#description {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 790px;
+  margin-top: 25px;
+  margin-bottom: 18px;
+  border-radius: 12px;
+}
+
+#dueDate {
+  border-radius: 12px;
+}
+
+.hidden__form__input {
+  border-radius: 12px;
+  margin-right: 5px;
+}
+
 /* CLASS HIDDEN CSS  *NEEDS TO STAY AT THE BOTTOM*
 */
 #hidden__form {
@@ -393,110 +582,4 @@ button {
 }
 .hidden {
   display: none;
-}
-
-i {
-  color: #462c11;
-}
-
-/*only do bounce for trashcans.*/
-
-i:hover {
-  /* transform: translateY(-35%); */
-  color: rgb(172, 65, 65);
-  animation: bounce 0.8s linear;
-}
-
-@keyframes bounce{
-  20%, 50%, 80%, to {
-    transform: translateY(0);
-  }
-  40%{
-    transform: translateY(-15px);
-  }
-  70%{
-    transform: translateY(-8px);
-  }
-  90%{
-    transform: translateY(-2px);
-  }
-}
-
-.project__task__container{
-  background-color: rgba(170, 84, 50, 0.582);
-  border-radius: 12px;
-  margin-bottom: 5px;
-  margin-right: 75px;
-}
-
-::-webkit-scrollbar {
-  background-color: rgba(151, 113, 56,0);
-  width: 8px;
-}
-
-::-webkit-scrollbar-corner{
-  background-color: aquamarine;
-}
-
-::-webkit-scrollbar-thumb{
-  background-color: #462c11;
-  background: linear-gradient(to left, #8F724D,#462c11);
-  border-radius: 10px;
-  width: 5px;
-}
-
-.add__task__form{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: 10px;
-}
-
-.task__add__title{
-  display: inline-block;
-  width: 800px;
-  border-radius: 12px;
-  margin-right: 20px;
-}
-
-.div__task__add__title{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 800px;
-  margin-top: 25px;
-  margin-bottom: 18px;
-}
-
-.tasks__container__hidden{
-  height: 630px;
-  /* border-bottom: 1px black solid; */
-}
-
-.task__add__description{
-  border-radius: 12px;
-}
-
-.task__add__duedate{
-  border-radius: 12px;
-}
-
-.task__select{
-  border-radius: 12px;
-  margin-right: 5px;
-}
-
-.project__header__name{
-  font-size: 24pt;
-  font-weight: bold;
-}
-
-.hidden__form__active{
-  position: absolute;
-  width: 800px;
-  height: 100px;
-  border: 1px solid limegreen;
-  background-color: rgba(151, 118, 97, 0.6);
-  transform: translateY(-110px);
-  /* transform: translateX(); */
 }
