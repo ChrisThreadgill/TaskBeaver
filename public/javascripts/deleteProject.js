@@ -23,7 +23,6 @@ export const deleteProject = async (e) => {
     if (data.message) {
       const div = document.getElementById(`project__link__div__${projectId}`);
 
-      console.log(div);
       div.remove();
       projectHeader.remove();
       projectTasks.remove();

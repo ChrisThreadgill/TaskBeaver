@@ -29,16 +29,18 @@ const projects = document.querySelectorAll(".project__list__name");
 const hiddenForm = document.querySelectorAll(".hidden__project__edit__form");
 
 export const projectLinkPopulate = async (e) => {
-  // console.log(e.target, "this is the project link clickkkkkkk");
   const completedButton = await getCompletedTasksButton();
   const inProgressButton = await getInProgressTasksButton();
-  // console.log(inProgressButton);
 
   const projectId = e.target.id.split("__")[2];
 
   const activeProjectLink = document.querySelector(".project__link__active");
-  const previousCompletedHiddenActive = document.querySelectorAll(".completed__hidden__active");
-  const previousInCompleteHiddenActive = document.querySelectorAll(".incomplete__hidden__active");
+  const previousCompletedHiddenActive = document.querySelectorAll(
+    ".completed__hidden__active"
+  );
+  const previousInCompleteHiddenActive = document.querySelectorAll(
+    ".incomplete__hidden__active"
+  );
   if (activeProjectLink) {
     const currentActiveProjectId = activeProjectLink.id.split("__")[2];
 
@@ -59,24 +61,24 @@ export const projectLinkPopulate = async (e) => {
   }
   if (previousCompletedHiddenActive.length) {
     for (let i = 0; i < previousCompletedHiddenActive.length; i++) {
-      // console.log(previousCompletedHiddenActive[i]);
       const previousCompleted = previousCompletedHiddenActive[i];
       // previousHidden.classList.toggle("hidden");
-      // console.log(previousCompleted, "before remove");
       previousCompleted.classList.remove("completed__hidden__active");
       previousCompleted.classList.toggle("hidden");
-
-      // console.log(previousCompleted, "after remove");s
-      // console.log(previousHidden);
-      // console.log("working");
     }
   }
 
-  const currentTasksContainer = document.getElementById(`tasks__project__${projectId}`);
+  const currentTasksContainer = document.getElementById(
+    `tasks__project__${projectId}`
+  );
 
-  const currentProjectAddTask = document.querySelector(`.add__task__div__${projectId}`);
+  const currentProjectAddTask = document.querySelector(
+    `.add__task__div__${projectId}`
+  );
 
-  const projectHeader = document.getElementById(`project__header__${projectId}`);
+  const projectHeader = document.getElementById(
+    `project__header__${projectId}`
+  );
 
   //populates nav bar with current project completed/in progress/ and due today
   const tasks = await fetch(`/api/projects/${projectId}/tasks`, {
@@ -97,7 +99,9 @@ export const projectLinkPopulate = async (e) => {
     let task = tasksArray[i];
 
     if (!task.completed) {
-      const incompleteTask = document.getElementById(`task__container__${task.id}`);
+      const incompleteTask = document.getElementById(
+        `task__container__${task.id}`
+      );
       const incompleteTaskList = incompleteTask.classList;
 
       for (let i = 0; i < incompleteTaskList.length; i++) {
@@ -115,7 +119,9 @@ export const projectLinkPopulate = async (e) => {
       uncompletedTasks++;
     }
     if (task.completed) {
-      const completedTask = document.getElementById(`task__container__${task.id}`);
+      const completedTask = document.getElementById(
+        `task__container__${task.id}`
+      );
 
       completedTask.classList.toggle("hidden");
       completedTask.classList.toggle("completed__hidden__active");
@@ -127,10 +133,10 @@ export const projectLinkPopulate = async (e) => {
       today.split("/")[1] === task.dueDate.split("-")[2].split("T")[0]
     ) {
       dueToday++;
-      console.log(true);
     }
   }
-  const uncompletedTasksInNavBar = document.getElementById(`in__progress__tasks`);
+  const uncompletedTasksInNavBar =
+    document.getElementById(`in__progress__tasks`);
   uncompletedTasksInNavBar.innerText = `${uncompletedTasks} In Progress`;
 
   const completedTasksInNavBar = document.getElementById(`completed__tasks`);
@@ -139,10 +145,16 @@ export const projectLinkPopulate = async (e) => {
   const dueTodayTasksInNavBar = document.getElementById("due__today__tasks");
   dueTodayTasksInNavBar.innerText = `${dueToday} Due Today`;
 
-  const allOpenEditTaskForms = document.querySelectorAll(`.edit__task__unhidden`);
-  const allOpenTaskDetails = document.querySelectorAll(`.project__task__details__unhidden`);
+  const allOpenEditTaskForms = document.querySelectorAll(
+    `.edit__task__unhidden`
+  );
+  const allOpenTaskDetails = document.querySelectorAll(
+    `.project__task__details__unhidden`
+  );
 
-  const unHiddenTaskContainer = document.querySelector(".task__container__unhidden");
+  const unHiddenTaskContainer = document.querySelector(
+    ".task__container__unhidden"
+  );
 
   const unhiddenHeader = document.querySelector(".project__header__unhidden");
 
@@ -151,7 +163,10 @@ export const projectLinkPopulate = async (e) => {
   const activeTaskAddForm = document.getElementById("add__task__unhidden");
 
   if (allOpenEditTaskForms[0]) {
-    if (projectId !== allOpenEditTaskForms[0].parentNode.classList[0].split("__")[3]) {
+    if (
+      projectId !==
+      allOpenEditTaskForms[0].parentNode.classList[0].split("__")[3]
+    ) {
       if (allOpenEditTaskForms.length) {
         for (let i = 0; i < allOpenEditTaskForms.length; i++) {
           const currentOpenEditForm = allOpenEditTaskForms[i];
@@ -215,7 +230,6 @@ export const projectLinkPopulate = async (e) => {
 for (let i = 0; i < projects.length; i++) {
   //each project link in the project list
   const currentProjectLink = projects[i];
-  // console.log(currentProjectLink);
 
   currentProjectLink.addEventListener("click", projectLinkPopulate);
 }
@@ -226,21 +240,26 @@ const completedTasksInNavBar = await getCompletedTasksButton();
 export const showCompleted = async (e) => {
   const projectId = getCurrentProjectId();
 
-  const completedActive = document.getElementsByClassName("show__completed__active");
+  const completedActive = document.getElementsByClassName(
+    "show__completed__active"
+  );
 
   const tasksArray = await getAllTasksByProjectId(projectId);
 
   for (let i = 0; i < tasksArray.length; i++) {
     const task = tasksArray[i];
-    // console.log(completedTask.completed);
     if (!task.completed) {
-      const incompleteTask = document.getElementById(`task__container__${task.id}`);
+      const incompleteTask = document.getElementById(
+        `task__container__${task.id}`
+      );
       incompleteTask.classList.toggle("hidden");
       incompleteTask.classList.toggle("incomplete__hidden__active");
     }
 
     if (task.completed) {
-      const completedTask = document.getElementById(`task__container__${task.id}`);
+      const completedTask = document.getElementById(
+        `task__container__${task.id}`
+      );
       completedTask.classList.toggle("hidden");
       completedTask.classList.toggle("completed__hidden__active");
       // setCompletedActive.classList.toggle("show__completed__active");
@@ -258,29 +277,35 @@ export const showCompleted = async (e) => {
 
 export const showInProgress = async (e) => {
   const projectId = getCurrentProjectId();
-  const inProgressActive = document.getElementsByClassName("in__progress__active");
-  console.log(inProgressActive);
+  const inProgressActive = document.getElementsByClassName(
+    "in__progress__active"
+  );
   if (inProgressActive[0]) return;
 
   const tasksArray = await getAllTasksByProjectId(projectId);
 
   for (let i = 0; i < tasksArray.length; i++) {
     const task = tasksArray[i];
-    // console.log(completedTask.completed);
     if (!task.completed) {
-      const incompleteTask = document.getElementById(`task__container__${task.id}`);
+      const incompleteTask = document.getElementById(
+        `task__container__${task.id}`
+      );
       incompleteTask.classList.toggle("hidden");
       incompleteTask.classList.toggle("incomplete__hidden__active");
     }
 
     if (task.completed) {
-      const completedTask = document.getElementById(`task__container__${task.id}`);
+      const completedTask = document.getElementById(
+        `task__container__${task.id}`
+      );
       completedTask.classList.toggle("hidden");
       completedTask.classList.toggle("completed__hidden__active");
     }
   }
 
-  const setCompletedInActive = document.getElementById(`tasks__project__${projectId}`);
+  const setCompletedInActive = document.getElementById(
+    `tasks__project__${projectId}`
+  );
   setCompletedInActive.classList.toggle("show__completed__active");
 
   //adds event listener back on completed button now that in progress is active
@@ -289,7 +314,6 @@ export const showInProgress = async (e) => {
 
   //removes event listener on inprogress link to alleviate unwanted 'hidden' toggles
   const inProgressTasksButton = await getInProgressTasksButton();
-  console.log(inProgressTasksButton);
   inProgressTasksButton.removeEventListener("click", showInProgress);
 
   // setCompletedInActive.classList.toggle("in__progress__active");

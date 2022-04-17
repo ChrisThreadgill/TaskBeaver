@@ -28,12 +28,8 @@ for (let i = 0; i < taskEditButtons.length; i++) {
 
     let { taskTitle, description, completed, dueDate, tag } =
       taskDetails.taskDetails;
-    // console.log(taskDetails)
-    console.log(taskTitle, description, completed, dueDate, tag);
-    // console.log(currentTaskInputs)
     for (let i = 0; i < currentTaskInputs.length; i++) {
       const taskInput = currentTaskInputs[i];
-      console.log(taskInput);
       if (taskInput.name === "taskTitle") {
         taskInput.value = taskTitle;
       }
@@ -54,7 +50,6 @@ for (let i = 0; i < taskEditButtons.length; i++) {
     const currentTaskSubmitButton = document.getElementById(
       `edit__task__submit__${currentTaskId}`
     );
-    console.log(currentTaskSubmitButton);
     currentTaskSubmitButton.addEventListener("click", async (e) => {
       e.preventDefault();
       for (let i = 0; i < currentTaskInputs.length; i++) {
@@ -69,16 +64,13 @@ for (let i = 0; i < taskEditButtons.length; i++) {
           dueDate = taskInput.value;
         }
         if (taskInput.name === "tag") {
-          console.log("before change =======", tag);
           tag = taskInput.value;
-          console.log("after change ======", tag);
         }
       }
 
       let _csrf = document.getElementById(
         `hidden__task__edit__${currentTaskId}`
       ).firstChild.value;
-      console.log(_csrf);
       const options = { taskTitle, description, dueDate, tag, _csrf };
       const body = JSON.stringify(options);
       const taskEdit = await fetch(`/api/tasks/${currentTaskId}`, {
@@ -101,8 +93,6 @@ for (let i = 0; i < taskEditButtons.length; i++) {
       const taskDueDate = document.getElementById(
         `task__dueDate__${currentTaskId}`
       );
-      console.log(taskDueDate);
-      console.log(dueDate);
       taskDueDate.innerText = `Due Date: ${new Date(dueDate).toDateString()}`;
       currentHiddenEditForm.classList.toggle("hidden");
       currentHiddenEditForm.classList.toggle("edit__task__unhidden");

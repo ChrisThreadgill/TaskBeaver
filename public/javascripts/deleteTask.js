@@ -12,8 +12,6 @@ export const taskDeletes = async (e) => {
   e.stopPropagation();
 
   const taskId = e.target.id.split("__")[2];
-  console.log(e.target.id);
-  console.log(taskId);
 
   const taskDelete = await fetch(`/api/tasks/${taskId}`, {
     method: "DELETE",
@@ -22,22 +20,19 @@ export const taskDeletes = async (e) => {
   const data = await taskDelete.json();
 
   if (data.message) {
-    // console.log("CONSOLE");
-    const currentTaskDiv = document.getElementById(`task__container__${taskId}`);
-    // console.log(currentTaskDiv);
+    const currentTaskDiv = document.getElementById(
+      `task__container__${taskId}`
+    );
     currentTaskDiv.classList.add("text__delete__animation");
 
     setTimeout(() => {
       currentTaskDiv.remove();
     }, 2000);
-    // currentTaskDiv.remove();
   }
 };
 
 for (let i = 0; i < taskDelete.length; i++) {
   let taskButton = taskDelete[i];
-
-  // console.log(taskButton)
 
   taskButton.addEventListener("click", taskDeletes);
 }

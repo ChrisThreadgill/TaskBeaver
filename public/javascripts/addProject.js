@@ -16,6 +16,17 @@ const toggleHidden = (e) => {
   document.getElementById("projectTypeAdd").value = "personal";
   const addForm = document.getElementById("addProject");
 
+  const errorSummary = document.querySelector(".add__project__error");
+
+  const oldErrors = errorSummary.childNodes;
+
+  if (oldErrors) {
+    while (oldErrors.length !== 0) {
+      let oldError = oldErrors[0];
+      oldError.remove();
+    }
+  }
+
   addForm.classList.toggle("hidden");
 };
 
@@ -45,7 +56,6 @@ newProject.addEventListener("click", async (e) => {
     projectType,
     _csrf,
   };
-  // console.log(info);
   const newProject = await fetch("/api/projects", {
     method: "post",
     body: JSON.stringify(info),
@@ -53,9 +63,6 @@ newProject.addEventListener("click", async (e) => {
   });
 
   const project = await newProject.json();
-
-  // console.log(project.message)
-  // console.log(project.errorArray)
 
   if (project.errorArray) {
     const errorArray = project.errorArray;
@@ -65,7 +72,6 @@ newProject.addEventListener("click", async (e) => {
     const oldErrors = errorSummary.childNodes;
 
     if (oldErrors) {
-      // console.log(oldErrors)
       while (oldErrors.length !== 0) {
         let oldError = oldErrors[0];
         oldError.remove();
@@ -79,50 +85,52 @@ newProject.addEventListener("click", async (e) => {
     }
   }
 
-  const { id } = project.project;
-  const projectList = document.querySelector(".project__list");
-  const projectLink = document.createElement("div");
-  projectLink.innerHTML = `
-  <a class=project__list__name id=project__link__${id}>
-  ${projectName}
-  </a>
-  <span>
-  <button class=delete__project id=delete__project__${id}>
-  <i class="fa-solid fa-trash-can project__trash__icon" id=trash__icon__${id}>
-  </i>
-  </button>
-  </span>
-  `;
+  if (project.project) {
+    const { id } = project.project;
+    const projectList = document.querySelector(".project__list");
+    const projectLink = document.createElement("div");
+    projectLink.innerHTML = `
+    <a class=project__list__name id=project__link__${id}>
+    ${projectName}
+    </a>
+    <span>
+    <button class=delete__project id=delete__project__${id}>
+    <i class="fa-solid fa-trash-can project__trash__icon" id=trash__icon__${id}>
+    </i>
+    </button>
+    </span>
+    `;
 
-  projectLink.setAttribute("class", "project__link");
-  projectLink.setAttribute("id", `project__link__div__${id}`);
-  projectList.appendChild(projectLink);
+    projectLink.setAttribute("class", "project__link");
+    projectLink.setAttribute("id", `project__link__div__${id}`);
+    projectList.appendChild(projectLink);
 
-  const newDeleteButton = document.getElementById(`delete__project__${id}`);
-  const trashcans = document.querySelectorAll(".project__trash__icon");
-  for (let i = 0; i < trashcans.length; i++) {
-    let trashcan = trashcans[i];
-    trashcan.addEventListener("click", deleteProject);
-  }
-
-  newDeleteButton.addEventListener("click", deleteProject);
-
-  if (!project.errorArray) {
-    document.getElementById("projectNameAdd").value = "";
-    document.getElementById("descriptionAdd").value = "";
-    document.getElementById("dueDateAdd").value = "";
-    document.getElementById("urlAdd").value = "";
-    document.getElementById("projectTypeAdd").value = "personal";
-    const addForm = document.getElementById("addProject");
-
-    let parentDiv = document.querySelector(".add__project__error").childNodes;
-    for (let i = 0; i < parentDiv.length; i++) {
-      let pTag = parentDiv[i];
-
-      pTag.remove();
+    const newDeleteButton = document.getElementById(`delete__project__${id}`);
+    const trashcans = document.querySelectorAll(".project__trash__icon");
+    for (let i = 0; i < trashcans.length; i++) {
+      let trashcan = trashcans[i];
+      trashcan.addEventListener("click", deleteProject);
     }
 
-    addForm.classList.toggle("hidden");
-    location.reload();
+    newDeleteButton.addEventListener("click", deleteProject);
+
+    if (!project.errorArray) {
+      document.getElementById("projectNameAdd").value = "";
+      document.getElementById("descriptionAdd").value = "";
+      document.getElementById("dueDateAdd").value = "";
+      document.getElementById("urlAdd").value = "";
+      document.getElementById("projectTypeAdd").value = "personal";
+      const addForm = document.getElementById("addProject");
+
+      let parentDiv = document.querySelector(".add__project__error").childNodes;
+      for (let i = 0; i < parentDiv.length; i++) {
+        let pTag = parentDiv[i];
+
+        pTag.remove();
+      }
+
+      addForm.classList.toggle("hidden");
+      location.reload();
+    }
   }
 });

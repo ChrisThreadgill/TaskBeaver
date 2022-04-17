@@ -31,12 +31,10 @@ export const taskComplete = async (e) => {
 
   //hide the completed task
   const currentTaskDiv = document.getElementById(`task__container__${taskId}`);
-  // console.log(currentTaskDiv);
   currentTaskDiv.classList.toggle("completed");
 };
 
 for (let i = 0; i < taskCheckboxes.length; i++) {
   const currentTask = taskCheckboxes[i];
-  // console.log(currentTask);
   currentTask.addEventListener("click", taskComplete);
 }
