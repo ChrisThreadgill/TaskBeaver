@@ -267,6 +267,45 @@ const addTask = async (e) => {
   }
 };
 
+const moveOffProject = async (e) => {
+  e.preventDefault();
+  const taskTitleForms = document.querySelectorAll(".task__add__title");
+  for (let taskTitleForm of taskTitleForms) {
+    taskTitleForm.value = "";
+  }
+  const taskDescriptionForms = document.querySelectorAll(
+    ".task__add__description"
+  );
+  for (let taskDescriptionForm of taskDescriptionForms) {
+    taskDescriptionForm.value = "";
+  }
+  const taskDueDateForms = document.querySelectorAll(".task__add__duedate");
+  for (let taskDueDateForm of taskDueDateForms) {
+    taskDueDateForm.value = "";
+  }
+  const taskSelectForms = document.querySelectorAll(".task__select");
+  for (let taskSelectForm of taskSelectForms) {
+    taskSelectForm.value = "NoDamGiven";
+  }
+
+  const taskErrorForms = document.querySelectorAll(".add__task__error");
+  for (let taskErrorForm of taskErrorForms) {
+    const oldErrors = taskErrorForm.childNodes;
+
+    if (oldErrors) {
+      while (oldErrors.length !== 0) {
+        let oldErr = oldErrors[0];
+        oldErr.remove();
+      }
+    }
+  }
+};
+
+const projectLinks = document.querySelectorAll(".project__link");
+for (let projectLink of projectLinks) {
+  projectLink.addEventListener("click", moveOffProject);
+}
+
 for (let i = 0; i < addTaskButtons.length; i++) {
   let button = addTaskButtons[i];
 

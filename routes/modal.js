@@ -34,7 +34,6 @@ router.get(
         ],
       });
     }
-    console.log(projects);
     res.render("modal", {
       title: "Test Modal",
       user,
