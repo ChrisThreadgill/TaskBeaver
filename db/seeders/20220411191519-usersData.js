@@ -12,11 +12,10 @@ module.exports = {
       "Users",
       [
         {
-          firstName: "Demo1",
+          firstName: "Brendan the Beaver",
           lastName: "TaskBeaver",
           email: "demo@taskbeaver.com",
-          hashedPassword:
-            "$2a$10$wwOjKtnH/pU9HaH.Nn0Y3eLp3GBnYwgPCbzUSuA0qVjxbjKShJhce",
+          hashedPassword: "$2a$10$wwOjKtnH/pU9HaH.Nn0Y3eLp3GBnYwgPCbzUSuA0qVjxbjKShJhce",
           phoneNumber: "5555555555",
           occupation: null,
           bio: null,
@@ -27,8 +26,7 @@ module.exports = {
           firstName: "Task",
           lastName: "Beaver",
           email: "Task@taskbeaver.com",
-          hashedPassword:
-            "$2a$10$naWUeaUJxCHGI8jgKEbapeJs7tdNkcemfCaFjT0LLn5AGTa1eIKde",
+          hashedPassword: "$2a$10$naWUeaUJxCHGI8jgKEbapeJs7tdNkcemfCaFjT0LLn5AGTa1eIKde",
           phoneNumber: "5103166071",
           occupation: "moneymaker",
           bio: "Man is handsome!",
@@ -39,8 +37,7 @@ module.exports = {
           firstName: "Vern",
           lastName: "Chao",
           email: "Vern@taskbeaver.com",
-          hashedPassword:
-            "$2a$10$7PESWB9ZKP.WLnDysBWro.YhNH7jNCenXEM.Sqp1xrz1amSzOE9vK",
+          hashedPassword: "$2a$10$7PESWB9ZKP.WLnDysBWro.YhNH7jNCenXEM.Sqp1xrz1amSzOE9vK",
           phoneNumber: "5103166071",
           occupation: "moneymaker",
           bio: "Man is handsome!",
@@ -51,8 +48,7 @@ module.exports = {
           firstName: "Darren",
           lastName: "Kong",
           email: "Darren@taskbeaver.com",
-          hashedPassword:
-            "$2a$10$lDJk9HC8hztYLti4hCFI2.y2Ze5yX3TQ6vTZiSWD5hulbeOpiOn42",
+          hashedPassword: "$2a$10$lDJk9HC8hztYLti4hCFI2.y2Ze5yX3TQ6vTZiSWD5hulbeOpiOn42",
           phoneNumber: "9991234567",
           occupation: "moneymaker",
           bio: "Man is a Beast",
@@ -63,8 +59,7 @@ module.exports = {
           firstName: "Chris",
           lastName: "Threadgill",
           email: "Chris@taskbeaver.com",
-          hashedPassword:
-            "$2a$10$frBzs5LenJW0QfzRPS5wV.5YENlB8.FXjx7Db.lW80qH1QvHq3qjC",
+          hashedPassword: "$2a$10$frBzs5LenJW0QfzRPS5wV.5YENlB8.FXjx7Db.lW80qH1QvHq3qjC",
           phoneNumber: "9991234567",
           occupation: "moneymaker",
           bio: "Man is a too good for life",
@@ -75,8 +70,7 @@ module.exports = {
           firstName: "Josh",
           lastName: "Bautista",
           email: "Josh@taskbeaver.com",
-          hashedPassword:
-            "$2a$10$SYD9DEBREidelOu28kDofOk5qviVInc.4B3ZbjxS8koyUL9b7pR4C",
+          hashedPassword: "$2a$10$SYD9DEBREidelOu28kDofOk5qviVInc.4B3ZbjxS8koyUL9b7pR4C",
           phoneNumber: "9991234567",
           occupation: "moneymaker",
           bio: "Thug life is afraid of this man",
