@@ -141,6 +141,18 @@ const addTask = async (e) => {
 
     const newTaskEditButton = document.getElementById(`task__edit__${id}`);
 
+    const incompleteRes = await fetch(`/api/projects/${projectId}/tasks/incomplete`, {
+      method: "GET",
+      headers: contentTypeJson,
+    });
+    const incompleteTasks = await incompleteRes.json();
+
+    let incompleteCount = incompleteTasks.tasksForProject.length;
+
+    const inProgressNav = document.getElementById(`in__progress__tasks`);
+
+    inProgressNav.innerText = `${incompleteCount} In Progress`;
+
     newTaskEditButton.addEventListener("click", async (e) => {
       const newHiddenEditForm = document.getElementById(`hidden__task__edit__${id}`);
       const newTaskInputs = document.getElementsByClassName(`hidden__task__input__${id}`);
