@@ -1,10 +1,5 @@
 const express = require("express");
-const {
-  csrfProtection,
-  asyncHandler,
-  userValidators,
-  loginValidators,
-} = require("./utils.js");
+const { csrfProtection, asyncHandler, userValidators, loginValidators } = require("./utils.js");
 const db = require("../db/models");
 const { loginUser, logoutUser } = require("../auth");
 const { check, validationResult } = require("express-validator");
@@ -53,15 +48,7 @@ router.post(
     let tasks = { taskTitle: "Make a new Task" };
     let projectDisplay = { projectName: "Project Title" };
     let navBarTasks = { inProgress: 0, dueToday: 0, completed: 0 };
-    const {
-      firstName,
-      lastName,
-      email,
-      hashedPassword,
-      phoneNumber,
-      occupation,
-      bio,
-    } = req.body;
+    const { firstName, lastName, email, hashedPassword, phoneNumber, occupation, bio } = req.body;
     const user = await db.User.build({
       firstName,
       lastName,
@@ -114,10 +101,7 @@ router.post(
     if (loginErrors.isEmpty()) {
       const user = await db.User.findOne({ where: { email } });
       if (user !== null) {
-        const passwordMatch = await bcrypt.compare(
-          hashedPassword,
-          user.hashedPassword.toString()
-        );
+        const passwordMatch = await bcrypt.compare(hashedPassword, user.hashedPassword.toString());
         if (passwordMatch) {
           loginUser(req, res, user);
           req.session.save(() => res.redirect("/"));

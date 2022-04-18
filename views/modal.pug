@@ -24,12 +24,12 @@ block content
     //- If logged in display button to logout
     if locals.authenticated
       div(id='logged__in__user')
-        span(id='welcome__user')=`Welcome ${user.firstName}`
+        span(id='welcome__user')=`Let's get busy ${user.firstName}!`
         div(id='logout__button')
           form(action='/logout' method='post')
-            button(type='submit') Logout
+            button(type='submit' id='user__logout') Logout
     else
-      span Login New Beaver!
+      span(id='template__login') Login New Beaver!
 
   //- Where all our project names is at
   div(class='home__display')
@@ -43,30 +43,34 @@ block content
         //- Example if not logged in
         if !locals.authenticated
           div(class='project__link')
-            a(href="#")=`Your first project!`
+            a(href="#" id='template__project')=`Your first project!`
         //- Actual list
         else
           each project in projects
             div(class='project__link' id=`project__link__div__${project.id}`)
               a(class=`project__list__name` id=`project__link__${project.id}`)=`${project.projectName}`
-              span
+              span(id='project__link__type')
+                if project.projectType
+                  span(class=`badge bg__${project.projectType}` id=`project__link__badge__${project.id}`)= `${project.projectType}`
+                else
+                  span(id=`empty__span__badge__${project.id}`)
                 button(class=`delete__project` id=`delete__project__${project.id}`)
-                  i(class='fa-solid fa-trash-can project__trash__icon' id=`trash__icon__${project.id}`)
+                  i(class='fa-solid fa-trash-can project__trash__icon test123' id=`trash__icon__${project.id}`)
 
 
     //- ADD PROJECT FORM
     form(class="hidden add__project" id="addProject")
       input(type='hidden' name='_csrf' value=csrfToken id="csurfId")
-      +form("Project Name:", "projectNameAdd", "", "text")
-      +form("Description:", "descriptionAdd", "", "text")
-      +form("Due Date:", "dueDateAdd", "", "date")
-      +form("Url:", "urlAdd", "", "text")
+      +form("Project Name:", "projectNameAdd", "", "text",'new__project__name')
+      +form("Description:", "descriptionAdd", "", "text",'new__project__description')
+      +form("Due Date:", "dueDateAdd", "", "date",'new__project__due__date')
+      +form("Url:", "urlAdd", "", "text",'new__project__url')
       label(for="projectType") Project Type:
-      select(name="projectType" id="projectTypeAdd")
-        option(value="personal") Personal
-        option(value="groceries") Groceries
-        option(value="project") Project
-        option(value="company") Company
+      select(name="projectType"  id="projectTypeAdd" class='new__project__type')
+        option(value="Personal") Personal
+        option(value="Project") Project
+        option(value="Homework") Homework
+        option(value="Work") Work
       button(type="submit" id="confirm__project__button") Confirm
       button(type="click" id="cancel-add__project__button") Cancel
       div(class="add__project__error")
@@ -94,7 +98,7 @@ block content
           +errorsSummary()
           form(action="/api/tasks" method="POST" class="add__task__form" )
             input(type="hidden" name="_csrf" value=csrfToken)
-            +form("", `task__title__${project.id}`, taskTitle, "text", "task__add__title", 'Add Task Here...')
+            +form("", `task__title__add__${project.id}`, taskTitle, "text", "task__add__title", 'Add Task Here...')
             +form("Description:", `description__${project.id}`, description, "text", "task__add__description")
             +form("Due Date:", `due__date__${project.id}`, dueDate, "date", "task__add__duedate")
             input(type='integer' name='projectId' value=`${project.id}` class='hidden add__task__id')
@@ -109,29 +113,29 @@ block content
 
         div(id=`project__details__div__${project.id}` class="project__details__div")
           div(class=`project__details__container hidden` id=`project__details__${project.id}`)
-                    div(class='project__description' id=`project__description__${project.id}`)= `Project Details: ${project.description}`
                     div(class=`project__title` id=`project__title__${project.id}`)= `Project Name: ${project.projectName}`
+                    div(class='project__description' id=`project__description__${project.id}`)= `Project Details: ${project.description}`
                     if(project.dueDate)
                       div(class= 'project__dueDate' id=`project__dueDate__${project.id}`)= `Due Date: ${project.dueDate.toDateString()}`
-                    div(class='project__type')
-                      span(class="badge bg-urgent" id=`project__type__${project.projectType}`)= `${project.projectType}`
+                    div(class='project__type' id=`project__type__${project.id}`)
+                      span(class=`badge bg__${project.projectType}` id=`project__type__${project.projectType}`)= `${project.projectType}`
 
         div(class=`hidden hidden__edit__form__div` id=`hidden__edit__form__div__${project.id}`)
           form(action=`/api/projects/${project.id}` method="PUT" class=`` id=`hidden__project__edit__${project.id}` )
             input(type="hidden" name="_csrf" value=csrfToken)
-            +hiddenForm("", "description", "", "textarea", `hidden__form__input__${project.id}`)
             +hiddenForm("Project Name:", "projectName", "", "text", `hidden__form__input__${project.id}` )
+            +hiddenForm("", "description", "", "textarea", `hidden__form__input__${project.id}`)
             +hiddenForm("Due Date:", "dueDate", "", "date", `hidden__form__input__${project.id}`)
             +hiddenForm("Url:", "url", "", "text", `hidden__form__input__${project.id}`)
-            select(name="projectType" class=`hidden__form__input hidden__form__input__${project.id}`)
-              option(value="personal") Personal
-              option(value="groceries") Groceries
-              option(value="project") Project
-              option(value="company") Company
+            select(name="projectType" class=`hidden__form__input project__edit__select hidden__form__input__${project.id}`)
+              option(value="Personal") Personal
+              option(value="Project") Project
+              option(value="Homework") Homework
+              option(value="Work") Work
             button(type="submit" class="edit__project__submit" id=`project__submit__${project.id}`) Edit
         div(id=`tasks__project__${project.id}` class='hidden tasks__container__hidden')
             each task in project.Tasks
-              div(class=`project__task__container` id=`task__container__${task.id}`)
+              div(class=`project__task__container task__add__animation` id=`task__container__${task.id}`)
                 div(class='task__buttons')
                   div
                     button(class='task__edit__button' id=`task__edit__${task.id}`)
@@ -145,7 +149,7 @@ block content
                     label(for=`completed__checkbox__${task.id}` class='fa-solid fa-check')
                 div(class=`task__title task__title__${task.id}` )=`${task.taskTitle}`
                 div(class='task__tag')
-                  span(class="badge bg-urgent" id=`task__tag__${task.id}`)=task.tag
+                  span(class=`badge bg__${task.tag}` id=`task__tag__${task.id}`)=task.tag
                 div(class=`hidden project__task__details__hidden project__task__${project.id}` id=`project__task__details__${task.id}`)
                   div(class='task__description' id=`task__description__${task.id}`) Description: #{task.description}
                   if(task.dueDate)
@@ -154,40 +158,68 @@ block content
                   form(action=`/api/tasks/${task.id}` method="PUT" class=`hidden` id=`hidden__task__edit__${task.id}` )
                     input(type="hidden" name="_csrf" value=csrfToken)
                     +hiddenForm("Task Title:", "taskTitle", "", "text", `hidden__task__input__${task.id}` )
-                    +hiddenForm("Description:", "description", "", "text", `hidden__task__input__${task.id}`)
+                    +hiddenForm("Description:", "description", "", "textarea", `hidden__task__input__${task.id}`)
                     +hiddenForm("Due Date:", "dueDate", "", "date", `hidden__task__input__${task.id}`)
-                    select(name="tag" class=`hidden__task__input__${task.id}`)
+                    select(name="tag" class=`task__edit__select hidden__task__input__${task.id}`)
 
                       option(value="NoDamGiven") NoDamGiven
                       option(value="Flexible") Flexible
                       option(value="Important") Important
                       option(value="Urgent") Urgent
                     button(type="submit" class="edit__task__button" id=`edit__task__submit__${task.id}`) Submit
-    //- Modal popup if not signed in
+    if locals.authenticated
+      div(class='fixed__footer__div')
+        div(class='professional__profiles')
+          div(id='vernyoon')
+            span(id='dev__name') Vernyoon Chao
+            img(src='/images/beaver-profile.png' id='profile__picture')
+            a(href='https://www.linkedin.com/in/vernyoon-chao-783494123/')
+              img(src='/images/linkedin-log.ico')
+            a(href='https://github.com/VernyoonChao98')
+              img(src='/images/github-logo.png' href='https://github.com/VernyoonChao98')
+          div(id='josh')
+            span(id='dev__name') Joshua Raphael Bautista
+            img(src='/images/beaver-profile-1.png' id='profile__picture')
+            a(href='https://www.linkedin.com/in/joshua-raphael-bautista-8a019a11b/')
+              img(src='/images/linkedin-log.ico' )
+            a(href='https://github.com/jrbauti-09')
+              img(src='/images/github-logo.png' href='https://github.com/jrbauti-09')
+          div(id='darren')
+            span(id='dev__name') Darren Kong
+            img(src='/images/darren-photo.png' id='profile__picture')
+            a(href='https://www.linkedin.com/in/darren-kong-06b47013b/')
+              img(src='/images/linkedin-log.ico' )
+            a(href='https://github.com/dkong1321')
+              img(src='/images/github-logo.png' href='https://github.com/dkong1321')
+          div(id='chris')
+            span(id='dev__name') Chris Threadgill
+            img(src='/images/chris-profile.png' id='profile__picture')
+            a(href='https://www.linkedin.com/in/chris-threadgill-b05090185/')
+              img(src='/images/linkedin-log.ico' )
+            a(href='https://github.com/ChrisThreadgill')
+              img(src='/images/github-logo.png' href='https://github.com/ChrisThreadgill')
+        //- Modal popup if not signed in
     if !locals.authenticated
       div(class='modal' id='modal')
         //- DEMO BUTTON
         div(class='modal__forms')
           div(class='modal__header')
-            h1 Welcome Busy Beaver!
+            img(src='/images/Logo.svg' id='nav__logo')
+            h1(class='modal__header__title') Welcome to Task Beaver
+            h3 We are a software engineering oriented project planning application, with the versatility to tackle any of your day to day tasks as well as plan and execute your next full stack application!
           +errorsSummary(errors)
           //- Login form
-          form(action='/login' method='POST')
+          form(action='/login' method='POST' class='login__form')
             input(type='hidden' name='_csrf' value=csrfToken)
+            span(class='modal__login__label') Let's get busy!
             +form('Email Address','email','','email','email@email.com')
             +form('Password', 'hashedPassword', '', 'password')
             button(type='submit' class='button-class' id='Login') Login
-          //- DEMO FORM
-          form(action="/login" method="POST")
-            input(type='hidden' name='_csrf' value=csrfToken)
-            +form('','email','demo@taskbeaver.com', 'hidden')
-            +form('', 'hashedPassword','Test!ing123', 'hidden')
-            button(type="submit" id="demo__Login__Button") Demo User
-          div
           //- Sign-up form
           div(class='modal_sign_up')
             +errorsSummary(errorArray)
-            form(action="/sign-up" method="POST")
+            span(class='modal__sign__up__label') Not a Task Beaver yet?  Sign-up for free now!
+            form(action="/sign-up" method="POST" class='sign__up__form')
               input(type="hidden" name="_csrf" value=csrfToken)
               +form("First Name", "firstName", '', "text")
               +form("Last Name", "lastName", '', "text")
@@ -196,3 +228,12 @@ block content
               +form("Confirm Password", "confirmPassword", "", "password")
               div
                   button(type="submit" class="button-class" id=`Sign-up`) Become a Beaver
+
+          //- DEMO FORM
+          form(action="/login" method="POST" class='hidden__demo__form')
+            input(type='hidden' name='_csrf' value=csrfToken)
+            span(class='modal__demo__label') Not sure yet? Try out our demo.
+            +form('','email','demo@taskbeaver.com', 'hidden')
+            +form('', 'hashedPassword','Test!ing123', 'hidden')
+            button(type="submit" id="demo__Login__Button") Try Us Out!
+          div

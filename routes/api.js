@@ -1,10 +1,5 @@
 const express = require("express");
-const {
-  csrfProtection,
-  asyncHandler,
-  taskValidator,
-  projectValidator,
-} = require("./utils.js");
+const { csrfProtection, asyncHandler, taskValidator, projectValidator } = require("./utils.js");
 const db = require("../db/models");
 const { loginUser, logoutUser } = require("../auth");
 const { check, validationResult } = require("express-validator");
@@ -122,6 +117,36 @@ router.get(
     }
   })
 );
+
+router.get(
+  "/projects/:id/tasks/completed",
+  asyncHandler(async (req, res, next) => {
+    const { userId } = req.session.auth;
+    const projectId = req.params.id;
+    // *should this check specific user??
+    if (userId) {
+      const tasksForProject = await db.Task.findAll({ where: { projectId, completed: true } });
+      res.json({
+        tasksForProject,
+      });
+    }
+  })
+);
+
+router.get(
+  "/projects/:id/tasks/incomplete",
+  asyncHandler(async (req, res, next) => {
+    const { userId } = req.session.auth;
+    const projectId = req.params.id;
+    // *should this check specific user??
+    if (userId) {
+      const tasksForProject = await db.Task.findAll({ where: { projectId, completed: false } });
+      res.json({
+        tasksForProject,
+      });
+    }
+  })
+);
 // TASKS
 
 // Route to get all task for a project.
@@ -162,8 +187,7 @@ router.post(
   taskValidator,
   asyncHandler(async (req, res, next) => {
     const { userId } = req.session.auth;
-    const { taskTitle, description, projectId, dueDate, tag, taskContactId } =
-      req.body;
+    const { taskTitle, description, projectId, dueDate, tag, taskContactId } = req.body;
     const validatorErrors = validationResult(req);
     if (validatorErrors.isEmpty()) {
       if (userId) {
@@ -201,15 +225,7 @@ router.put(
 
     const taskId = req.params.id;
 
-    const {
-      taskTitle,
-      description,
-      projectId,
-      dueDate,
-      completed,
-      tag,
-      taskContactId,
-    } = req.body;
+    const { taskTitle, description, projectId, dueDate, completed, tag, taskContactId } = req.body;
     const taskToUpdate = await db.Task.findByPk(taskId);
 
     if (userId) {
