@@ -41,46 +41,54 @@ for (let i = 0; i < taskEditButtons.length; i++) {
 
     currentHiddenEditForm.classList.toggle("hidden");
     currentHiddenEditForm.classList.toggle("edit__task__unhidden");
+  });
+  const currentTaskSubmitButton = document.getElementById(`edit__task__submit__${currentTaskId}`);
+  currentTaskSubmitButton.addEventListener("click", async (e) => {
+    e.preventDefault();
+    const currentTaskInputs = document.getElementsByClassName(`hidden__task__input__${currentTaskId}`);
+    const currentHiddenEditForm = document.getElementById(`hidden__task__edit__${currentTaskId}`);
+    let taskTitle;
+    let description;
+    let dueDate;
+    let tag;
 
-    const currentTaskSubmitButton = document.getElementById(`edit__task__submit__${currentTaskId}`);
-    currentTaskSubmitButton.addEventListener("click", async (e) => {
-      e.preventDefault();
-      for (let i = 0; i < currentTaskInputs.length; i++) {
-        const taskInput = currentTaskInputs[i];
-        if (taskInput.name === "taskTitle") {
-          taskTitle = taskInput.value;
-        }
-        if (taskInput.name === "description") {
-          description = taskInput.value;
-        }
-        if (taskInput.name === "dueDate") {
-          dueDate = taskInput.value;
-        }
-        if (taskInput.name === "tag") {
-          tag = taskInput.value;
-        }
+    for (let i = 0; i < currentTaskInputs.length; i++) {
+      const taskInput = currentTaskInputs[i];
+      if (taskInput.name === "taskTitle") {
+        taskTitle = taskInput.value;
       }
+      if (taskInput.name === "description") {
+        description = taskInput.value;
+      }
+      if (taskInput.name === "dueDate") {
+        dueDate = taskInput.value;
+      }
+      if (taskInput.name === "tag") {
+        tag = taskInput.value;
+      }
+    }
 
-      let _csrf = document.getElementById(`hidden__task__edit__${currentTaskId}`).firstChild.value;
-      const options = { taskTitle, description, dueDate, tag, _csrf };
-      const body = JSON.stringify(options);
-      const taskEdit = await fetch(`/api/tasks/${currentTaskId}`, {
-        method: "put",
-        body,
-        headers: contentTypeJson,
-      });
-
-      const taskTitleDiv = document.querySelector(`.task__title__${currentTaskId}`);
-      taskTitleDiv.innerText = taskTitle;
-
-      const taskTag = document.getElementById(`task__tag__${currentTaskId}`);
-      taskTag.innerText = tag;
-      const taskDescription = document.getElementById(`task__description__${currentTaskId}`);
-      taskDescription.innerText = `Description: ${description}`;
-      const taskDueDate = document.getElementById(`task__dueDate__${currentTaskId}`);
-      taskDueDate.innerText = `Due Date: ${new Date(dueDate).toDateString()}`;
-      currentHiddenEditForm.classList.toggle("hidden");
-      currentHiddenEditForm.classList.toggle("edit__task__unhidden");
+    let _csrf = document.getElementById(`hidden__task__edit__${currentTaskId}`).firstChild.value;
+    const options = { taskTitle, description, dueDate, tag, _csrf };
+    const body = JSON.stringify(options);
+    const taskEdit = await fetch(`/api/tasks/${currentTaskId}`, {
+      method: "put",
+      body,
+      headers: contentTypeJson,
     });
+
+    const taskTitleDiv = document.querySelector(`.task__title__${currentTaskId}`);
+    taskTitleDiv.innerText = taskTitle;
+
+    const taskTag = document.getElementById(`task__tag__${currentTaskId}`);
+    console.log(taskTag);
+    taskTag.removeAttribute("class");
+    taskTag.innerHTML = `<span class="badge bg__${tag}" id="task__tag__${currentTaskId}">${tag}</span>`;
+    const taskDescription = document.getElementById(`task__description__${currentTaskId}`);
+    taskDescription.innerText = `Description: ${description}`;
+    const taskDueDate = document.getElementById(`task__dueDate__${currentTaskId}`);
+    taskDueDate.innerText = `Due Date: ${new Date(dueDate).toDateString()}`;
+    currentHiddenEditForm.classList.toggle("hidden");
+    currentHiddenEditForm.classList.toggle("edit__task__unhidden");
   });
 }

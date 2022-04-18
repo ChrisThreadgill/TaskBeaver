@@ -3,7 +3,7 @@ import { taskDeletes } from "./deleteTask.js";
 window.addEventListener("load", (event) => {
   console.log("hello from addTask!");
 });
-
+import { taskComplete } from "./completedTask.js";
 const contentTypeJson = { "Content-Type": "application/json" };
 
 const dateView = (date) => {
@@ -22,10 +22,8 @@ const addTask = async (e) => {
 
   const projectId = e.target.id.split(`__`)[3];
 
-  const taskTitle = document.getElementById(`task__title__${projectId}`).value;
-  const description = document.getElementById(
-    `description__${projectId}`
-  ).value;
+  const taskTitle = document.getElementById(`task__title__add__${projectId}`).value;
+  const description = document.getElementById(`description__${projectId}`).value;
   let dueDate = document.getElementById(`due__date__${projectId}`).value;
   const tag = document.getElementById(`task__select__${projectId}`).value;
 
@@ -81,9 +79,7 @@ const addTask = async (e) => {
     taskDiv.setAttribute("id", `task__container__${id}`);
     //add class to buttons.
 
-    const projectBoard = document.getElementById(
-      `tasks__project__${projectId}`
-    );
+    const projectBoard = document.getElementById(`tasks__project__${projectId}`);
     taskDiv.classList.add("task__add__animation");
 
     taskDiv.innerHTML = `
@@ -93,13 +89,13 @@ const addTask = async (e) => {
         <button class='task__delete__button' id='task__delete__${id}'><i class="fa-solid fa-trash-can task__trash__icon" id='trash__task__${id}'></i></button>
         <button class='task__details__button' id='task__details__${id}'><i class="fa-solid fa-angle-down"></i></button>
     </div>
-      <div><input type="checkbox" id="completed__checkbox__${id}">
+      <div><input type="checkbox" class="completed__check__box" id="completed__checkbox__${id}">
       <label class="fa-solid fa-check" for="completed__checkbox__${id}"></label>
       </div>
     </div>
     <div class="task__title" id='task__title__${id}'>${taskTitle}</div>
     <div class="task__tag">
-        <span class="badge bg-urgent" id='task__tag__${id}'>${tag}</span>
+        <span class="badge bg__${tag}" id='task__tag__${id}'>${tag}</span>
     </div>
     <div class="hidden project__task__details__hidden project__task__${projectId}" id="project__task__details__${id}">
         <div class="task__description" id='task__description__${id}'>Description: ${description}</div>
@@ -117,7 +113,7 @@ const addTask = async (e) => {
             <div>
                 <label for="dueDate ">Due Date:</label>
                 <input class="hidden__task__input__${id}" type="date" name="dueDate" id="dueDate" value="" ></div>
-                <select class="hidden__task__input__${id}" name="tag">
+                <select class="task__edit__select hidden__task__input__${id}" name="tag">
                     <option value="NoDamGiven">NoDamGiven</option>
                     <option value="Flexible">Flexible</option>
                     <option value="Important">Important</option>
@@ -130,14 +126,12 @@ const addTask = async (e) => {
 `;
 
     projectBoard.appendChild(taskDiv);
+    const newTaskCheckBox = document.getElementById(`completed__checkbox__${id}`);
+    newTaskCheckBox.addEventListener("click", taskComplete);
 
     // adding new event listener for details drop down
-    const newTaskDetailsButton = document.getElementById(
-      `task__details__${id}`
-    );
-    const newTaskDetailContainer = document.getElementById(
-      `project__task__details__${id}`
-    );
+    const newTaskDetailsButton = document.getElementById(`task__details__${id}`);
+    const newTaskDetailContainer = document.getElementById(`project__task__details__${id}`);
     const taskDetailsEvent = async (e) => {
       newTaskDetailContainer.classList.toggle("hidden");
       newTaskDetailContainer.classList.remove("project__task__details__hidden");
@@ -148,19 +142,14 @@ const addTask = async (e) => {
     const newTaskEditButton = document.getElementById(`task__edit__${id}`);
 
     newTaskEditButton.addEventListener("click", async (e) => {
-      const newHiddenEditForm = document.getElementById(
-        `hidden__task__edit__${id}`
-      );
-      const newTaskInputs = document.getElementsByClassName(
-        `hidden__task__input__${id}`
-      );
+      const newHiddenEditForm = document.getElementById(`hidden__task__edit__${id}`);
+      const newTaskInputs = document.getElementsByClassName(`hidden__task__input__${id}`);
       const newTaskResponse = await fetch(`/api/tasks/${id}`, {
         method: "get",
         headers: contentTypeJson,
       });
       const newTaskDetails = await newTaskResponse.json();
-      let { taskTitle, description, completed, dueDate, tag } =
-        newTaskDetails.taskDetails;
+      let { taskTitle, description, completed, dueDate, tag } = newTaskDetails.taskDetails;
       for (let i = 0; i < newTaskInputs.length; i++) {
         const taskInput = newTaskInputs[i];
         if (taskInput.name === "taskTitle") {
@@ -179,49 +168,53 @@ const addTask = async (e) => {
 
       newHiddenEditForm.classList.toggle("hidden");
       newHiddenEditForm.classList.toggle("edit__task__unhidden");
+    });
+    const newEditSubmitButton = document.getElementById(`edit__task__submit__${id}`);
+    newEditSubmitButton.addEventListener("click", async (e) => {
+      e.preventDefault();
+      const newTaskInputs = document.getElementsByClassName(`hidden__task__input__${id}`);
+      const newHiddenEditForm = document.getElementById(`hidden__task__edit__${id}`);
+      let taskTitle;
+      let description;
+      let dueDate;
+      let tag;
 
-      const newEditSubmitButton = document.getElementById(
-        `edit__task__submit__${id}`
-      );
-      newEditSubmitButton.addEventListener("click", async (e) => {
-        e.preventDefault();
-        for (let i = 0; i < newTaskInputs.length; i++) {
-          const taskInput = newTaskInputs[i];
-          if (taskInput.name === "taskTitle") {
-            taskTitle = taskInput.value;
-          }
-          if (taskInput.name === "description") {
-            description = taskInput.value;
-          }
-          if (taskInput.name === "dueDate") {
-            dueDate = taskInput.value;
-          }
-          if (taskInput.name === "tag") {
-            tag = taskInput.value;
-          }
+      for (let i = 0; i < newTaskInputs.length; i++) {
+        const taskInput = newTaskInputs[i];
+        if (taskInput.name === "taskTitle") {
+          taskTitle = taskInput.value;
         }
-        const options = { taskTitle, description, dueDate, tag };
-        const body = JSON.stringify(options);
-        const newTaskEdit = await fetch(`/api/tasks/${id}`, {
-          method: "put",
-          body,
-          headers: contentTypeJson,
-        });
-
-        const taskTitleDiv = document.getElementById(`task__title__${id}`);
-        taskTitleDiv.innerText = taskTitle;
-
-        const taskTag = document.getElementById(`task__tag__${id}`);
-        taskTag.innerText = tag;
-        const taskDescription = document.getElementById(
-          `task__description__${id}`
-        );
-        taskDescription.innerText = description;
-        const taskDueDate = document.getElementById(`task__dueDate__${id}`);
-        taskDueDate.innerText = `Due Date: ${new Date(dueDate).toDateString()}`;
-        newHiddenEditForm.classList.toggle("hidden");
-        newHiddenEditForm.classList.toggle("edit__task__unhidden");
+        if (taskInput.name === "description") {
+          description = taskInput.value;
+        }
+        if (taskInput.name === "dueDate") {
+          dueDate = taskInput.value;
+        }
+        if (taskInput.name === "tag") {
+          tag = taskInput.value;
+        }
+      }
+      const _csrf = document.getElementById("csurfId").value;
+      const options = { taskTitle, description, dueDate, tag, _csrf };
+      const body = JSON.stringify(options);
+      const newTaskEdit = await fetch(`/api/tasks/${id}`, {
+        method: "put",
+        body,
+        headers: contentTypeJson,
       });
+
+      const taskTitleDiv = document.getElementById(`task__title__${id}`);
+      taskTitleDiv.innerText = taskTitle;
+
+      const taskTag = document.getElementById(`task__tag__${id}`);
+      taskTag.removeAttribute("class");
+      taskTag.innerHTML = `<span class="badge bg__${tag}" id="task__tag__${id}">${tag}</span>`;
+      const taskDescription = document.getElementById(`task__description__${id}`);
+      taskDescription.innerText = description;
+      const taskDueDate = document.getElementById(`task__dueDate__${id}`);
+      taskDueDate.innerText = `Due Date: ${new Date(dueDate).toDateString()}`;
+      newHiddenEditForm.classList.toggle("hidden");
+      newHiddenEditForm.classList.toggle("edit__task__unhidden");
     });
 
     const trashCansIcons = document.querySelectorAll(".task__trash__icon");
@@ -240,9 +233,7 @@ const addTask = async (e) => {
     for (let taskTitleForm of taskTitleForms) {
       taskTitleForm.value = "";
     }
-    const taskDescriptionForms = document.querySelectorAll(
-      ".task__add__description"
-    );
+    const taskDescriptionForms = document.querySelectorAll(".task__add__description");
     for (let taskDescriptionForm of taskDescriptionForms) {
       taskDescriptionForm.value = "";
     }
@@ -270,13 +261,16 @@ const addTask = async (e) => {
 
 const moveOffProject = async (e) => {
   e.preventDefault();
+  const projectDetailsUnhidden = document.querySelector(".project__details__unhidden");
+  if (projectDetailsUnhidden) {
+    projectDetailsUnhidden.classList.toggle("project__details__unhidden");
+    projectDetailsUnhidden.classList.toggle("hidden");
+  }
   const taskTitleForms = document.querySelectorAll(".task__add__title");
   for (let taskTitleForm of taskTitleForms) {
     taskTitleForm.value = "";
   }
-  const taskDescriptionForms = document.querySelectorAll(
-    ".task__add__description"
-  );
+  const taskDescriptionForms = document.querySelectorAll(".task__add__description");
   for (let taskDescriptionForm of taskDescriptionForms) {
     taskDescriptionForm.value = "";
   }
