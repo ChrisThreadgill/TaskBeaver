@@ -9,20 +9,27 @@ export const deleteProject = async (e) => {
     const res = await fetch(`/api/projects/${projectId}`, {
       method: "DELETE",
     });
-    const projectHeader = document.getElementById(
-      `project__header__${projectId}`
-    );
-    const projectTasks = document.getElementById(
-      `tasks__project__${projectId}`
-    );
+    const projectHeader = document.getElementById(`project__header__${projectId}`);
+    const projectTasks = document.getElementById(`tasks__project__${projectId}`);
     const addTaskDiv = document.querySelector(`.add__task__div__${projectId}`);
-    const hiddenEditForm = document.getElementById(
-      `hidden__edit__form__div__${projectId}`
-    );
+    const hiddenEditForm = document.getElementById(`hidden__edit__form__div__${projectId}`);
     const data = await res.json();
     if (data.message) {
       const div = document.getElementById(`project__link__div__${projectId}`);
 
+      const currentProjectHeader = document.querySelector(".project__header__unhidden");
+
+      if (currentProjectHeader) {
+        currentProjectHeader;
+        const currentProjectId = currentProjectHeader.id.split("__")[2];
+        console.log(currentProjectId);
+        if (currentProjectId === projectId) {
+          const inProgressNav = document.getElementById(`in__progress__tasks`);
+          const completedNav = document.getElementById(`completed__tasks`);
+          inProgressNav.innerText = `0 In Progress`;
+          completedNav.innerText = `0 Completed`;
+        }
+      }
       div.remove();
       projectHeader.remove();
       projectTasks.remove();
